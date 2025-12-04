@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graham Betts | eLearning Instructional Designer</title>
+    
+    <!-- 1. TAILWIND CSS LIBRARY -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- 2. EASY UPDATE CONFIGURATION (EDIT COLORS HERE) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // CHANGE THESE HEX CODES TO UPDATE YOUR SITE THEME
+                        primary: '#0d9488',      /* Currently: Teal-600 */
+                        primaryHover: '#0f766e', /* Darker Teal for hover states */
+                        secondary: '#0f172a',    /* Currently: Slate-900 (Dark background) */
+                        light: '#f8fafc',        /* Currently: Slate-50 (Light background) */
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- 3. ICONS AND FONTS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- 4. CUSTOM CSS SECTION (FULLY ANNOTATED) -->
+    <style>
+        /* === IMPORT FONTS === */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        /* === GLOBAL SETTINGS === */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        html {
+            scroll-behavior: smooth; /* Enables smooth scrolling when clicking nav links */
+        }
+
+        /* === HERO SECTION === */
+        /* To change the main background image, replace the URL below */
+        .hero-bg {
+            background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), 
+            url('https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Creates the parallax scrolling effect */
+        }
+
+        /* === PORTFOLIO CARDS === */
+        .portfolio-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        /* The effect when you hover over a project box */
+        .portfolio-card:hover {
+            transform: translateY(-5px); /* Lifts the card up */
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* === CONTACT FORM === */
+        /* The colored ring that appears when you click a text box */
+        .form-input:focus {
+            ring: 2px solid var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        /* === UTILITIES === */
+        /* Prevents scrolling when the modal is open */
+        .no-scroll {
+            overflow: hidden; 
+        }
+    </style>
+</head>
+<body class="bg-light text-slate-800">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <!-- Logo Text -->
+                    <span class="text-2xl font-bold text-secondary tracking-tight">Graham<span class="text-primary">Betts</span></span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#portfolio" class="text-slate-600 hover:text-primary font-medium transition">Portfolio</a>
+                    <a href="#about" class="text-slate-600 hover:text-primary font-medium transition">About</a>
+                    <a href="#contact" class="bg-primary text-white px-5 py-2 rounded-full font-medium hover:bg-primaryHover transition shadow-md">Let's Talk</a>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="text-slate-600 hover:text-secondary focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <a href="#portfolio" class="block px-4 py-3 text-slate-600 hover:bg-light">Portfolio</a>
+            <a href="#about" class="block px-4 py-3 text-slate-600 hover:bg-light">About</a>
+            <a href="#contact" class="block px-4 py-3 text-primary font-bold hover:bg-light">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-bg h-screen flex items-center justify-center text-center px-4">
+        <div class="max-w-4xl mx-auto text-white" data-aos="fade-up">
+            <div class="inline-block px-3 py-1 mb-4 border border-primary rounded-full text-primary text-sm font-semibold tracking-wide uppercase bg-secondary/50 backdrop-blur-sm">
+               Digital Learning Design Portfolio
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold mb-6 leading-tight">
+                Engaging Learning Experiences <span class="text-primary"> <br>that Drive Performance</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-200 mb-10 font-light max-w-2xl mx-auto">
+                An expert at helping knowledge owner bridge the gap between information delivery and measurable change.         </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#portfolio" class="px-8 py-3 bg-primary text-white rounded-lg font-semibold text-lg hover:bg-primaryHover transition shadow-lg hover:shadow-primary/25">
+                    View My Work
+                </a>
+                <a href="#contact" class="px-8 py-3 bg-transparent border-2 border-white text-white rounded-lg font-semibold text-lg hover:bg-white hover:text-secondary transition">
+                    Contact Me
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Portfolio Grid (8-Box Section) -->
+    <section id="portfolio" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-secondary mb-4">Featured Projects</h2>
+            <div class="w-16 h-1 bg-primary mx-auto rounded-full"></div>
+            <p class="mt-4 text-slate-600 max-w-2xl mx-auto">
+                A selection of work demonstrating scenario-based learning, AI-enhanced development, and comprehensive onboarding solutions.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Project 1: Soft Skills -->
+            <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project1')">
+                <div class="relative overflow-hidden">
+                    <img src="https://placehold.co/600x400/0f172a/FFF?text=Scenario+Based+Learning" alt="Scenario Based Learning" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
+                    <div class="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                        Soft Skills
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-secondary mb-2">Managerial Decision Making</h3>
+                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
+                        A branching scenario course designed to help new managers navigate difficult conversations and conflict resolution.
+                    </p>
+                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
+                        <i class="fas fa-tools"></i> Storyline 360, Vyond
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2: Systems -->
+            <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project2')">
+                <div class="relative overflow-hidden">
+                    <img src="https://placehold.co/600x400/0d9488/FFF?text=System+Simulation" alt="System Simulation" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
+                    <div class="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                        Technical Training
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-secondary mb-2">ERP System Rollout</h3>
+                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
+                        Interactive "Show, Try, Test" simulation for a company-wide SAP implementation. Reduced help-desk tickets by 40%.
+                    </p>
+                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
+                        <i class="fas fa-tools"></i> Camtasia, Rise 360
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3: Gamification -->
+            <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project3')">
+                <div class="relative overflow-hidden">
+                    <img src="https://placehold.co/600x400/475569/FFF?text=Gamification" alt="Gamification" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
+                    <div class="absolute top-4 left-4 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                        Gamification
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-secondary mb-2">Cybersecurity Quest</h3>
+                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
+                        Escaping the "Click Next" fatigue. A point-and-click adventure game teaching data privacy and phishing awareness.
+                    </p>
+                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
+                        <i class="fas fa-tools"></i> Storyline 360, JavaScript
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4: Microlearning -->
+            <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project4')">
+                <div class="relative overflow-hidden">
+                    <img src="https://placehold.co/600x400/e11d48/FFF?text=Microlearning" alt="Microlearning" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
+                    <div class="absolute top-4 left-4 bg-rose-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                        Microlearning
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-secondary mb-2">Sales Enablement Burst</h3>
+                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
+                        Mobile-first modules delivered weekly to field sales agents. Focused on product updates and objection handling.
+                    </p>
+                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
+                        <i class="fas fa-tools"></i> 7Taps, Canva
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5: Video -->
+            <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project5')">
+                <div class="relative overflow-hidden">
+                    <img src="https://placehold.co/600x400/f59e0b/FFF?text=Video+Production" alt="Video Production" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
+                    <div class="absolute top-4 left-4 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                        Video
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-secondary mb-2">Safety First Animation</h3>
+                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
+                        Animated explainer video simplifying complex OSHA regulations for factory floor staff.
+                    </p>
+                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
+                        <i class="fas fa-tools"></i> After Effects, Audition
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6: Job Aids -->
+            <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project6')">
+                <div class="relative overflow-hidden">
+                    <img src="https://placehold.co/600x400/64748b/FFF?text=Job+Aid+%26+PDF" alt="Job Aids" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
+                    <div class="absolute top-4 left-4 bg-slate-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                        Job Aids
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-secondary mb-2">QRG & Infographics</h3>
+                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
+                        Performance support assets designed to be printed and placed at workstations for immediate reference.
+                    </p>
+                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
+                        <i class="fas fa-tools"></i> InDesign, Illustrator
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW CARD 7: AI & Emerging Tech -->
+            <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project7')">
+                <div class="relative overflow-hidden">
+                    <img src="https://placehold.co/600x400/2563eb/FFF?text=AI+%26+Emerging+Tech" alt="AI Technology" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
+                    <div class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                        AI Innovation
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-secondary mb-2">AI Learning Assistant</h3>
+                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
+                        Integrating LLMs to provide real-time feedback on learner inputs, creating a dynamic and personalized coaching experience.
+                    </p>
+                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
+                        <i class="fas fa-tools"></i> ChatGPT API, Python, Storyline
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW CARD 8: Onboarding -->
+            <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project8')">
+                <div class="relative overflow-hidden">
+                    <img src="https://placehold.co/600x400/10b981/FFF?text=Onboarding" alt="Onboarding" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
+                    <div class="absolute top-4 left-4 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                        Onboarding
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-secondary mb-2">Day 1 Global Onboarding</h3>
+                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
+                        A blended learning journey for new hires. Reduced "time-to-productivity" by 30% through structured digital milestones.
+                    </p>
+                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
+                        <i class="fas fa-tools"></i> Rise 360, Workday
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Split About & Contact Section -->
+    <section id="about" class="flex flex-col lg:flex-row min-h-[600px]">
+        
+        <!-- Left Side: About (White/Light) -->
+        <div class="lg:w-2/3 bg-slate-100 p-10 lg:p-20 flex flex-col justify-center">
+            <div class="max-w-2xl">
+                <h4 class="text-primary font-bold uppercase tracking-wider mb-2 text-sm">About Me</h4>
+                <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-8">More Than Just "Click Next"</h2>
+                
+                <div class="flex items-start gap-6 mb-8">
+                   <!-- Placeholder Avatar -->
+                   <img src="https://placehold.co/150x150/0f172a/FFF?text=GB" alt="Graham Betts" class="w-24 h-24 rounded-full shadow-lg border-4 border-white object-cover shrink-0">
+                   <div>
+                       <p class="text-lg text-slate-700 leading-relaxed mb-4">
+                           I'm <strong>Graham Betts</strong>, an Instructional Designer passionate about creating learning experiences that respect the learner's time and intelligence.
+                       </p>
+                       <p class="text-slate-600 leading-relaxed">
+                           With a background in both technical training and creative design, I specialize in translating dry, complex subject matter into interactive, digestible content. My philosophy is simple: <strong>Effective learning is active, not passive.</strong>
+                       </p>
+                   </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-6 mt-6">
+                    <div>
+                        <h5 class="font-bold text-secondary mb-3 border-b border-slate-300 pb-2">Methodologies</h5>
+                        <ul class="space-y-2 text-slate-600 text-sm">
+                            <li><i class="fas fa-check text-primary mr-2"></i>ADDIE & SAM</li>
+                            <li><i class="fas fa-check text-primary mr-2"></i>Bloom's Taxonomy</li>
+                            <li><i class="fas fa-check text-primary mr-2"></i>Action Mapping</li>
+                            <!-- Added Onboarding here -->
+                            <li><i class="fas fa-check text-primary mr-2"></i>Employee Lifecycle (Onboarding)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-secondary mb-3 border-b border-slate-300 pb-2">Toolbox</h5>
+                        <ul class="space-y-2 text-slate-600 text-sm">
+                            <li><i class="fas fa-laptop-code text-primary mr-2"></i>Articulate 360 (Storyline/Rise)</li>
+                            <!-- Added AI here -->
+                            <li><i class="fas fa-robot text-primary mr-2"></i>AI & Automation</li>
+                            <li><i class="fas fa-video text-primary mr-2"></i>Camtasia / Premiere Pro</li>
+                            <li><i class="fas fa-server text-primary mr-2"></i>LMS Administration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Contact (Dark/Accent) -->
+        <div id="contact" class="lg:w-1/3 bg-secondary p-10 lg:p-20 text-white flex flex-col justify-center relative">
+            <!-- Decorative circle -->
+            <div class="absolute top-0 right-0 w-32 h-32 bg-primary rounded-bl-full opacity-20"></div>
+
+            <h2 class="text-3xl font-bold mb-6">Let's Collaborate</h2>
+            <p class="text-slate-400 mb-8">Ready to discuss your next training project? Drop me a message or connect on social.</p>
+            
+            <form id="contactForm" class="space-y-4" onsubmit="handleFormSubmit(event)">
+                <!-- HIDDEN CONFIGURATION FOR FORMSUBMIT -->
+                <!-- The JavaScript below will handle sending to this email via FormSubmit -->
+                <input type="hidden" name="_subject" value="New Portfolio Contact!">
+                <input type="hidden" name="_captcha" value="false">
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-400 mb-1">Name</label>
+                    <input type="text" name="name" required class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-white" placeholder="Jane Doe">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-400 mb-1">Email</label>
+                    <input type="email" name="email" required class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-white" placeholder="jane@company.com">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-400 mb-1">Project Details</label>
+                    <textarea name="message" rows="4" required class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-white" placeholder="I need a 20-minute onboarding course..."></textarea>
+                </div>
+                <button type="submit" class="w-full bg-primary hover:bg-primaryHover text-white font-bold py-3 rounded-lg transition shadow-lg mt-2">
+                    Send Message
+                </button>
+            </form>
+
+            <div class="mt-10 pt-8 border-t border-slate-800">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-primary">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <a href="mailto:hello@grahambetts.design" class="hover:text-primary transition">hello@grahambetts.design</a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-primary">
+                        <i class="fab fa-linkedin-in"></i>
+                    </div>
+                    <a href="https://linkedin.com/in/graham-betts" target="_blank" class="hover:text-primary transition">linkedin.com/in/graham-betts</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-slate-500 py-8 text-center text-sm border-t border-slate-900">
+        <p>&copy; 2024 Graham Betts. All Rights Reserved.</p>
+        <p class="mt-2">Instructional Designer | eLearning Developer</p>
+    </footer>
+
+    <!-- Custom Modal for Projects (Hidden by default) -->
+    <div id="projectModal" class="fixed inset-0 z-[60] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <!-- Background overlay -->
+            <div class="fixed inset-0 bg-secondary bg-opacity-75 transition-opacity" aria-hidden="true" onclick="closeModal()"></div>
+
+            <!-- Modal panel -->
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                            <h3 class="text-2xl leading-6 font-bold text-secondary" id="modalTitle">Project Title</h3>
+                            <div class="mt-4">
+                                <img id="modalImg" src="" alt="Project" class="w-full h-64 object-cover rounded-lg mb-4">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                    <div class="bg-slate-50 p-3 rounded">
+                                        <span class="block text-xs font-bold text-slate-500 uppercase">Role</span>
+                                        <span class="text-sm font-medium">Instructional Designer</span>
+                                    </div>
+                                    <div class="bg-slate-50 p-3 rounded">
+                                        <span class="block text-xs font-bold text-slate-500 uppercase">Tools</span>
+                                        <span class="text-sm font-medium" id="modalTools">Storyline, Adobe CC</span>
+                                    </div>
+                                    <div class="bg-slate-50 p-3 rounded">
+                                        <span class="block text-xs font-bold text-slate-500 uppercase">Client</span>
+                                        <span class="text-sm font-medium">Corporate Training</span>
+                                    </div>
+                                </div>
+                                <h4 class="font-bold text-secondary mt-4">The Challenge</h4>
+                                <p class="text-sm text-slate-600 mb-3" id="modalChallenge">
+                                    Employees were struggling to retain compliance information due to dry, text-heavy PDFs.
+                                </p>
+                                <h4 class="font-bold text-secondary mt-4">The Solution</h4>
+                                <p class="text-sm text-slate-600 mb-3" id="modalSolution">
+                                    I created a gamified, scenario-based module where learners had to identify risks in a virtual environment.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <!-- NEW: Primary Action Button (Launch/View) -->
+                    <a id="modalLink" href="#" target="_blank" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-primaryHover focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                        Launch Demo
+                    </a>
+                    <!-- CHANGED: Close Button (Now Secondary Style) -->
+                    <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-slate-700 hover:bg-slate-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onclick="closeModal()">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Form Submit Handler using FormSubmit.co (AJAX)
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerText;
+            const form = e.target;
+            
+            // ----------------------------------------------------
+            // IMPORTANT: REPLACE THE EMAIL BELOW WITH YOUR REAL EMAIL
+            // ----------------------------------------------------
+            const yourEmail = "YOUR_GMAIL_HERE@gmail.com"; 
+            
+            const endpoint = `https://formsubmit.co/ajax/${yourEmail}`;
+
+            // Show loading state
+            btn.innerText = 'Sending...';
+            btn.classList.add('opacity-75');
+            btn.disabled = true;
+
+            const formData = new FormData(form);
+
+            fetch(endpoint, {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Success
+                btn.innerText = 'Sent!';
+                btn.classList.remove('opacity-75');
+                btn.classList.add('bg-green-600');
+                
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.classList.remove('bg-green-600');
+                    btn.disabled = false;
+                    form.reset();
+                    alert("Message sent successfully! Please check your email to confirm if this is your first time.");
+                }, 2000);
+            })
+            .catch(error => {
+                // Error
+                console.error('Error:', error);
+                btn.innerText = 'Error!';
+                btn.classList.add('bg-red-600');
+                
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.classList.remove('bg-red-600');
+                    btn.classList.remove('opacity-75');
+                    btn.disabled = false;
+                    alert("Something went wrong. Please email me directly.");
+                }, 2000);
+            });
+        }
+
+        // Project Modal Logic
+        // NOW INCLUDES: linkText and linkUrl
+        const projects = {
+            'project1': {
+                title: 'Managerial Decision Making',
+                img: 'https://placehold.co/800x400/0f172a/FFF?text=Soft+Skills+Scenario',
+                tools: 'Storyline 360, Vyond',
+                challenge: 'New managers were avoiding difficult conversations, leading to unresolved team conflicts and low morale.',
+                solution: 'Developed a branching scenario where learners practice "safe-to-fail" conversations. The course uses a meter to track "Trust" and "Morale" based on user choices.',
+                linkText: 'Launch Demo',
+                linkUrl: '#'
+            },
+            'project2': {
+                title: 'ERP System Rollout',
+                img: 'https://placehold.co/800x400/0d9488/FFF?text=System+Simulation',
+                tools: 'Camtasia, Rise 360',
+                challenge: 'The company was migrating to SAP, and 500+ employees needed to learn the new interface before launch day.',
+                solution: 'Created a "Watch-Try-Do" simulation series. Users first watched the process, then performed it with guidance, and finally tested their skills without prompts.',
+                linkText: 'Launch Demo',
+                linkUrl: '#'
+            },
+            'project3': {
+                title: 'Cybersecurity Quest',
+                img: 'https://placehold.co/800x400/475569/FFF?text=Gamified+Security',
+                tools: 'Storyline 360, JavaScript',
+                challenge: 'Annual compliance training had low engagement and employees were clicking through without reading.',
+                solution: 'Designed an escape-room style game. To unlock the door, learners had to identify phishing emails and secure sensitive data on a virtual desk.',
+                linkText: 'Play Game',
+                linkUrl: '#'
+            },
+             'project4': {
+                title: 'Sales Enablement Burst',
+                img: 'https://placehold.co/800x400/e11d48/FFF?text=Microlearning+App',
+                tools: '7Taps, Canva',
+                challenge: 'Field sales agents didn\'t have time for long LMS courses but needed updates on new product features.',
+                solution: 'Implemented a microlearning strategy delivering 2-minute "bursts" of content directly to their mobile devices via SMS links.',
+                linkText: 'View Example',
+                linkUrl: '#'
+            },
+             'project5': {
+                title: 'Safety First Animation',
+                img: 'https://placehold.co/800x400/f59e0b/FFF?text=Safety+Animation',
+                tools: 'After Effects, Audition',
+                challenge: 'Factory floor staff were ignoring text-heavy safety manuals, leading to minor injuries.',
+                solution: 'Produced a series of high-energy, character-driven animations that visually demonstrated the "Do\'s and Don\'ts" of machinery operation.',
+                linkText: 'Watch Video',
+                linkUrl: '#'
+            },
+             'project6': {
+                title: 'QRG & Infographics',
+                img: 'https://placehold.co/800x400/64748b/FFF?text=Job+Aids',
+                tools: 'InDesign, Illustrator',
+                challenge: 'Call center agents were putting customers on hold to look up complex pricing tables.',
+                solution: 'Redesigned the pricing structure into color-coded, one-page digital Job Aids (QRGs) that reduced call handling time by 15%.',
+                linkText: 'View PDF',
+                linkUrl: '#'
+            },
+            'project7': {
+                title: 'AI Learning Assistant',
+                img: 'https://placehold.co/800x400/2563eb/FFF?text=AI+Learning+Assistant',
+                tools: 'ChatGPT API, Python, Storyline',
+                challenge: 'Learners required instant feedback on open-text practice responses, which standard multiple-choice questions could not provide.',
+                solution: 'Integrated the OpenAI API into Articulate Storyline to analyze learner inputs and provide specific, real-time coaching tips.',
+                linkText: 'Try Demo',
+                linkUrl: '#'
+            },
+            'project8': {
+                title: 'Day 1 Global Onboarding',
+                img: 'https://placehold.co/800x400/10b981/FFF?text=Global+Onboarding',
+                tools: 'Rise 360, Workday',
+                challenge: 'Global new hires reported a disjointed experience, with different regions receiving conflicting information.',
+                solution: 'Created a unified "Passport to Success" program in Rise 360 that provided a consistent 90-day roadmap while allowing for localized content branches.',
+                linkText: 'View Course',
+                linkUrl: '#'
+            }
+        };
+
+        function openModal(projectId) {
+            const project = projects[projectId];
+            if (!project) return;
+
+            document.getElementById('modalTitle').innerText = project.title;
+            document.getElementById('modalImg').src = project.img;
+            document.getElementById('modalTools').innerText = project.tools;
+            document.getElementById('modalChallenge').innerText = project.challenge;
+            document.getElementById('modalSolution').innerText = project.solution;
+
+            // NEW: Update Link Button
+            const linkBtn = document.getElementById('modalLink');
+            linkBtn.innerText = project.linkText;
+            linkBtn.href = project.linkUrl;
+
+            document.getElementById('projectModal').classList.remove('hidden');
+            // Prevent background scrolling
+            document.body.classList.add('no-scroll');
+        }
+
+        function closeModal() {
+            document.getElementById('projectModal').classList.add('hidden');
+            // Restore background scrolling
+            document.body.classList.remove('no-scroll');
+        }
+    </script>
+</body>
+</html>
