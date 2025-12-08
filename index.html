@@ -442,26 +442,35 @@
                                     <p class="mb-3 text-sm text-slate-600" id="modalSolution">
                                         I created a gamified, scenario-based module where learners had to identify risks in a virtual environment.
                                     </p>
+                                    <!-- NEW: Result Section -->
+                                    <h4 class="mt-4 font-bold text-secondary">The Result</h4>
+                                    <p class="mb-3 text-sm text-slate-600" id="modalResult">
+                                        <!-- Result text will be injected here -->
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="px-4 py-3 bg-slate-50 sm:px-6 sm:flex sm:flex-row-reverse">
-                        <!-- LAUNCH BUTTON -->
-                        <button id="modalLinkBtn" onclick="viewDemo()" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primaryHover focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                    <div class="px-4 py-3 bg-slate-50 sm:px-6 sm:flex sm:flex-row-reverse gap-2">
+                        <!-- LAUNCH DEMO BUTTON -->
+                        <button id="modalLinkBtn" onclick="viewDemo()" class="inline-flex justify-center w-auto px-4 py-2 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primaryHover focus:outline-none sm:text-sm hidden">
                             Launch Demo
                         </button>
+                        <!-- NEW: SEE PROCESS BUTTON -->
+                        <button id="modalProcessBtn" onclick="viewProcess()" class="inline-flex justify-center w-auto px-4 py-2 text-base font-medium text-primary border border-primary rounded-md shadow-sm bg-white hover:bg-slate-50 focus:outline-none sm:text-sm hidden">
+                            See the Process
+                        </button>
                         <!-- CLOSE BUTTON -->
-                        <button type="button" class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-slate-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onclick="closeModal()">
+                        <button type="button" class="inline-flex justify-center w-auto px-4 py-2 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-slate-50 focus:outline-none sm:text-sm" onclick="closeModal()">
                             Close
                         </button>
                     </div>
                 </div>
 
-                <!-- DEMO VIEW (Iframe) - Hidden by default -->
+                <!-- DEMO/PROCESS VIEW (Iframe) - Hidden by default -->
                 <div id="demoContainer" class="hidden h-[85vh] flex flex-col">
                     <div class="flex items-center justify-between px-4 py-2 border-b bg-slate-100">
-                        <span class="font-bold text-secondary" id="demoTitle">Demo Preview</span>
+                        <span class="font-bold text-secondary" id="iframeHeader">Preview</span>
                         <div class="flex gap-2">
                             <button onclick="backToDetails()" class="text-sm font-medium text-slate-600 hover:text-primary">
                                 <i class="mr-1 fas fa-arrow-left"></i> Back
@@ -492,11 +501,7 @@
             const originalText = btn.innerText;
             const form = e.target;
             
-            // ----------------------------------------------------
-            // FIXED: CORRECTLY FORMATTED EMAIL STRING
-            // ----------------------------------------------------
             const yourEmail = "grahamjbetts@gmail.com"; 
-            
             const endpoint = "https://formsubmit.co/ajax/" + yourEmail;
 
             // Show loading state
@@ -549,18 +554,31 @@
                 tools: 'Intellum Evolve, Vyond',
                 challenge: 'Colleagues in retail have been avoiding customer interaction. Often favouring task over personal connections, this was negatively impacting CSAT scores and sales. The \'ask\' required learners to implement presupplied learning around making the right decision to approach, then positive engagement following a new \'WOW\' model.',
                 solution: 'Developed a branching scenario where learners practice "safe-to-fail" choices on action and conversations, mapped by experts to simulate real interactions. Scoring across all stages allows learners to understand how their actions contribute positively or negatively to the customer experience and the business sales performance. In the wider course this was linked to incentivisation for learners to repeat their attempts to gain higher scores and post their achievements in communities.',
-                linkText: 'Launch Demo',
-                // FIXED: Updated username to your actual GitHub account
-                linkUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/1/index.html'
+                // Specific result from user prompt
+                result: 'Learning was well received by managers and colleagues alike, as it was both fun and provided realism and tangible examples. In the 3 months following the training \'Approach\' scores rose 22%, in comparison to 10% drop the previous quarter.',
+                
+                // Demo Config
+                showDemo: true,
+                demoUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/1/index.html',
+                
+                // Process Config
+                showProcess: true, 
+                processUrl: '#' // Replace with URL to your process document
             },
             'project2': {
-                title: 'ERP System Rollout',
+                title: 'Order Mgmt System Rollout',
                 img: 'https://placehold.co/800x400/0d9488/FFF?text=System+Simulation',
-                tools: 'Camtasia, Rise 360',
-                challenge: 'The company was migrating to SAP, and 500+ employees needed to learn the new interface before launch day.',
-                solution: 'Created a "Watch-Try-Do" simulation series. Users first watched the process, then performed it with guidance, and finally tested their skills without prompts.',
-                linkText: 'Launch Demo',
-                linkUrl: '#'
+                tools: 'Evolve, Photoshop',
+                challenge: 'The company was launching a new Order Management system to Retail colleagues.',
+                solution: 'Following procedural training rollout a week earlier, including a robust communications plan, short system simulations were rolled out to all colleagues. These simulations didn\'t follow \'perfect path\' scenarios, but veered off to give typical day to day situations.',
+                // Specific result from user prompt
+                result: 'Learners were able to settle into using the software in a safe space, resulting in extremely quick adoption and an accelerated rollout of the new service proposition.',
+                
+                showDemo: true,
+                demoUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/2/index.html',
+                
+                showProcess: false,
+                processUrl: '#'
             },
             'project3': {
                 title: 'Cybersecurity Quest',
@@ -568,8 +586,14 @@
                 tools: 'Storyline 360, JavaScript',
                 challenge: 'Annual compliance training had low engagement and employees were clicking through without reading.',
                 solution: 'Designed an escape-room style game. To unlock the door, learners had to identify phishing emails and secure sensitive data on a virtual desk.',
-                linkText: 'Play Game',
-                linkUrl: '#'
+                // Dummy result
+                result: 'Engagement rates increased by 45%, and the average completion time improved significantly as learners were motivated to solve the puzzles.',
+                
+                showDemo: true,
+                demoUrl: '#',
+                
+                showProcess: false,
+                processUrl: '#'
             },
              'project4': {
                 title: 'Sales Enablement Burst',
@@ -577,8 +601,14 @@
                 tools: '7Taps, Canva',
                 challenge: 'Field sales agents didn\'t have time for long LMS courses but needed updates on new product features.',
                 solution: 'Implemented a microlearning strategy delivering 2-minute "bursts" of content directly to their mobile devices via SMS links.',
-                linkText: 'View Example',
-                linkUrl: '#'
+                // Dummy result
+                result: 'Sales agents reported feeling more confident in product knowledge, leading to a 15% increase in upsells within the first month.',
+                
+                showDemo: true,
+                demoUrl: '#',
+                
+                showProcess: true,
+                processUrl: '#'
             },
              'project5': {
                 title: 'Safety First Animation',
@@ -586,15 +616,29 @@
                 tools: 'After Effects, Audition',
                 challenge: 'Factory floor staff were ignoring text-heavy safety manuals, leading to minor injuries.',
                 solution: 'Produced a series of high-energy, character-driven animations that visually demonstrated the "Do\'s and Don\'ts" of machinery operation.',
-                linkText: 'Watch Video',
-                linkUrl: '#'
+                // Dummy result
+                result: 'Workplace accidents related to machinery misuse dropped by 30% in the quarter following the campaign launch.',
+                
+                showDemo: true,
+                demoUrl: '#',
+                
+                showProcess: false,
+                processUrl: '#'
             },
              'project6': {
                 title: 'QRG & Infographics',
                 img: 'https://placehold.co/800x400/64748b/FFF?text=Job+Aids',
                 tools: 'InDesign, Illustrator',
                 challenge: 'Call center agents were putting customers on hold to look up complex pricing tables.',
-                solution: 'Redesigned the pricing structure into color-coded, one-page digital Job Aids (QRGs) that reduced call handling time by 15%.'
+                solution: 'Redesigned the pricing structure into color-coded, one-page digital Job Aids (QRGs) that reduced call handling time by 15%.',
+                // Dummy result
+                result: 'Average Handle Time (AHT) decreased by 45 seconds per call, improving overall customer satisfaction scores.',
+                
+                showDemo: true,
+                demoUrl: '#',
+                
+                showProcess: true,
+                processUrl: '#'
             },
             'project7': {
                 title: 'AI Learning Assistant',
@@ -602,8 +646,14 @@
                 tools: 'ChatGPT API, Python, Storyline',
                 challenge: 'Learners required instant feedback on open-text practice responses, which standard multiple-choice questions could not provide.',
                 solution: 'Integrated the OpenAI API into Articulate Storyline to analyze learner inputs and provide specific, real-time coaching tips.',
-                linkText: 'Try Demo',
-                linkUrl: '#'
+                // Dummy result
+                result: 'Learners practiced 3x more frequently knowing they would get instant, personalized feedback, leading to higher retention.',
+                
+                showDemo: true,
+                demoUrl: '#',
+                
+                showProcess: false,
+                processUrl: '#'
             },
             'project8': {
                 title: 'Day 1 Global Onboarding',
@@ -611,12 +661,19 @@
                 tools: 'Rise 360, Workday',
                 challenge: 'Global new hires reported a disjointed experience, with different regions receiving conflicting information.',
                 solution: 'Created a unified "Passport to Success" program in Rise 360 that provided a consistent 90-day roadmap while allowing for localized content branches.',
-                linkText: 'View Course',
-                linkUrl: '#'
+                // Dummy result
+                result: 'New hire "Time to Productivity" decreased by 2 weeks, and employee satisfaction scores for onboarding rose to 4.8/5.',
+                
+                showDemo: true,
+                demoUrl: '#',
+                
+                showProcess: true,
+                processUrl: '#'
             }
         };
 
-        let currentProjectUrl = '';
+        let currentDemoUrl = '';
+        let currentProcessUrl = '';
 
         function openModal(projectId) {
             const project = projects[projectId];
@@ -637,25 +694,54 @@
             document.getElementById('modalTools').innerText = project.tools;
             document.getElementById('modalChallenge').innerText = project.challenge;
             document.getElementById('modalSolution').innerText = project.solution;
-            document.getElementById('demoTitle').innerText = project.title;
+            document.getElementById('modalResult').innerText = project.result; // New Result Field
 
-            // Update Button Text & Store URL
-            const linkBtn = document.getElementById('modalLinkBtn');
-            linkBtn.innerText = project.linkText;
-            currentProjectUrl = project.linkUrl;
+            // Toggle Buttons & Store URLs
+            const demoBtn = document.getElementById('modalLinkBtn');
+            const processBtn = document.getElementById('modalProcessBtn');
+
+            // Handle Demo Button
+            if (project.showDemo) {
+                demoBtn.classList.remove('hidden');
+                currentDemoUrl = project.demoUrl;
+            } else {
+                demoBtn.classList.add('hidden');
+            }
+
+            // Handle Process Button
+            if (project.showProcess) {
+                processBtn.classList.remove('hidden');
+                currentProcessUrl = project.processUrl;
+            } else {
+                processBtn.classList.add('hidden');
+            }
 
             // Show Modal
             document.getElementById('projectModal').classList.remove('hidden');
             document.body.classList.add('no-scroll');
         }
 
+        // View the Interactive Course
         function viewDemo() {
-            if (currentProjectUrl === '#') {
+            if (!currentDemoUrl || currentDemoUrl === '#') {
                 alert("Demo link coming soon!");
                 return;
             }
+            openIframe(currentDemoUrl, "Demo Preview");
+        }
 
-            // Expand Modal Width for Course
+        // View the Process Documentation
+        function viewProcess() {
+            if (!currentProcessUrl || currentProcessUrl === '#') {
+                alert("Process documentation coming soon!");
+                return;
+            }
+            openIframe(currentProcessUrl, "Process Walkthrough");
+        }
+
+        // Helper to open Iframe (Shared by both buttons)
+        function openIframe(url, title) {
+            // Expand Modal Width
             const modalPanel = document.getElementById('modalPanel');
             modalPanel.classList.remove('sm:max-w-3xl');
             modalPanel.classList.add('sm:max-w-7xl', 'w-full');
@@ -664,8 +750,9 @@
             document.getElementById('modalContent').classList.add('hidden');
             document.getElementById('demoContainer').classList.remove('hidden');
 
-            // Load Iframe
-            document.getElementById('courseFrame').src = currentProjectUrl;
+            // Set Title & Load Iframe
+            document.getElementById('iframeHeader').innerText = title;
+            document.getElementById('courseFrame').src = url;
         }
 
         function backToDetails() {
