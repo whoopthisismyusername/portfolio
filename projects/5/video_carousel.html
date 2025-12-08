@@ -11,25 +11,28 @@
         body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="bg-slate-50 flex items-center justify-center min-h-screen p-4">
+<body class="bg-slate-50 flex items-center justify-center h-screen overflow-hidden p-0">
 
     <!-- Carousel Container -->
-    <div class="relative w-full max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-slate-200">
+    <!-- Full width/height for iframe fit -->
+    <div class="relative w-full h-full bg-white flex flex-col">
         
         <!-- Header -->
-        <div class="bg-teal-700 text-white px-6 py-4 flex justify-between items-center">
+        <div class="bg-teal-700 text-white px-4 py-3 flex justify-between items-center shrink-0">
             <h2 class="text-lg font-bold">Design Process: Infographics & QRGs</h2>
             <span class="text-sm bg-teal-800 px-3 py-1 rounded-full" id="slide-indicator">Step 1 of 3</span>
         </div>
 
         <!-- Slides Wrapper -->
-        <div class="relative h-[500px]">
+        <div class="relative flex-1 w-full overflow-hidden">
             
             <!-- Slide 1 -->
-            <div class="absolute inset-0 transition-opacity duration-500 ease-in-out opacity-100 flex flex-col" id="slide-0">
-                <!-- Video Section (60% height) -->
-                <div class="h-3/5 bg-black w-full relative overflow-hidden">
-                    <iframe src="https://player.vimeo.com/video/277261451?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+            <div class="absolute inset-0 transition-opacity duration-500 ease-in-out opacity-100 flex flex-col h-full" id="slide-0">
+                <!-- Video Section -->
+                <!-- aspect-video maintains 16:9 ratio, shrink-0 prevents squashing -->
+                <div class="shrink-0 w-full bg-black aspect-video max-h-[50%] relative">
+                    <iframe id="video-frame-0"
+                            src="https://player.vimeo.com/video/434373553?h=7c0719d42a&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
                             frameborder="0" 
                             allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
                             referrerpolicy="strict-origin-when-cross-origin" 
@@ -37,23 +40,27 @@
                             title="Add-On Scenario - Training">
                     </iframe>
                 </div>
-                <!-- Text Section (40% height) -->
-                <div class="h-2/5 p-8 flex flex-col justify-center">
+                <!-- Text Section (Scrollable) -->
+                <div class="flex-1 p-6 overflow-y-auto pb-16"> <!-- Added pb-16 for navigation clearance -->
                     <div class="flex items-center mb-3">
-                        <div class="w-8 h-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold mr-3">1</div>
+                        <div class="w-8 h-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold mr-3 shrink-0">1</div>
                         <h3 class="text-2xl font-bold text-slate-800">Analyzing the Problem</h3>
                     </div>
                     <p class="text-slate-600 leading-relaxed">
                         We identified that call center agents were overwhelmed by 15+ pages of dense pricing tables. Heatmap analysis revealed they only accessed 20% of the data regularly, leading to long hold times.
                     </p>
+                    <p class="text-slate-600 leading-relaxed mt-4">
+                        By conducting user interviews, we determined that the search functionality was the primary pain point. Agents were Ctrl+F'ing through PDFs rather than using a structured index.
+                    </p>
                 </div>
             </div>
 
             <!-- Slide 2 -->
-            <div class="absolute inset-0 transition-opacity duration-500 ease-in-out opacity-0 flex flex-col pointer-events-none" id="slide-1">
-                <!-- Video Section (60% height) -->
-                <div class="h-3/5 bg-black w-full relative overflow-hidden">
-                    <iframe src="https://player.vimeo.com/video/277261451?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+            <div class="absolute inset-0 transition-opacity duration-500 ease-in-out opacity-0 flex flex-col h-full pointer-events-none" id="slide-1">
+                <!-- Video Section -->
+                <div class="shrink-0 w-full bg-black aspect-video max-h-[50%] relative">
+                    <iframe id="video-frame-1"
+                            src="https://player.vimeo.com/video/1014920401?h=8e28971cc5&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
                             frameborder="0" 
                             allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
                             referrerpolicy="strict-origin-when-cross-origin" 
@@ -61,9 +68,10 @@
                             title="Add-On Scenario - Training">
                     </iframe>
                 </div>
-                <div class="h-2/5 p-8 flex flex-col justify-center">
+                <!-- Text Section -->
+                <div class="flex-1 p-6 overflow-y-auto pb-16">
                     <div class="flex items-center mb-3">
-                        <div class="w-8 h-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold mr-3">2</div>
+                        <div class="w-8 h-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold mr-3 shrink-0">2</div>
                         <h3 class="text-2xl font-bold text-slate-800">Drafting the Solution</h3>
                     </div>
                     <p class="text-slate-600 leading-relaxed">
@@ -73,10 +81,11 @@
             </div>
 
             <!-- Slide 3 -->
-            <div class="absolute inset-0 transition-opacity duration-500 ease-in-out opacity-0 flex flex-col pointer-events-none" id="slide-2">
-                <!-- Video Section (60% height) -->
-                <div class="h-3/5 bg-black w-full relative overflow-hidden">
-                    <iframe src="https://player.vimeo.com/video/277261451?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+            <div class="absolute inset-0 transition-opacity duration-500 ease-in-out opacity-0 flex flex-col h-full pointer-events-none" id="slide-2">
+                <!-- Video Section -->
+                <div class="shrink-0 w-full bg-black aspect-video max-h-[50%] relative">
+                    <iframe id="video-frame-2"
+                            src="https://player.vimeo.com/video/277261451?h=a229166551&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
                             frameborder="0" 
                             allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
                             referrerpolicy="strict-origin-when-cross-origin" 
@@ -84,9 +93,10 @@
                             title="Add-On Scenario - Training">
                     </iframe>
                 </div>
-                <div class="h-2/5 p-8 flex flex-col justify-center">
+                <!-- Text Section -->
+                <div class="flex-1 p-6 overflow-y-auto pb-16">
                     <div class="flex items-center mb-3">
-                        <div class="w-8 h-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold mr-3">3</div>
+                        <div class="w-8 h-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold mr-3 shrink-0">3</div>
                         <h3 class="text-2xl font-bold text-slate-800">Implementation & Review</h3>
                     </div>
                     <p class="text-slate-600 leading-relaxed">
@@ -98,29 +108,51 @@
         </div>
 
         <!-- Navigation Controls -->
-        <button onclick="prevSlide()" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-teal-800 p-3 rounded-full shadow-lg hover:shadow-xl transition focus:outline-none z-10">
+        <!-- Positioned relative to screen height to stay accessible -->
+        <button onclick="prevSlide()" class="absolute left-2 top-[20%] md:top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-teal-800 p-2 rounded-full shadow-lg hover:shadow-xl transition focus:outline-none z-10">
             <i class="fas fa-chevron-left text-xl"></i>
         </button>
-        <button onclick="nextSlide()" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-teal-800 p-3 rounded-full shadow-lg hover:shadow-xl transition focus:outline-none z-10">
+        <button onclick="nextSlide()" class="absolute right-2 top-[20%] md:top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-teal-800 p-2 rounded-full shadow-lg hover:shadow-xl transition focus:outline-none z-10">
             <i class="fas fa-chevron-right text-xl"></i>
         </button>
 
         <!-- Dots -->
-        <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
-            <button onclick="goToSlide(0)" class="w-3 h-3 rounded-full bg-teal-600 transition-all dot" id="dot-0"></button>
-            <button onclick="goToSlide(1)" class="w-3 h-3 rounded-full bg-gray-300 hover:bg-teal-400 transition-all dot" id="dot-1"></button>
-            <button onclick="goToSlide(2)" class="w-3 h-3 rounded-full bg-gray-300 hover:bg-teal-400 transition-all dot" id="dot-2"></button>
+        <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10 pointer-events-none">
+            <button onclick="goToSlide(0)" class="w-3 h-3 rounded-full bg-teal-600 transition-all dot pointer-events-auto shadow-sm border border-white" id="dot-0"></button>
+            <button onclick="goToSlide(1)" class="w-3 h-3 rounded-full bg-gray-300 hover:bg-teal-400 transition-all dot pointer-events-auto shadow-sm border border-white" id="dot-1"></button>
+            <button onclick="goToSlide(2)" class="w-3 h-3 rounded-full bg-gray-300 hover:bg-teal-400 transition-all dot pointer-events-auto shadow-sm border border-white" id="dot-2"></button>
         </div>
 
     </div>
 
+    <!-- Vimeo API for Auto-Pause -->
     <script src="https://player.vimeo.com/api/player.js"></script>
     <script>
         let currentSlide = 0;
         const totalSlides = 3;
+        const players = [];
+
+        // Initialize Vimeo Players on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            for (let i = 0; i < totalSlides; i++) {
+                const iframe = document.getElementById(`video-frame-${i}`);
+                if (iframe) {
+                    players[i] = new Vimeo.Player(iframe);
+                }
+            }
+        });
+
+        // Helper to stop audio when switching slides
+        function pauseCurrentVideo() {
+            if (players[currentSlide]) {
+                players[currentSlide].pause().catch(function(error) {
+                    console.log("Pause failed:", error);
+                });
+            }
+        }
 
         function updateCarousel() {
-            // Hide all slides
+            // Loop through slides to hide/show
             for (let i = 0; i < totalSlides; i++) {
                 const slide = document.getElementById(`slide-${i}`);
                 const dot = document.getElementById(`dot-${i}`);
@@ -142,16 +174,19 @@
         }
 
         function nextSlide() {
+            pauseCurrentVideo(); // Auto-pause video
             currentSlide = (currentSlide + 1) % totalSlides;
             updateCarousel();
         }
 
         function prevSlide() {
+            pauseCurrentVideo(); // Auto-pause video
             currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
             updateCarousel();
         }
 
         function goToSlide(index) {
+            pauseCurrentVideo(); // Auto-pause video
             currentSlide = index;
             updateCarousel();
         }
