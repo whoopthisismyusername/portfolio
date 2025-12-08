@@ -27,9 +27,9 @@
             
             <!-- Slide 1 -->
             <div class="absolute inset-0 transition-opacity duration-500 ease-in-out opacity-100 flex flex-col h-full" id="slide-0">
-                <!-- Image Section (Responsive Height) -->
-                <!-- Uses h-1/2 on mobile, flex-grow on desktop to fill space comfortably -->
-                <div class="h-1/2 w-full bg-slate-200 relative overflow-hidden group shrink-0">
+                <!-- Image Section (Matched to Video Layout) -->
+                <!-- Changed: Now uses aspect-video and max-h-[50%] to match video carousel proportions -->
+                <div class="shrink-0 w-full bg-slate-200 aspect-video max-h-[50%] relative overflow-hidden group">
                     <img src="https://placehold.co/800x400/e2e8f0/1e293b?text=Step+1:+Analysis" class="object-cover w-full h-full" alt="Analysis">
                     <!-- Zoom Icon Overlay -->
                     <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 group-hover:bg-opacity-10 transition">
@@ -53,7 +53,7 @@
 
             <!-- Slide 2 -->
             <div class="absolute inset-0 transition-opacity duration-500 ease-in-out opacity-0 flex flex-col h-full pointer-events-none" id="slide-1">
-                <div class="h-1/2 w-full bg-slate-200 relative overflow-hidden shrink-0">
+                <div class="shrink-0 w-full bg-slate-200 aspect-video max-h-[50%] relative overflow-hidden group">
                     <img src="https://placehold.co/800x400/0d9488/ffffff?text=Step+2:+Design+Draft" class="object-cover w-full h-full" alt="Design">
                 </div>
                 <div class="flex-1 p-6 overflow-y-auto pb-16">
@@ -69,7 +69,7 @@
 
             <!-- Slide 3 -->
             <div class="absolute inset-0 transition-opacity duration-500 ease-in-out opacity-0 flex flex-col h-full pointer-events-none" id="slide-2">
-                <div class="h-1/2 w-full bg-slate-200 relative overflow-hidden shrink-0">
+                <div class="shrink-0 w-full bg-slate-200 aspect-video max-h-[50%] relative overflow-hidden group">
                     <img src="https://placehold.co/800x400/0f172a/ffffff?text=Step+3:+Final+Output" class="object-cover w-full h-full" alt="Final Output">
                 </div>
                 <div class="flex-1 p-6 overflow-y-auto pb-16">
@@ -86,10 +86,11 @@
         </div>
 
         <!-- Navigation Controls -->
-        <button onclick="prevSlide()" class="absolute left-2 top-[25%] bg-white/80 hover:bg-white text-teal-800 p-2 rounded-full shadow-lg hover:shadow-xl transition focus:outline-none z-10">
+        <!-- Adjusted top position to 20% to align with the new aspect-video height -->
+        <button onclick="prevSlide()" class="absolute left-2 top-[20%] md:top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-teal-800 p-2 rounded-full shadow-lg hover:shadow-xl transition focus:outline-none z-10">
             <i class="fas fa-chevron-left text-xl"></i>
         </button>
-        <button onclick="nextSlide()" class="absolute right-2 top-[25%] bg-white/80 hover:bg-white text-teal-800 p-2 rounded-full shadow-lg hover:shadow-xl transition focus:outline-none z-10">
+        <button onclick="nextSlide()" class="absolute right-2 top-[20%] md:top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-teal-800 p-2 rounded-full shadow-lg hover:shadow-xl transition focus:outline-none z-10">
             <i class="fas fa-chevron-right text-xl"></i>
         </button>
 
