@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process Carousel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 flex items-center justify-center min-h-screen p-4">
+
+    <!-- Carousel Container -->
+    <div class="relative w-full max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-slate-200">
+        
+        <!-- Header -->
+        <div class="bg-teal-700 text-white px-6 py-4 flex justify-between items-center">
+            <h2 class="text-lg font-bold">Design Process: Infographics & QRGs</h2>
+            <span class="text-sm bg-teal-800 px-3 py-1 rounded-full" id="slide-indicator">Step 1 of 3</span>
+        </div>
+
+        <!-- Slides Wrapper -->
+        <div class="relative h-[500px]">
+            
+            <!-- Slide 1 -->
+            <div class="absolute inset-0 transition-opacity duration-500 ease-in-out opacity-100 flex flex-col" id="slide-0">
+                <!-- Image Section (60% height) -->
+                <div class="h-3/5 bg-slate-200 w-full relative overflow-hidden group">
+                    <img src="https://placehold.co/800x400/e2e8f0/1e293b?text=Step+1:+Analysis" class="object-cover w-full h-full" alt="Analysis">
+                    <!-- Zoom Icon Overlay -->
+                    <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 group-hover:bg-opacity-10 transition">
+                        <i class="fas fa-search-plus text-white opacity-0 group-hover:opacity-100 text-3xl"></i>
+                    </div>
+                </div>
+                <!-- Text Section (40% height) -->
+                <div class="h-2/5 p-8 flex flex-col justify-center">
+                    <div class="flex items-center mb-3">
+                        <div class="w-8 h-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold mr-3">1</div>
+                        <h3 class="text-2xl font-bold text-slate-800">Analyzing the Problem</h3>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed">
+                        We identified that call center agents were overwhelmed by 15+ pages of dense pricing tables. Heatmap analysis revealed they only accessed 20% of the data regularly, leading to long hold times.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="absolute inset-0 transition-opacity duration-500 ease-in-out opacity-0 flex flex-col pointer-events-none" id="slide-1">
+                <div class="h-3/5 bg-slate-200 w-full relative overflow-hidden">
+                    <img src="https://placehold.co/800x400/0d9488/ffffff?text=Step+2:+Design+Draft" class="object-cover w-full h-full" alt="Design">
+                </div>
+                <div class="h-2/5 p-8 flex flex-col justify-center">
+                    <div class="flex items-center mb-3">
+                        <div class="w-8 h-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold mr-3">2</div>
+                        <h3 class="text-2xl font-bold text-slate-800">Drafting the Solution</h3>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed">
+                        I drafted a new color-coded structure using Adobe InDesign. We condensed the 15 pages into a single, interactive PDF. Key information was prioritized based on frequency of use.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="absolute inset-0 transition-opacity duration-500 ease-in-out opacity-0 flex flex-col pointer-events-none" id="slide-2">
+                <div class="h-3/5 bg-slate-200 w-full relative overflow-hidden">
+                    <img src="https://placehold.co/800x400/0f172a/ffffff?text=Step+3:+Final+Output" class="object-cover w-full h-full" alt="Final Output">
+                </div>
+                <div class="h-2/5 p-8 flex flex-col justify-center">
+                    <div class="flex items-center mb-3">
+                        <div class="w-8 h-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold mr-3">3</div>
+                        <h3 class="text-2xl font-bold text-slate-800">Implementation & Review</h3>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed">
+                        The final QRG was deployed to the Intranet. User testing confirmed that information retrieval speed improved by 40%. The design is now the template for all future job aids.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Navigation Controls -->
+        <button onclick="prevSlide()" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-teal-800 p-3 rounded-full shadow-lg hover:shadow-xl transition focus:outline-none z-10">
+            <i class="fas fa-chevron-left text-xl"></i>
+        </button>
+        <button onclick="nextSlide()" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-teal-800 p-3 rounded-full shadow-lg hover:shadow-xl transition focus:outline-none z-10">
+            <i class="fas fa-chevron-right text-xl"></i>
+        </button>
+
+        <!-- Dots -->
+        <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
+            <button onclick="goToSlide(0)" class="w-3 h-3 rounded-full bg-teal-600 transition-all dot" id="dot-0"></button>
+            <button onclick="goToSlide(1)" class="w-3 h-3 rounded-full bg-gray-300 hover:bg-teal-400 transition-all dot" id="dot-1"></button>
+            <button onclick="goToSlide(2)" class="w-3 h-3 rounded-full bg-gray-300 hover:bg-teal-400 transition-all dot" id="dot-2"></button>
+        </div>
+
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 3;
+
+        function updateCarousel() {
+            // Hide all slides
+            for (let i = 0; i < totalSlides; i++) {
+                const slide = document.getElementById(`slide-${i}`);
+                const dot = document.getElementById(`dot-${i}`);
+                
+                if (i === currentSlide) {
+                    slide.classList.remove('opacity-0', 'pointer-events-none');
+                    slide.classList.add('opacity-100');
+                    dot.classList.remove('bg-gray-300');
+                    dot.classList.add('bg-teal-600', 'w-6'); // Active dot is wider
+                } else {
+                    slide.classList.add('opacity-0', 'pointer-events-none');
+                    slide.classList.remove('opacity-100');
+                    dot.classList.add('bg-gray-300');
+                    dot.classList.remove('bg-teal-600', 'w-6');
+                }
+            }
+            // Update Text Indicator
+            document.getElementById('slide-indicator').innerText = `Step ${currentSlide + 1} of ${totalSlides}`;
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+
+        // Initialize
+        updateCarousel();
+    </script>
+</body>
+</html>
