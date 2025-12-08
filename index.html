@@ -402,7 +402,8 @@
 
     <!-- Custom Modal for Projects (Hidden by default) -->
     <div id="projectModal" class="fixed inset-0 z-[60] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <!-- Changed: Removed px-4 on mobile to go full-screen width -->
+        <div class="flex items-center justify-center min-h-screen pt-4 pb-0 text-center sm:px-4 sm:pb-20 sm:block sm:p-0">
             <!-- Background overlay -->
             <div class="fixed inset-0 transition-opacity bg-secondary bg-opacity-75" aria-hidden="true" onclick="closeModal()"></div>
 
@@ -410,7 +411,8 @@
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
             <!-- Modal panel -->
-            <div id="modalPanel" class="inline-block w-full text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-3xl">
+            <!-- Changed: Added w-screen on mobile to maximize space -->
+            <div id="modalPanel" class="inline-block w-screen sm:w-full text-left align-bottom transition-all transform bg-white rounded-t-xl sm:rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-3xl">
                 
                 <!-- CONTENT VIEW (Text + Image) -->
                 <div id="modalContent">
@@ -468,7 +470,8 @@
                 </div>
 
                 <!-- DEMO/PROCESS VIEW (Iframe) - Hidden by default -->
-                <div id="demoContainer" class="hidden h-[85vh] flex flex-col">
+                <!-- Changed: h-[100vh] on mobile to fill screen -->
+                <div id="demoContainer" class="hidden h-[100vh] sm:h-[85vh] flex flex-col">
                     <div class="flex items-center justify-between px-4 py-2 border-b bg-slate-100">
                         <span class="font-bold text-secondary" id="iframeHeader">Preview</span>
                         <div class="flex gap-2">
@@ -559,10 +562,10 @@
                 
                 // Demo Config
                 showDemo: true,
-                demoUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/1/A/index.html',
+                demoUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/1/index.html',
                 
                 // Process Config
-                showProcess: false, 
+                showProcess: true, 
                 processUrl: '#' // Replace with URL to your process document
             },
             'project2': {
@@ -620,7 +623,7 @@
                 result: 'Workplace accidents related to machinery misuse dropped by 30% in the quarter following the campaign launch.',
                 
                 showDemo: true,
-                demoUrl: 'projects/5/video_carousel.html',
+                demoUrl: '#',
                 
                 showProcess: false,
                 processUrl: '#'
@@ -638,7 +641,7 @@
                 demoUrl: '#',
                 
                 showProcess: true,
-                processUrl: 'projects/6/process_carousel.html'
+                processUrl: 'process_carousel.html'
             },
             'project7': {
                 title: 'AI Learning Assistant',
@@ -763,7 +766,7 @@
 
             // Toggle Views
             document.getElementById('modalContent').classList.remove('hidden');
-            document.getElementById('demoContainer').classList.add('hidden');
+            document.getElementById('demoContainer').classList.remove('hidden');
 
             // Stop Iframe (Audio)
             document.getElementById('courseFrame').src = '';
@@ -779,8 +782,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
