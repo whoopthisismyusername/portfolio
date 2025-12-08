@@ -153,12 +153,12 @@
                     </div>
                 </div>
                 <div class="p-6">
-                    <h3 class="text-xl font-bold text-secondary mb-2">Managerial Decision Making</h3>
+                    <h3 class="text-xl font-bold text-secondary mb-2">Closing Customer Interactions</h3>
                     <p class="text-slate-500 text-sm mb-4 line-clamp-2">
                         A branching scenario course designed to help new managers navigate difficult conversations and conflict resolution.
                     </p>
                     <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
-                        <i class="fas fa-tools"></i> Storyline 360, Vyond
+                        <i class="fas fa-tools"></i> Intellum Evolve, Vyond
                     </div>
                 </div>
             </div>
@@ -402,54 +402,78 @@
 
     <!-- Custom Modal for Projects (Hidden by default) -->
     <div id="projectModal" class="fixed inset-0 z-[60] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
             <!-- Background overlay -->
-            <div class="fixed inset-0 bg-secondary bg-opacity-75 transition-opacity" aria-hidden="true" onclick="closeModal()"></div>
+            <div class="fixed inset-0 transition-opacity bg-secondary bg-opacity-75" aria-hidden="true" onclick="closeModal()"></div>
+
+            <!-- Center Modal Vertically helper -->
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
             <!-- Modal panel -->
-            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-start">
-                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                            <h3 class="text-2xl leading-6 font-bold text-secondary" id="modalTitle">Project Title</h3>
-                            <div class="mt-4">
-                                <img id="modalImg" src="" alt="Project" class="w-full h-64 object-cover rounded-lg mb-4">
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                                    <div class="bg-slate-50 p-3 rounded">
-                                        <span class="block text-xs font-bold text-slate-500 uppercase">Role</span>
-                                        <span class="text-sm font-medium">Instructional Designer</span>
+            <div id="modalPanel" class="inline-block w-full text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-3xl">
+                
+                <!-- CONTENT VIEW (Text + Image) -->
+                <div id="modalContent">
+                    <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div class="w-full mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                <h3 class="text-2xl font-bold leading-6 text-secondary" id="modalTitle">Project Title</h3>
+                                <div class="mt-4">
+                                    <img id="modalImg" src="" alt="Project" class="object-cover w-full mb-4 rounded-lg h-64">
+                                    <div class="grid grid-cols-1 gap-4 mb-4 md:grid-cols-3">
+                                        <div class="p-3 rounded bg-slate-50">
+                                            <span class="block text-xs font-bold uppercase text-slate-500">Role</span>
+                                            <span class="text-sm font-medium">Instructional Designer</span>
+                                        </div>
+                                        <div class="p-3 rounded bg-slate-50">
+                                            <span class="block text-xs font-bold uppercase text-slate-500">Tools</span>
+                                            <span class="text-sm font-medium" id="modalTools">Storyline, Adobe CC</span>
+                                        </div>
+                                        <div class="p-3 rounded bg-slate-50">
+                                            <span class="block text-xs font-bold uppercase text-slate-500">Client</span>
+                                            <span class="text-sm font-medium">Corporate Training</span>
+                                        </div>
                                     </div>
-                                    <div class="bg-slate-50 p-3 rounded">
-                                        <span class="block text-xs font-bold text-slate-500 uppercase">Tools</span>
-                                        <span class="text-sm font-medium" id="modalTools">Storyline, Adobe CC</span>
-                                    </div>
-                                    <div class="bg-slate-50 p-3 rounded">
-                                        <span class="block text-xs font-bold text-slate-500 uppercase">Client</span>
-                                        <span class="text-sm font-medium">Corporate Training</span>
-                                    </div>
+                                    <h4 class="mt-4 font-bold text-secondary">The Challenge</h4>
+                                    <p class="mb-3 text-sm text-slate-600" id="modalChallenge">
+                                        Employees were struggling to retain compliance information due to dry, text-heavy PDFs.
+                                    </p>
+                                    <h4 class="mt-4 font-bold text-secondary">The Solution</h4>
+                                    <p class="mb-3 text-sm text-slate-600" id="modalSolution">
+                                        I created a gamified, scenario-based module where learners had to identify risks in a virtual environment.
+                                    </p>
                                 </div>
-                                <h4 class="font-bold text-secondary mt-4">The Challenge</h4>
-                                <p class="text-sm text-slate-600 mb-3" id="modalChallenge">
-                                    Employees were struggling to retain compliance information due to dry, text-heavy PDFs.
-                                </p>
-                                <h4 class="font-bold text-secondary mt-4">The Solution</h4>
-                                <p class="text-sm text-slate-600 mb-3" id="modalSolution">
-                                    I created a gamified, scenario-based module where learners had to identify risks in a virtual environment.
-                                </p>
                             </div>
                         </div>
                     </div>
+                    <div class="px-4 py-3 bg-slate-50 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <!-- LAUNCH BUTTON -->
+                        <button id="modalLinkBtn" onclick="viewDemo()" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primaryHover focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                            Launch Demo
+                        </button>
+                        <!-- CLOSE BUTTON -->
+                        <button type="button" class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-slate-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onclick="closeModal()">
+                            Close
+                        </button>
+                    </div>
                 </div>
-                <div class="bg-slate-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <!-- NEW: Primary Action Button (Launch/View) -->
-                    <a id="modalLink" href="#" target="_blank" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-primaryHover focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
-                        Launch Demo
-                    </a>
-                    <!-- CHANGED: Close Button (Now Secondary Style) -->
-                    <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-slate-700 hover:bg-slate-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onclick="closeModal()">
-                        Close
-                    </button>
+
+                <!-- DEMO VIEW (Iframe) - Hidden by default -->
+                <div id="demoContainer" class="hidden h-[85vh] flex flex-col">
+                    <div class="flex items-center justify-between px-4 py-2 border-b bg-slate-100">
+                        <span class="font-bold text-secondary" id="demoTitle">Demo Preview</span>
+                        <div class="flex gap-2">
+                            <button onclick="backToDetails()" class="text-sm font-medium text-slate-600 hover:text-primary">
+                                <i class="mr-1 fas fa-arrow-left"></i> Back
+                            </button>
+                            <button onclick="closeModal()" class="text-sm font-medium text-slate-600 hover:text-red-600">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <iframe id="courseFrame" class="w-full h-full border-0 bg-slate-50" src=""></iframe>
                 </div>
+
             </div>
         </div>
     </div>
@@ -526,7 +550,7 @@
                 challenge: 'Colleagues in retail have been avoiding customer interaction. Often favouring task over personal connections, this was negatively impacting CSAT scores and sales. The \'ask\' required learners to implement presupplied learning around making the right decision to approach, then positive engagement following a new \'WOW\' model.',
                 solution: 'Developed a branching scenario where learners practice "safe-to-fail" choices on action and conversations, mapped by experts to simulate real interactions. Scoring across all stages allows learners to understand how their actions contribute positively or negatively to the customer experience and the business sales performance. In the wider course this was linked to incentivisation for learners to repeat their attempts to gain higher scores and post their achievements in communities.',
                 linkText: 'Launch Demo',
-                // FIXED: Updated username in link
+                // FIXED: Updated username to your actual GitHub account
                 linkUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/1/index.html'
             },
             'project2': {
@@ -570,9 +594,7 @@
                 img: 'https://placehold.co/800x400/64748b/FFF?text=Job+Aids',
                 tools: 'InDesign, Illustrator',
                 challenge: 'Call center agents were putting customers on hold to look up complex pricing tables.',
-                solution: 'Redesigned the pricing structure into color-coded, one-page digital Job Aids (QRGs) that reduced call handling time by 15%.',
-                linkText: 'View PDF',
-                linkUrl: '#'
+                solution: 'Redesigned the pricing structure into color-coded, one-page digital Job Aids (QRGs) that reduced call handling time by 15%.'
             },
             'project7': {
                 title: 'AI Learning Assistant',
@@ -594,32 +616,79 @@
             }
         };
 
+        let currentProjectUrl = '';
+
         function openModal(projectId) {
             const project = projects[projectId];
             if (!project) return;
 
+            // Reset view to content
+            document.getElementById('modalContent').classList.remove('hidden');
+            document.getElementById('demoContainer').classList.add('hidden');
+            
+            // Reset width to standard
+            const modalPanel = document.getElementById('modalPanel');
+            modalPanel.classList.remove('sm:max-w-7xl', 'w-full');
+            modalPanel.classList.add('sm:max-w-3xl');
+
+            // Populate Content
             document.getElementById('modalTitle').innerText = project.title;
             document.getElementById('modalImg').src = project.img;
             document.getElementById('modalTools').innerText = project.tools;
             document.getElementById('modalChallenge').innerText = project.challenge;
             document.getElementById('modalSolution').innerText = project.solution;
+            document.getElementById('demoTitle').innerText = project.title;
 
-            // NEW: Update Link Button
-            const linkBtn = document.getElementById('modalLink');
+            // Update Button Text & Store URL
+            const linkBtn = document.getElementById('modalLinkBtn');
             linkBtn.innerText = project.linkText;
-            linkBtn.href = project.linkUrl;
+            currentProjectUrl = project.linkUrl;
 
+            // Show Modal
             document.getElementById('projectModal').classList.remove('hidden');
-            // Prevent background scrolling
             document.body.classList.add('no-scroll');
+        }
+
+        function viewDemo() {
+            if (currentProjectUrl === '#') {
+                alert("Demo link coming soon!");
+                return;
+            }
+
+            // Expand Modal Width for Course
+            const modalPanel = document.getElementById('modalPanel');
+            modalPanel.classList.remove('sm:max-w-3xl');
+            modalPanel.classList.add('sm:max-w-7xl', 'w-full');
+
+            // Toggle Views
+            document.getElementById('modalContent').classList.add('hidden');
+            document.getElementById('demoContainer').classList.remove('hidden');
+
+            // Load Iframe
+            document.getElementById('courseFrame').src = currentProjectUrl;
+        }
+
+        function backToDetails() {
+            // Shrink Modal Width
+            const modalPanel = document.getElementById('modalPanel');
+            modalPanel.classList.add('sm:max-w-3xl');
+            modalPanel.classList.remove('sm:max-w-7xl', 'w-full');
+
+            // Toggle Views
+            document.getElementById('modalContent').classList.remove('hidden');
+            document.getElementById('demoContainer').classList.add('hidden');
+
+            // Stop Iframe (Audio)
+            document.getElementById('courseFrame').src = '';
         }
 
         function closeModal() {
             document.getElementById('projectModal').classList.add('hidden');
-            // Restore background scrolling
             document.body.classList.remove('no-scroll');
+            
+            // Stop Iframe (Audio)
+            document.getElementById('courseFrame').src = '';
         }
     </script>
 </body>
 </html>
-
