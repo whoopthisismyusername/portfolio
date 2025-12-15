@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview HUD (Split View)</title>
+    <style>
+        :root {
+            --bg-sidebar: #f7fafc;
+            --bg-main: #ffffff;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --accent-blue: #3182ce;
+            --accent-green: #38a169;
+            --accent-red: #e53e3e;
+            --border-color: #e2e8f0;
+            --card-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            --card-hover: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* 1. Global Reset & Layout */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden; /* Prevent global scroll */
+            display: flex;
+            color: var(--text-main);
+        }
+
+        /* 2. Left Sidebar (30%) - Functional Area */
+        .sidebar {
+            width: 30%;
+            height: 100%;
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 25px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            z-index: 10;
+        }
+
+        /* 3. Right Content (70%) - Search Results */
+        .main-content {
+            width: 70%;
+            height: 100%;
+            background-color: var(--bg-main);
+            padding: 30px 40px;
+            box-sizing: border-box;
+            overflow-y: auto; /* Independent scrolling */
+        }
+
+        /* Typography */
+        h1 { font-size: 1.4rem; margin: 0 0 5px 0; color: #1a202c; }
+        .subtitle { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 25px; }
+        label { font-size: 0.85rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 8px; }
+
+        /* Controls */
+        .control-group { margin-bottom: 25px; }
+
+        button.icon-btn {
+            width: 100%;
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        
+        button.icon-btn:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+            transform: translateY(-1px);
+        }
+
+        /* Search Input */
+        #searchBar {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            border: 2px solid #cbd5e0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            outline: none;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+        }
+
+        #searchBar:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2);
+        }
+
+        /* CARD STYLES (Accordion) */
+        .card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 16px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.2s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            box-shadow: var(--card-hover);
+            border-color: #cbd5e0;
+        }
+
+        /* Header is clickable */
+        .card-header {
+            padding: 18px 25px;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none; /* Prevent text selection on rapid clicks */
+        }
+
+        .card-header:hover {
+            background: #f8fafc;
+        }
+
+        /* Chevron Icon logic */
+        .card-header::after {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-right: 2px solid var(--text-muted);
+            border-bottom: 2px solid var(--text-muted);
+            transform: rotate(45deg);
+            transition: transform 0.3s;
+            margin-left: 15px;
+        }
+
+        .card.expanded .card-header::after {
+            transform: rotate(-135deg); /* Flip up */
+            border-color: var(--accent-blue);
+        }
+        
+        .card.expanded {
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        .story-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin: 0;
+        }
+
+        .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+        .tag {
+            background: #ebf8ff; color: #2c5282;
+            padding: 3px 8px; border-radius: 4px;
+            font-size: 0.75rem; font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* STAR Content (Hidden by default) */
+        .star-content {
+            display: none;
+            padding: 0 25px 25px 25px;
+            border-top: 1px solid #f0f4f8;
+            background: #fafbfc;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .card.expanded .star-content {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Content Grid */
+        .star-row {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            margin-top: 15px;
+            align-items: baseline;
+        }
+
+        .label {
+            font-weight: 700; font-size: 0.8rem;
+            color: var(--text-muted); text-transform: uppercase;
+            text-align: right; padding-right: 15px;
+        }
+
+        .text { font-size: 0.95rem; line-height: 1.6; white-space: pre-wrap; }
+        .text ul { margin: 0; padding-left: 20px; }
+        .text li { margin-bottom: 4px; }
+
+        .star-row.result-row .text {
+            color: var(--accent-green); font-weight: 600;
+            background: #f0fff4; padding: 10px; border-radius: 6px;
+            border-left: 4px solid var(--accent-green);
+        }
+        
+        .star-row.result-row .text ul { color: var(--accent-green); }
+
+        /* Utility */
+        .hidden { display: none !important; }
+        .empty-state { text-align: center; padding: 60px; color: var(--text-muted); display: none; }
+        
+        /* Import Section (Inside Sidebar) */
+        #importSection {
+            display: none;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid var(--accent-blue);
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+
+        input[type="text"], textarea {
+            width: 100%; padding: 8px; border: 1px solid #cbd5e0;
+            border-radius: 6px; box-sizing: border-box; font-family: monospace;
+        }
+        textarea { height: 80px; margin-bottom: 10px; }
+        
+        .btn-primary {
+            background-color: var(--accent-blue); color: white; border: none;
+            padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%;
+        }
+        
+        .btn-secondary { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.8rem; text-decoration: underline; margin-top: 5px; }
+
+        /* Toast */
+        #toast {
+            visibility: hidden; min-width: 250px; margin-left: -125px;
+            background-color: #333; color: #fff; text-align: center;
+            border-radius: 8px; padding: 16px; position: fixed;
+            z-index: 1000; left: 50%; bottom: 30px; opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s;
+        }
+        #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
+    </style>
+</head>
+<body>
+
+    <!-- LEFT SIDEBAR (Tools) -->
+    <div class="sidebar">
+        <header>
+            <h1>Interview HUD</h1>
+            <div class="subtitle">Competency Manager</div>
+        </header>
+
+        <!-- Search -->
+        <div class="control-group">
+            <label for="searchBar">Search Stories</label>
+            <input type="text" id="searchBar" placeholder="Type to filter..." autofocus>
+            <div id="results-count" style="margin-top:8px; font-size:0.8rem; color:var(--text-muted);">Showing all stories</div>
+        </div>
+
+        <!-- Sync Button -->
+        <div class="control-group">
+            <button class="icon-btn" onclick="toggleImport()">
+                <span⚙️ Import / Sync Data</span>
+            </button>
+        </div>
+
+        <!-- Import Panel (Hidden by default) -->
+        <div id="importSection">
+            <h4 style="margin:0 0 10px 0; color:var(--accent-blue);">Sync from Google Sheet</h4>
+            <input type="text" id="sheetUrl" placeholder="Paste CSV Link here..." style="margin-bottom:8px;">
+            <button id="fetchBtn" class="btn-primary" onclick="fetchSheet()">Sync Now</button>
+            
+            <hr style="border:0; border-top:1px solid #eee; margin:15px 0;">
+            
+            <h4 style="margin:0 0 10px 0;">Or Paste CSV Text</h4>
+            <textarea id="csvInput" placeholder="Title, Tags, S, T, A, R"></textarea>
+            <button class="btn-primary" onclick="saveManualData()">Save Text</button>
+            
+            <div style="text-align:center; margin-top:10px;">
+                <button class="btn-secondary" onclick="requestReset()">Reset to Defaults</button>
+            </div>
+            
+            <!-- Reset Confirm -->
+            <div id="resetConfirm" style="display:none; margin-top:10px; background:#fff5f5; padding:10px; border-radius:4px;">
+                <p style="color:#e53e3e; margin:0 0 5px 0; font-size:0.8rem;">Delete all data?</p>
+                <button onclick="confirmReset()" style="background:#e53e3e; color:white; border:none; border-radius:4px; padding:4px 8px; cursor:pointer;">Yes</button>
+                <button onclick="cancelReset()" style="background:#eee; border:none; border-radius:4px; padding:4px 8px; cursor:pointer;">No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT CONTENT (Stories) -->
+    <div class="main-content">
+        <div id="stories-container">
+            <!-- Javascript injects cards here -->
+        </div>
+        
+        <div id="no-results" class="empty-state">
+            <h3>No matches found</h3>
+            <p>Try searching for a different keyword.</p>
+        </div>
+    </div>
+
+    <div id="toast">Message</div>
+
+<script>
+    // --- Data Management ---
+    const DEFAULT_DATA = [
+        {
+            title: "The Late Project Turnaround",
+            tags: "Leadership, Conflict",
+            situation: "Project X was 2 weeks behind schedule with low morale.",
+            task: "Needed to realign scope and motivate the team to hit the deadline.",
+            action: "Initiated daily 15-min standups | Negotiated a scope reduction with stakeholders | Mediated a dispute between designers",
+            result: "Delivered on time. Client renewed contract ($50k value). Team retention stabilized."
+        },
+        {
+            title: "Automating Monthly Reporting",
+            tags: "Innovation, Technical",
+            situation: "Senior analysts spent 4 hours/week manually copying data from Excel to SQL.",
+            task: "Eliminate manual entry errors and reclaim analyst time.",
+            action: "Identified the data pattern | Wrote a Python script using Pandas | Built a simple UI for non-tech staff",
+            result: "Saved 200+ hours/year. Reduced error rate to 0%."
+        },
+        {
+            title: "The Production Database Error",
+            tags: "Failure, Integrity",
+            situation: "Accidentally deleted a customer config table during routine cleanup.",
+            task: "Restore service immediately and communicate transparency to the client.",
+            action: "Alerted lead engineer immediately (didn't hide it) | Restored from backup within 15 minutes | Wrote a post-mortem to prevent recurrence",
+            result: "Client appreciated honesty. New safety protocol adopted by whole team."
+        }
+    ];
+
+    function loadStories() {
+        const stored = localStorage.getItem('interview_stories_star');
+        return stored ? JSON.parse(stored) : DEFAULT_DATA;
+    }
+
+    let stories = loadStories();
+
+    // --- Interaction ---
+    function toggleCard(headerElement) {
+        // Toggle the 'expanded' class on the parent .card div
+        const card = headerElement.parentElement;
+        card.classList.toggle('expanded');
+    }
+
+    // New: Helper for Bullet Points
+    function formatText(text) {
+        if (!text) return "";
+        if (text.includes('|')) {
+            const bullets = text.split('|').map(item => `<li>${item.trim()}</li>`).join('');
+            return `<ul>${bullets}</ul>`;
+        }
+        return text;
+    }
+
+    function renderStories(data) {
+        const container = document.getElementById('stories-container');
+        container.innerHTML = '';
+        
+        const countDiv = document.getElementById('results-count');
+        countDiv.innerText = `Showing ${data.length} stories`;
+
+        data.forEach(story => {
+            const tagText = story.tags || "";
+            const tagSpans = tagText.split(',').map(tag => `<span class="tag">${tag.trim()}</span>`).join('');
+            
+            const cardHTML = `
+                <div class="card" data-tags="${tagText.toLowerCase()} ${story.title.toLowerCase()}">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <div>
+                            <h3 class="story-title">${story.title}</h3>
+                            <div class="tags">${tagSpans}</div>
+                        </div>
+                    </div>
+                    <div class="star-content">
+                        <div class="star-row">
+                            <div class="label">Situation</div>
+                            <div class="text">${formatText(story.situation)}</div>
+                        </div>
+                        <div class="star-row">
+                            <div class="label">Task</div>
+                            <div class="text">${formatText(story.task)}</div>
+                        </div>
+                        <div class="star-row">
+                            <div class="label">Action</div>
+                            <div class="text">${formatText(story.action)}</div>
+                        </div>
+                        <div class="star-row result-row">
+                            <div class="label">Result</div>
+                            <div class="text">${formatText(story.result)}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.innerHTML += cardHTML;
+        });
+    }
+
+    // --- Search Logic ---
+    const searchBar = document.getElementById('searchBar');
+    const noResults = document.getElementById('no-results');
+
+    searchBar.addEventListener('keyup', (e) => {
+        const term = e.target.value.toLowerCase();
+        const cards = document.getElementsByClassName('card');
+        let visibleCount = 0;
+
+        Array.from(cards).forEach(card => {
+            // We search against the hidden content as well, which is great for "deep search"
+            const tags = card.getAttribute('data-tags') || '';
+            const content = card.innerText.toLowerCase(); // innerText gets text even if collapsed in most browsers, but if display:none it might not.
+            // Actually, innerText ignores display:none. We should use textContent or cache data.
+            // Let's rely on data-tags and the JS objects for robust search? 
+            // Better: stick to simple DOM search. If display:none, innerText is empty.
+            // FIX: We search the raw HTML content or the cached data?
+            // Simplest fix: Search the JS object data? No, we are iterating DOM elements.
+            // We will temporarily check the story Title/Tags in attribute.
+            // For deep search, let's use the full text content which we can get via textContent (works on hidden elements).
+            
+            const fullText = card.textContent.toLowerCase();
+
+            if (fullText.includes(term)) {
+                card.classList.remove('hidden');
+                visibleCount++;
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+        document.getElementById('results-count').innerText = term ? `Found ${visibleCount} matches` : `Showing ${visibleCount} stories`;
+    });
+
+    // --- Sync & Import Logic (Same as before) ---
+    function toggleImport() {
+        const section = document.getElementById('importSection');
+        if (section.style.display === 'block') {
+            section.style.display = 'none';
+        } else {
+            section.style.display = 'block';
+            document.getElementById('csvInput').value = convertToCSV(stories);
+            cancelReset();
+        }
+    }
+
+    function showToast(message, isError = false) {
+        const toast = document.getElementById("toast");
+        toast.className = "show";
+        toast.innerText = message;
+        toast.style.backgroundColor = isError ? "#e53e3e" : "#333";
+        setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+    }
+
+    function convertToCSV(dataArr) {
+        return dataArr.map(s => `"${s.title}", "${s.tags}", "${s.situation}", "${s.task}", "${s.action}", "${s.result}"`).join('\n');
+    }
+
+    function parseCSV(text) {
+        let arr = []; 
+        let quote = false;  
+        let row = 0, col = 0;
+        let data = [['']];  
+  
+        for (let i = 0; i < text.length; i++) {
+            let cc = text[i], nc = text[i+1];
+            data[row] = data[row] || [];
+            data[row][col] = data[row][col] || '';
+            
+            if (cc == '"' && quote && nc == '"') { data[row][col] += cc; ++i; continue; }
+            if (cc == '"') { quote = !quote; continue; }
+            if (!quote && cc == ',') { ++col; continue; }
+            if (!quote && (cc == '\r' || cc == '\n')) { 
+                if(cc == '\r' && nc == '\n') { ++i; }
+                row++; col = 0; continue; 
+            }
+            data[row][col] += cc; 
+        }
+
+        if (data.length > 0 && data[0].length > 0) {
+            const firstCell = (data[0][0] || "").toLowerCase().trim();
+            if (firstCell === "title") data.shift();
+        }
+
+        return data.filter(r => r.length >= 6 && r[0]).map(r => ({
+            title: (r[0] || "").trim(),
+            tags: (r[1] || "").trim(),
+            situation: (r[2] || "").trim(),
+            task: (r[3] || "").trim(),
+            action: (r[4] || "").trim(),
+            result: (r[5] || "").trim()
+        }));
+    }
+
+    function saveStoriesToStorage(newStories) {
+        localStorage.setItem('interview_stories_star', JSON.stringify(newStories));
+        stories = newStories;
+        renderStories(stories);
+        toggleImport();
+    }
+
+    async function fetchSheet() {
+        const url = document.getElementById('sheetUrl').value.trim();
+        const btn = document.getElementById('fetchBtn');
+        if (!url) { showToast("Please paste a URL.", true); return; }
+
+        const originalText = btn.innerText;
+        btn.innerText = "Syncing...";
+        btn.disabled = true;
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("Could not reach URL.");
+            const text = await response.text();
+            if (text.includes("<html")) throw new Error("Link returned HTML. Use CSV format.");
+
+            const newStories = parseCSV(text);
+            if (newStories.length === 0) throw new Error("No valid stories found.");
+
+            saveStoriesToStorage(newStories);
+            showToast(`Success! ${newStories.length} stories loaded.`);
+        } catch (error) {
+            console.error(error);
+            showToast(error.message, true);
+        } finally {
+            btn.innerText = originalText;
+            btn.disabled = false;
+        }
+    }
+
+    function saveManualData() {
+        try {
+            const newStories = parseCSV(document.getElementById('csvInput').value);
+            if (newStories.length === 0) throw new Error("Invalid CSV.");
+            saveStoriesToStorage(newStories);
+            showToast("Saved!");
+        } catch (e) { showToast(e.message, true); }
+    }
+
+    function requestReset() { document.getElementById('resetConfirm').style.display = 'block'; }
+    function cancelReset() { document.getElementById('resetConfirm').style.display = 'none'; }
+    function confirmReset() {
+        localStorage.removeItem('interview_stories_star');
+        stories = DEFAULT_DATA;
+        renderStories(stories);
+        cancelReset();
+        toggleImport();
+        showToast("Restored defaults.");
+    }
+
+    // Init
+    renderStories(stories);
+
+</script>
+</body>
+</html>
