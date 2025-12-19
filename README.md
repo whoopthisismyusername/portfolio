@@ -2,6 +2,50 @@
 Digital Learning &amp; Instructional Design Portfolio
 
 
+
+            <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project8')">
+                <div class="relative overflow-hidden">
+                    <img src="https://placehold.co/600x400/10b981/FFF?text=Onboarding" alt="Onboarding" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
+                    <div class="absolute top-4 left-4 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                        Onboarding
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-secondary mb-2">Day 1 Global Onboarding</h3>
+                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
+                        A blended learning journey for new hires. Reduced "time-to-productivity" by 30% through structured digital milestones.
+                    </p>
+                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
+                        <i class="fas fa-tools"></i> Rise 360, Workday
+                    </div>
+                </div>
+            </div>
+
+            <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project9')">
+                <div class="relative overflow-hidden">
+                    <img src="https://placehold.co/600x400/10b981/FFF?text=Curriculum Design" alt="Curriculum Design" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
+                    <div class="absolute top-4 left-4 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                        Onboarding
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-secondary mb-2">Zero to competence pathway</h3>
+                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
+                        A blended learning journey for new hires. Reduced "time-to-productivity" by 30% and onboarding cost by £2 million.
+                    </p>
+                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
+                        <i class="fas fa-tools"></i> Storyline, Rise, Evolve.
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
             'project8': {
                 title: 'Day 1 Global Onboarding',
                 img: 'https://placehold.co/800x400/10b981/FFF?text=Global+Onboarding',
