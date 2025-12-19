@@ -40,7 +40,16 @@ Digital Learning &amp; Instructional Design Portfolio
             </div>
 
 
-
+ <div class="p-6">
+                    <h3 class="text-xl font-bold text-secondary mb-2">AI Learning Assistant</h3>
+                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
+                        Integrating LLMs to provide real-time feedback on learner inputs, creating a dynamic and personalized coaching experience.
+                    </p>
+                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
+                        <i class="fas fa-tools"></i> ChatGPT API, Python, Storyline
+                    </div>
+                </div>
+            </div>
 
 
 
