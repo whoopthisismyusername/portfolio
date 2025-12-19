@@ -78,6 +78,54 @@ Digital Learning &amp; Instructional Design Portfolio
                 solution: 'Cross functional project led to uncover all required knowledge, categorise knowledge into core groupings, and then develop resource plan. Project costs analysed and resource shortfalls mitigated. A team of contnet SME\'s set up with assigned content designers and full project plan created.',
                 // Dummy result
                 result: 'After 3 months of design and development work, an internal team of 3 content designers \(including myself\), and 2 external contractors, created a new learning program that as flexible to business pinch points, contained regulatory safeguards, and allowed for faster and more consistent knowledge and skill growth was put in place. This supported rapid growth and expansion through Covid.',
+
+
+
+
+
+
+
+            'project7': {
+                title: 'AI Learning Assistant',
+                img: 'https://placehold.co/800x400/2563eb/FFF?text=AI+Learning+Assistant',
+                tools: 'ChatGPT API, Python, Storyline',
+                challenge: 'Learners required instant feedback on open-text practice responses, which standard multiple-choice questions could not provide.',
+                solution: 'Integrated the OpenAI API into Articulate Storyline to analyze learner inputs and provide specific, real-time coaching tips.',
+                result: 'Learners practiced 3x more frequently knowing they would get instant, personalized feedback, leading to higher retention.',
+                
+                showDemo: true,
+                demoUrl: '#',
+                
+                showProcess: false,
+                processUrl: '#'
+            },
+            'project8': {
+                title: 'Day 1 Global Onboarding',
+                img: 'https://placehold.co/600x400/10b981/FFF?text=Onboarding',
+                tools: 'Rise 360, Workday',
+                challenge: 'New hires faced a disjointed onboarding experience.',
+                solution: 'A blended learning journey for new hires.',
+                result: 'Reduced "time-to-productivity" by 30% through structured digital milestones.',
+                showDemo: false,
+                demoUrl: '#',
+                showProcess: false,
+                processUrl: '#'
+            },
+            // Added Missing Project 9 Logic
+            'project9': {
+                title: 'Zero to competence pathway',
+                img: 'https://placehold.co/600x400/10b981/FFF?text=Curriculum Design',
+                tools: 'Storyline, Rise, Evolve',
+                challenge: 'Training costs were high and productivity time was low.',
+                solution: 'A blended learning journey for new hires.',
+                result: 'Reduced time-to-productivity by 30% and onboarding cost by £2 million.',
+                showDemo: false,
+                demoUrl: '#',
+                showProcess: false,
+                processUrl: '#'
+            }
+
+                
                 
                 showDemo: true,
                 demoUrl: '#',
