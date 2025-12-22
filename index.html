@@ -580,7 +580,7 @@
             // Reset width to standard
             const modalPanel = document.getElementById('modalPanel');
             modalPanel.classList.remove('sm:max-w-7xl', 'w-full');
-            modalPanel.classList.add('sm:max-w-3xl');
+            modalPanel.classList.add('sm:max-w-5xl');
 
             // Populate Content
             document.getElementById('modalTitle').innerText = project.title;
@@ -637,7 +637,7 @@
         function openIframe(url, title) {
             // Expand Modal Width
             const modalPanel = document.getElementById('modalPanel');
-            modalPanel.classList.remove('sm:max-w-3xl');
+            modalPanel.classList.remove('sm:max-w-5xl');
             modalPanel.classList.add('sm:max-w-7xl', 'w-full');
 
             // Toggle Views
@@ -652,7 +652,7 @@
         function backToDetails() {
             // Shrink Modal Width
             const modalPanel = document.getElementById('modalPanel');
-            modalPanel.classList.add('sm:max-w-3xl');
+            modalPanel.classList.add('sm:max-w-5xl');
             modalPanel.classList.remove('sm:max-w-7xl', 'w-full');
 
             // Toggle Views
@@ -674,6 +674,7 @@
     </script>
 </body>
 </html>
+
 
 
 
