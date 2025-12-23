@@ -62,16 +62,15 @@ Digital Learning &amp; Instructional Design Portfolio
 
 
             'project8': {
-                title: 'Digital Adoption Support',
-                img: 'https://placehold.co/800x400/10b981/FFF?text=Global+Onboarding',
-                tools: ', Workday',
-                challenge: 'Global new hires reported a disjointed experience, with different regions receiving conflicting information.',
-                solution: 'Created a unified "Passport to Success" program in Rise 360 that provided a consistent 90-day roadmap while allowing for localized content branches.',
-                // Dummy result
-                result: 'New hire "Time to Productivity" decreased by 2 weeks, and employee satisfaction scores for onboarding rose to 4.8/5.',
+                title: 'LMS Customisation & Development',
+                img: 'https://placehold.co/800x400/10b981/FFF?text=LMS+Consultant',
+                tools: 'SAP SuccessFactors, MS Copilot Studio, ChatGPT, Photoshop',
+                challenge: 'SAP SuccessFactors launch new LMS user experience. In a diverse business with multiple different audience groups, the platform needed to be customised to support the varied requirements of learners.',
+                solution: 'Utilised on-brand page designs and code based custom card dialogs, displayed across custom pages, combined with intelligent assignment rules, to ensure each core audience was services by a bespoke, but easily maintained solution.',
+                result: 'SAP SuccessFactors Learning successfully accepted by Veterinary business as the suitable solution to deploy Clinical Academy. Entire platform customsied with intuitive UI to help learners access their core training and self development pathways.',
                 
                 showDemo: true,
-                demoUrl: '#',
+                demoUrl: 'https://player.vimeo.com/video/1148907962?',
                 
                 showProcess: true,
                 processUrl: '#'
