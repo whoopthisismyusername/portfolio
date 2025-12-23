@@ -1,13 +1,6 @@
 # portfolio
 Digital Learning &amp; Instructional Design Portfolio
 
-       <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project7')">
-                <div class="relative overflow-hidden">
-                    <img src="https://placehold.co/600x400/2563eb/FFF?text=AI+%26+Emerging+Tech" alt="AI Technology" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
-                    <div class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
-                        AI Innovation
-                    </div>
-                </div>
 
             <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project8')">
                 <div class="relative overflow-hidden">
@@ -45,14 +38,21 @@ Digital Learning &amp; Instructional Design Portfolio
                 </div>
             </div>
 
+       <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project7')">
+                <div class="relative overflow-hidden">
+                    <img src="https://placehold.co/600x400/2563eb/FFF?text=AI+%26+Emerging+Tech" alt="AI Technology" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
+                    <div class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                        AI Innovation
+                    </div>
+                </div>
 
  <div class="p-6">
                     <h3 class="text-xl font-bold text-secondary mb-2">AI Learning Assistant</h3>
                     <p class="text-slate-500 text-sm mb-4 line-clamp-2">
-                        Integrating LLMs to provide real-time feedback on learner inputs, creating a dynamic and personalized coaching experience.
+                        Integrating LLMs to provide real-time support on learner inputs, creating a dynamic and personalized experience.
                     </p>
                     <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
-                        <i class="fas fa-tools"></i> ChatGPT API, Python, Storyline
+                        <i class="fas fa-tools"></i> MS Copilot Studio, Scribe Now, MS Teams
                     </div>
                 </div>
             </div>
@@ -62,9 +62,9 @@ Digital Learning &amp; Instructional Design Portfolio
 
 
             'project8': {
-                title: 'Day 1 Global Onboarding',
+                title: 'Digital Adoption Support',
                 img: 'https://placehold.co/800x400/10b981/FFF?text=Global+Onboarding',
-                tools: 'Rise 360, Workday',
+                tools: ', Workday',
                 challenge: 'Global new hires reported a disjointed experience, with different regions receiving conflicting information.',
                 solution: 'Created a unified "Passport to Success" program in Rise 360 that provided a consistent 90-day roadmap while allowing for localized content branches.',
                 // Dummy result
@@ -94,10 +94,10 @@ Digital Learning &amp; Instructional Design Portfolio
             'project7': {
                 title: 'AI Learning Assistant',
                 img: 'https://placehold.co/800x400/2563eb/FFF?text=AI+Learning+Assistant',
-                tools: 'ChatGPT API, Python, Storyline',
-                challenge: 'Learners required instant feedback on open-text practice responses, which standard multiple-choice questions could not provide.',
-                solution: 'Integrated the OpenAI API into Articulate Storyline to analyze learner inputs and provide specific, real-time coaching tips.',
-                result: 'Learners practiced 3x more frequently knowing they would get instant, personalized feedback, leading to higher retention.',
+                tools: 'MS Copilot Studio, Scribe Now, MS Teams',
+                challenge: 'Learners were asked to switch to a new core software platform with no \'down-time\'. A robust blended training package was launched, however, with over 200 new workflow processes, all colvered across a wide array of training courses, a solution was needed to ensure colleagues were able to access knowledge when they needed it.',
+                solution: 'Develop a MS Copilot Studio agent that could be fed with ScribeHow step-by-step guides and deliver clear, and accurate support that matched learner needs in a high pressure environment.',
+                result: 'This supported a successful, and ahead of schedule rollout of the tool and allowed for a reduction in post launch support, creating cost savings for the project.',
                 
                 showDemo: true,
                 demoUrl: '#',
