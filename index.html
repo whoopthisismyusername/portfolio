@@ -124,8 +124,6 @@
     </header>
 
     
-
-
     
     <section id="portfolio" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div class="text-center mb-16">
@@ -287,7 +285,7 @@
                 </div>
             </div>
      
-               
+                
             
         </div>
     </section>
@@ -295,7 +293,7 @@
     <section id="about" class="flex flex-col lg:flex-row min-h-[600px]">
         
         <div class="lg:w-2/3 bg-slate-100 p-10 lg:p-20 flex flex-col justify-center">
-            <div class="max-w-2xl">
+            <div class="max-w-5xl w-full">
                 <h4 class="text-primary font-bold uppercase tracking-wider mb-2 text-sm">About Me</h4>
                 <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-8">Creating learning that you experience, rather than simply complete.</h2>
                 
@@ -303,14 +301,25 @@
                     <img src="https://placehold.co/150x150/0f172a/FFF?text=GB" alt="Graham Betts" class="w-24 h-24 rounded-full shadow-lg border-4 border-white object-cover shrink-0">
                     <div>
                         <p class="text-lg text-slate-700 leading-relaxed mb-4">
-                            I'm <strong>Graham Betts</strong>, an Digital Learning Professional passionate about creating learning experiences that respect the learner's time and intelligence.
-                        </p>
-                        <p class="text-slate-600 leading-relaxed">
-                            In my career I've operated solo, in projects and led remote, matrix and onsite teams. However I've been working, it has always been with the goal of using data to link business needs, learner skills and knowledge, to tangible actions and activities that support personal growth. With a background spanning customer services, sales, technical and regulated training combined with my creative design education, I specialize in translating dry, complex subject matters into interactive, engaging and digestible content. My philosophy is simple: <strong>Effective learning is active, not passive.</strong>
-                        </p>
+<p>I’m Graham Betts, a Digital Learning Experience Manager who designs learning that respects the learner’s time — and drives performance.</p>
+
+<p>I create engaging learning experiences to create change, not just to drive completion. My focus is on practical, scenario-led design that helps colleagues build confidence, apply skills on the job, and achieve measurable outcomes.</p>
+<br>
+<p>What I do best:</p>
+<br>
+<ul style="list-style-type: disc; padding-left: 20px; margin-left: 15px;">
+    <li><strong>Learning Experience Design (LXD):</strong> Interactive, scenario-based learning that builds real capability</li>
+    <li><strong>Complexity made clear:</strong> Technical and regulated topics translated into engaging, digestible learning journeys</li>
+    <li><strong>SAP SuccessFactors LMS transformation:</strong> Improving the end-to-end learner experience (look & feel, navigation, structure, discoverability and adoption)</li>
+    <li><strong>Data-led design:</strong> Using analytics and stakeholder insight to shape content, journeys and evaluation</li>
+    <li><strong>Delivery & leadership:</strong> Experienced working solo and leading remote, matrix and onsite teams</li>
+</ul>
+<br>
+<p><strong>My philosophy is simple: Learning is the process of applying knowledge, not just consuming it.</strong>strong></p>
+
                     </div>
                 </div>
-
+<br>
                 <div class="grid grid-cols-2 gap-6 mt-6">
                     <div>
                         <h5 class="font-bold text-secondary mb-3 border-b border-slate-300 pb-2">Methodologies</h5>
@@ -338,7 +347,7 @@
             <div class="absolute top-0 right-0 w-32 h-32 bg-primary rounded-bl-full opacity-20"></div>
 
             <h2 class="text-3xl font-bold mb-6">Let's Collaborate</h2>
-            <p class="text-slate-400 mb-8">Ready to discuss your next training project? Drop me a message or connect on social.</p>
+            <p class="text-slate-400 mb-8">Ready to discuss your next project? Drop me a message or connect on social.</p>
             
             <form id="contactForm" class="space-y-4" onsubmit="handleFormSubmit(event)">
                 <input type="hidden" name="_subject" value="New Portfolio Contact!">
@@ -379,17 +388,19 @@
     </section>
 
     <footer class="bg-secondary text-slate-500 py-8 text-center text-sm border-t border-slate-900">
-        <p>&copy; 2024 Graham Betts. All Rights Reserved.</p>
-        <p class="mt-2">Instructional Designer | eLearning Developer</p>
+        <p>&copy; 2025 Graham Betts. All Rights Reserved.</p>
+        <p class="mt-2">Instructional Designer | eLearning Developer | Learning Experience Design Expert</p>
     </footer>
 
     <div id="projectModal" class="fixed inset-0 z-[60] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <div class="flex items-center justify-center min-h-screen pt-4 pb-0 text-center sm:px-4 sm:pb-20 sm:block sm:p-0">
+        <!-- REPLACED: Wrapper now uses flex centering for all screen sizes -->
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:items-center sm:p-0">
             <div class="fixed inset-0 transition-opacity bg-secondary bg-opacity-75" aria-hidden="true" onclick="closeModal()"></div>
 
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <!-- REMOVED: The ghost span <span>&#8203;</span> is no longer needed with flexbox -->
 
-            <div id="modalPanel" class="inline-block w-screen sm:w-full text-left align-bottom transition-all transform bg-white rounded-t-xl sm:rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-5xl">
+            <!-- UPDATED: Modal Panel uses w-full by default and responsive centering -->
+            <div id="modalPanel" class="relative w-full bg-white text-left shadow-xl transform transition-all sm:my-8 sm:max-w-5xl rounded-t-xl sm:rounded-lg">
                 
                 <div id="modalContent">
                     <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
@@ -422,7 +433,7 @@
                                     </p>
                                     <h4 class="mt-4 font-bold text-secondary">The Result</h4>
                                     <p class="mb-3 text-sm text-slate-600" id="modalResult">
-                                        </p>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -436,6 +447,27 @@
                         </button>
                         <button type="button" class="inline-flex justify-center w-auto px-4 py-2 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-slate-50 focus:outline-none sm:text-sm" onclick="closeModal()">
                             Close
+                        </button>
+                    </div>
+                </div>
+
+                <!-- NEW: Disclaimer Container for Project 4 -->
+                <div id="disclaimerContainer" class="hidden px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4 text-center rounded-lg">
+                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-50 mb-4">
+                         <i class="fas fa-info-circle text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl leading-6 font-bold text-secondary mb-2">Notice</h3>
+                    <div class="mt-2 max-w-lg mx-auto">
+                        <p class="text-md text-slate-600">
+                            Please note, this demonstration showcases an example of the use of the 7Taps tool and a microlearning pathway, but not of the stated case example. This is due to commercial sensitivities.
+                        </p>
+                    </div>
+                    <div class="mt-6 sm:flex sm:flex-row-reverse sm:justify-center gap-3">
+                        <button type="button" onclick="proceedToDemo()" class="w-full sm:w-auto inline-flex justify-center rounded-md border border-transparent shadow-sm px-6 py-2 bg-primary text-base font-medium text-white hover:bg-primaryHover focus:outline-none sm:text-sm">
+                            Launch
+                        </button>
+                        <button type="button" onclick="cancelDisclaimer()" class="mt-3 sm:mt-0 w-full sm:w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-6 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:text-sm">
+                            Cancel
                         </button>
                     </div>
                 </div>
@@ -460,14 +492,14 @@
     </div>
 
     <script>
-        // Mobile Menu Toggle
-        function toggleMobileMenu() {
+        // Make functions global for inline onclick handlers
+        window.toggleMobileMenu = function() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         }
 
         // Form Submit Handler using FormSubmit.co (AJAX)
-        function handleFormSubmit(e) {
+        window.handleFormSubmit = function(e) {
             e.preventDefault();
             const btn = e.target.querySelector('button');
             const originalText = btn.innerText;
@@ -499,7 +531,7 @@
                     btn.classList.remove('bg-green-600');
                     btn.disabled = false;
                     form.reset();
-                    alert("Message sent successfully! Please check your email to confirm if this is your first time.");
+                    alert("Message sent successfully! I aim to respond within 1-2 days. Thanks for reaching out.");
                 }, 2000);
             })
             .catch(error => {
@@ -556,15 +588,15 @@
                 challenge: 'Annual compliance training had low engagement and employees were clicking through without reading.',
                 solution: 'Stakeholder was looking at purchasing an external solution. Developed a bespoke, editable and low cost internal solution.',
                 // Fixed: Double quotes
-                result: "Course achieved a 'World Class' learner satisfaction NPS score. More importantly though, it generated a a notable reduction in data breaches, and a significant uptick in reporting across the business.",
+                result: "Course achieved a 'World Class' learner satisfaction NPS score. More importantly though, it generated a notable reduction in data breaches, and a significant uptick in reporting across the business.",
                 
                 showDemo: true,
-                demoUrl: '://whoopthisismyusername.github.io/portfolio/projects/3/story.html',
+                demoUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/3/story.html',
                 
                 showProcess: false,
                 processUrl: '#'
             },
-'project4': {
+            'project4': {
                 title: 'Card Based Microlearning',
                 img: 'https://whoopthisismyusername.github.io/portfolio/projects/4/7taps.jpg',
                 tools: '7Taps, Canva, Vyond',
@@ -572,7 +604,7 @@
                 solution: "A flexible microlearning pathway that allowed colleagues to consume as little or as much as they needed in bitesized chunks. The content broken into knowledge and soft skills with key messages pulled out by AI, worked on with SMEs and then turned into engaging and targetted information that went straight to the heart of the questions the available data showed us our customers were asking.",
                 result: "A rapid delivery of training across deskless workforce that drove 15% uplift in colleagues engaging with customers in nutrition aisles and an above target launch of the 'Easy-Repeat-In-Store' proposition.",
                 showDemo: true,
-                demoUrl: 'https://app.7taps.com/folder/GNljTQPltmp',
+                demoUrl: 'https://app.7taps.com/folder/BQ2PfBw8fR0',
                 showProcess: false,
                 processUrl: '#'
             },
@@ -611,8 +643,8 @@
                 title: 'AI Learning Assistant',
                 img: 'https://placehold.co/800x400/2563eb/FFF?text=AI+Learning+Assistant',
                 tools: 'MS Copilot Studio, Scribe Now, MS Teams',
-                challenge: 'Learners were asked to switch to a new core software platform with no \'down-time\'. A robust blended training package was launched, however, with over 200 new workflow processes, all colvered across a wide array of training courses, a solution was needed to ensure colleagues were able to access knowledge when they needed it.',
-                solution: 'Develop a MS Copilot Studio agent that could be fed with ScribeHow step-by-step guides and deliver clear, and accurate support that matched learner needs in a high pressure environment.',
+                challenge: 'Learners were asked to switch to a new core software platform with no \'down-time\'. A robust blended training package was launched, however, with over 200 new workflow processes, all covered across a wide array of training courses, a solution was needed to ensure colleagues were able to access knowledge when they needed it.',
+                solution: 'Develop a MS Copilot Studio agent that could be fed with \'ScribeHow\' step-by-step guides and deliver clear, and accurate support that matched learner needs in a high pressure environment.',
                 result: 'This supported a successful, and ahead of schedule rollout of the tool and allowed for a reduction in post launch support, creating cost savings for the project.',
                 
                 showDemo: true,
@@ -640,18 +672,42 @@
 
         let currentDemoUrl = '';
         let currentProcessUrl = '';
+        let currentProjectId = ''; // Track the current project ID
 
-        function openModal(projectId) {
+        // Helper to open Iframe (Shared by both buttons)
+        window.openIframe = function(url, title) {
+            // Expand Modal Width
+            const modalPanel = document.getElementById('modalPanel');
+            modalPanel.classList.remove('sm:max-w-5xl');
+            // UPDATED: Removed 'w-full' from add list as it is now default
+            modalPanel.classList.add('sm:max-w-7xl');
+
+            // Toggle Views
+            document.getElementById('modalContent').classList.add('hidden');
+            document.getElementById('demoContainer').classList.remove('hidden');
+
+            // Set Title & Load Iframe
+            document.getElementById('iframeHeader').innerText = title;
+            document.getElementById('courseFrame').src = url;
+        }
+
+        window.openModal = function(projectId) {
+            console.log("Opening modal for:", projectId);
             const project = projects[projectId];
             if (!project) return;
 
-            // Reset view to content
+            // Set current Project ID
+            currentProjectId = projectId;
+
+            // Reset view to content and ensure disclaimer is hidden
             document.getElementById('modalContent').classList.remove('hidden');
             document.getElementById('demoContainer').classList.add('hidden');
+            document.getElementById('disclaimerContainer').classList.add('hidden');
             
             // Reset width to standard
             const modalPanel = document.getElementById('modalPanel');
-            modalPanel.classList.remove('sm:max-w-7xl', 'w-full');
+            // UPDATED: Removed 'w-full' from remove list
+            modalPanel.classList.remove('sm:max-w-7xl');
             modalPanel.classList.add('sm:max-w-5xl');
 
             // Populate Content
@@ -688,44 +744,49 @@
         }
 
         // View the Interactive Course
-        function viewDemo() {
+        window.viewDemo = function() {
             if (!currentDemoUrl || currentDemoUrl === '#') {
                 alert("Demo link coming soon!");
                 return;
             }
-            openIframe(currentDemoUrl, "Demo Preview");
+
+            // SPECIAL LOGIC FOR PROJECT 4 (Disclaimer)
+            if (currentProjectId === 'project4') {
+                document.getElementById('modalContent').classList.add('hidden');
+                document.getElementById('disclaimerContainer').classList.remove('hidden');
+                return;
+            }
+
+            window.openIframe(currentDemoUrl, "Demo Preview");
+        }
+
+        // Proceed function for the disclaimer
+        window.proceedToDemo = function() {
+            document.getElementById('disclaimerContainer').classList.add('hidden');
+            window.openIframe(currentDemoUrl, "Demo Preview");
+        }
+
+        // Cancel function for the disclaimer (goes back to details)
+        window.cancelDisclaimer = function() {
+            document.getElementById('disclaimerContainer').classList.add('hidden');
+            document.getElementById('modalContent').classList.remove('hidden');
         }
 
         // View the Process Documentation
-        function viewProcess() {
+        window.viewProcess = function() {
             if (!currentProcessUrl || currentProcessUrl === '#') {
                 alert("Process documentation coming soon!");
                 return;
             }
-            openIframe(currentProcessUrl, "Process Walkthrough");
+            window.openIframe(currentProcessUrl, "Process Walkthrough");
         }
 
-        // Helper to open Iframe (Shared by both buttons)
-        function openIframe(url, title) {
-            // Expand Modal Width
-            const modalPanel = document.getElementById('modalPanel');
-            modalPanel.classList.remove('sm:max-w-5xl');
-            modalPanel.classList.add('sm:max-w-7xl', 'w-full');
-
-            // Toggle Views
-            document.getElementById('modalContent').classList.add('hidden');
-            document.getElementById('demoContainer').classList.remove('hidden');
-
-            // Set Title & Load Iframe
-            document.getElementById('iframeHeader').innerText = title;
-            document.getElementById('courseFrame').src = url;
-        }
-
-        function backToDetails() {
+        window.backToDetails = function() {
             // Shrink Modal Width
             const modalPanel = document.getElementById('modalPanel');
             modalPanel.classList.add('sm:max-w-5xl');
-            modalPanel.classList.remove('sm:max-w-7xl', 'w-full');
+            // UPDATED: Removed 'w-full' from remove list
+            modalPanel.classList.remove('sm:max-w-7xl');
 
             // Toggle Views
             document.getElementById('modalContent').classList.remove('hidden');
@@ -736,40 +797,16 @@
             document.getElementById('courseFrame').src = '';
         }
 
-        function closeModal() {
+        window.closeModal = function() {
             document.getElementById('projectModal').classList.add('hidden');
             document.body.classList.remove('no-scroll');
             
+            // Ensure disclaimer is reset
+            document.getElementById('disclaimerContainer').classList.add('hidden');
+
             // Stop Iframe (Audio)
             document.getElementById('courseFrame').src = '';
         }
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
