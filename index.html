@@ -174,7 +174,23 @@
             </div>
 
 
-
+                        <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project9')">
+                <div class="relative overflow-hidden">
+                    <img src="https://images.pexels.com/photos/7075/people-office-group-team.jpg?text=Leadership+Learning" alt="Leadership Learning" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
+                    <div class="absolute top-4 left-4 bg-cyan-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                        Leadership Development
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-secondary mb-2">Human Centred Learning</h3>
+                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
+                        Creating flexible leadership training that matters
+                    </p>
+                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
+                        <i class="fas fa-tools"></i>Gemini, Rise, Photoshop.
+                    </div>
+                </div>
+            </div>
 
             
             <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project2')">
@@ -668,6 +684,21 @@
                 showProcess: false,
                 processUrl: '#'
             },
+
+                        'project9': {
+                title: 'Leadership Scenarios - Code Developed Interactions',
+                img: 'https://placehold.co/800x400/ff0090/FFF?text=Ledership+Learning',
+                tools: 'SAP SuccessFactors, MS Copilot Studio, ChatGPT, Photoshop',
+                challenge: 'SAP SuccessFactors launch new LMS user experience. In a diverse business with multiple different audience groups, the platform needed to be customised to support the varied requirements of learners.',
+                solution: 'Utilised on-brand page designs and code based custom card dialogs, displayed across custom pages, combined with intelligent assignment rules, to ensure each core audience was services by a bespoke, but easily maintained solution.',
+                result: 'SAP SuccessFactors Learning successfully accepted by Veterinary business as the suitable solution to deploy Clinical Academy. Entire platform customsied with intuitive UI to help learners access their core training and self development pathways.',
+                
+                showDemo: true,
+                demoUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/9/index.html',
+                
+                showProcess: false,
+                processUrl: '#'
+            },
         };
 
         let currentDemoUrl = '';
@@ -810,5 +841,6 @@
     </script>
 </body>
 </html>
+
 
 
