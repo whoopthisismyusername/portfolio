@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Radical Candor Coach</title>
+    <style>
+        /* --- CSS STYLING --- */
+        :root {
+            /* Corporate / SaaS Theme Palette */
+            --primary-color: #4f46e5; /* Indigo */
+            --primary-dark: #312e81;
+            --accent-color: #8b5cf6; /* Purple */
+            --bg-color: #f3f4f6;
+            --chat-bg: #ffffff;
+            --bubble-manager: #e0e7ff; /* Light Indigo */
+            --bubble-employee: #f3f4f6; /* Light Grey */
+            --text-main: #1f2937;
+            --text-light: #6b7280;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--text-main);
+            overflow: hidden;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 0 20px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 10;
+            flex-shrink: 0;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .brand span { margin-left: 10px; }
+
+        .score-board {
+            background-color: rgba(255,255,255,0.15);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* --- MAIN LAYOUT --- */
+        .game-wrapper {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        }
+
+        /* --- SIDEBARS (Desktop) --- */
+        .sidebar {
+            flex: 1; /* Allow to grow/shrink (25% roughly) */
+            min-width: 180px; /* Prevent becoming too narrow */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 40px;
+            background-color: #f9fafb;
+            /* Default text color for sidebars */
+            color: white; 
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        /* MANAGER SIDEBAR BACKGROUND */
+        .sidebar.manager { 
+            border-right: 1px solid #e5e7eb;
+            /* Linear gradient darkens the image so text pops. Replace the URL below. */
+            background-image: linear-gradient(rgba(49, 46, 129, 0.85), rgba(49, 46, 129, 0.85)), 
+                              url('manager.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* EMPLOYEE SIDEBAR BACKGROUND */
+        .sidebar.employee { 
+            border-left: 1px solid #e5e7eb;
+            /* Linear gradient darkens the image so text pops. Replace the URL below. */
+            background-image: linear-gradient(rgba(31, 41, 55, 0.85), rgba(31, 41, 55, 0.85)), 
+                              url('developer.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .avatar-circle {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 4px solid rgba(255,255,255,0.3);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            display: flex; justify-content: center; align-items: center; 
+            font-size: 2.5rem;
+            backdrop-filter: blur(4px);
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .role-title { 
+            font-weight: 800; 
+            font-size: 0.85rem; 
+            margin-bottom: 4px; 
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.7); /* Light text for dark bg */
+        }
+        .role-name {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: white; /* White text for dark bg */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* --- CHAT AREA --- */
+        .chat-section {
+            flex: 2; /* Takes up double the space of a sidebar (50% roughly) */
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            min-width: 0;
+        }
+
+        .chat-window {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            background-color: var(--chat-bg);
+            display: flex;
+            flex-direction: column;
+            scroll-behavior: smooth;
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* SYSTEM / SCENARIO MESSAGE STYLE */
+        .system-message {
+            width: 85%;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            color: var(--text-main);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: left;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            border-left: 5px solid var(--accent-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        .system-message h4 {
+            margin: 0 0 12px 0;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        /* Message Labels (Mobile Only) */
+        .message-label {
+            font-size: 0.75rem; color: #9ca3af; margin-bottom: 4px; margin-top: 12px; font-weight: 600; display: none;
+        }
+        .message-label.manager { align-self: flex-start; margin-left: 5px; }
+        .message-label.employee { align-self: flex-end; margin-right: 5px; }
+
+        .message {
+            max-width: 70%;
+            padding: 14px 18px;
+            margin: 6px 0;
+            border-radius: 18px;
+            font-size: 1rem;
+            line-height: 1.5;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            word-wrap: break-word;
+            color: var(--text-main);
+        }
+
+        .message.manager {
+            align-self: flex-start;
+            background-color: var(--bubble-manager);
+            color: var(--primary-dark);
+            border-bottom-left-radius: 2px;
+        }
+
+        .message.employee {
+            align-self: flex-end;
+            background-color: var(--bubble-employee);
+            color: var(--text-main);
+            border-bottom-right-radius: 2px;
+        }
+
+        .typing-indicator {
+            background-color: #f3f4f6;
+            padding: 12px 18px;
+            border-radius: 20px;
+            display: none;
+            width: fit-content;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+        .dot {
+            height: 7px; width: 7px; background-color: #9ca3af;
+            border-radius: 50%; display: inline-block; margin: 0 3px;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        .dot:nth-child(1) { animation-delay: -0.32s; }
+        .dot:nth-child(2) { animation-delay: -0.16s; }
+
+        /* --- CONTROLS AREA --- */
+        .controls-area {
+            /* Desktop default */
+            min-height: 220px; 
+            background-color: white;
+            border-top: 1px solid #e5e7eb;
+            padding: 20px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.03);
+            z-index: 5;
+        }
+
+        .prompt-text {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr; /* 3 Columns on desktop */
+            gap: 20px;
+            width: 100%;
+        }
+
+        .option-card {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            text-align: left;
+            transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            -webkit-tap-highlight-color: transparent;
+            line-height: 1.4;
+            position: relative;
+            overflow: hidden;
+        }
+        .option-card:active { transform: scale(0.98); }
+        .option-card:hover:not(:disabled) { 
+            border-color: var(--primary-color); 
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.1);
+            transform: translateY(-2px);
+        }
+        .option-card:disabled { opacity: 0.5; background-color: #f9fafb; cursor: default; transform: none; box-shadow: none; }
+
+        /* --- MODAL --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(17, 24, 39, 0.7); /* Darker backdrop */
+            backdrop-filter: blur(4px);
+            display: none; /* Hidden by default */
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            padding: 20px;
+        }
+        
+        /* Flex to show modal */
+        .modal-overlay.active { display: flex; }
+
+        .modal-box {
+            background: white;
+            width: 100%;
+            max-width: 550px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            color: var(--text-main);
+        }
+
+        .modal-box h2 {
+            margin-top: 0;
+            color: var(--text-main);
+            font-size: 1.8rem;
+        }
+        
+        .modal-btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white; border: none; padding: 14px 30px;
+            font-size: 1rem; border-radius: 8px; cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .btn-primary:hover { background-color: var(--primary-dark); }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-color); border: 2px solid var(--primary-color); padding: 14px 30px;
+            font-size: 1rem; border-radius: 8px; cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .btn-secondary:hover { background-color: #eff6ff; }
+
+        .feedback-list {
+            text-align: left;
+            background: #f0fdf4; /* Very light green default */
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 0.95rem;
+            border: 1px solid #dcfce7;
+            color: var(--text-main);
+        }
+        .feedback-item { margin-bottom: 15px; border-bottom: 1px solid #dcfce7; padding-bottom: 12px; }
+        .feedback-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .badge-miss { background: #fee2e2; color: #991b1b; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- MOBILE OPTIMIZATION --- */
+        @media screen and (max-width: 768px) {
+            .sidebar { display: none; }
+            .message-label { display: block; }
+            .game-wrapper { flex-direction: column; }
+
+            /* Shorten Chat, Enlarge Controls for visibility */
+            .chat-section { width: 100%; }
+            
+            .chat-window {
+                flex: 1; 
+                padding: 15px;
+            }
+
+            .controls-area {
+                /* Controls take roughly 50% height to fit stacked buttons comfortably */
+                height: 55vh;
+                padding: 15px;
+                flex: none; 
+                border-top: 2px solid #e5e7eb;
+            }
+
+            .prompt-text { text-align: center; margin-bottom: 10px; font-size: 0.8rem; }
+
+            .options-grid {
+                grid-template-columns: 1fr; /* Stack vertically */
+                gap: 10px;
+                overflow-y: auto;
+                height: 100%;
+                padding-bottom: 10px;
+            }
+
+            .option-card {
+                padding: 18px; /* Fat fingers friendly */
+                font-size: 0.95rem;
+                display: flex;
+                align-items: center;
+                min-height: 80px;
+            }
+
+            .message { max-width: 85%; }
+            .system-message { width: 95%; padding: 15px; }
+        }
+
+        @keyframes popIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand">
+            <!-- Simple Chat/Clipboard Icon -->
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span>Candor Coach</span>
+        </div>
+        <div class="score-board">Relationship Score: <span id="score-display">0</span></div>
+    </header>
+
+    <!-- START MODAL -->
+    <div id="main-modal" class="modal-overlay active">
+        <div class="modal-box">
+            <h2 id="modal-title">Scenario: The "Brilliant Jerk"</h2>
+            <div id="modal-desc">
+                <strong>Situation:</strong> Alex, your lead developer, just deployed a flawless feature. However, during the sprint review, he was dismissive and rude to the junior designer, Sarah, when she asked a question.
+                <br><br>
+                <strong>Goal:</strong> Use <span style="color:var(--primary-color); font-weight:bold;">Radical Candor</span> to correct the behavior without discouraging his technical performance.
+                <br><br>
+                <em style="color:#666; font-size:0.9rem;">Remember: Care Personally + Challenge Directly.</em>
+            </div>
+            <div class="modal-btn-container" id="modal-actions">
+                <button class="btn-primary" onclick="startGame()">Start Conversation</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FEEDBACK MODAL -->
+    <div id="feedback-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h2>Performance Review 📊</h2>
+            <p>Here is an analysis of your management style in this session:</p>
+            <div id="feedback-content" class="feedback-list">
+            </div>
+            <div class="modal-btn-container">
+                <button class="btn-primary" onclick="closeFeedback()">Back to Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN GAME UI -->
+    <div class="game-wrapper">
+        <div class="sidebar manager">
+            <div class="avatar-circle mgr-img">💼</div>
+            <div class="role-title">MANAGER</div>
+            <div class="role-name">You</div>
+        </div>
+
+        <div class="chat-section">
+            <div class="chat-window" id="chat-stream">
+                <!-- Chat history goes here -->
+                <div class="typing-indicator" id="typing-bubble">
+                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                </div>
+            </div>
+
+            <div class="controls-area">
+                <div class="prompt-text">Choose your response:</div>
+                <div class="options-grid" id="options-container">
+                    <!-- Buttons go here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar employee">
+            <div class="avatar-circle emp-img">👨‍💻</div>
+            <div class="role-title">DEVELOPER</div>
+            <div class="role-name">Alex</div>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA: RADICAL CANDOR SCENARIO ---
+        // Score: +2 (Radical Candor), 0 (Ruinous Empathy/Manipulative Insincerity), -2 (Obnoxious Aggression)
+        
+        const scenarioData = [
+            {
+                // TURN 1: OPENING
+                advice: "Start by being direct but kind. Ruinous Empathy beats around the bush. Obnoxious Aggression attacks immediately.",
+                options: [
+                    { 
+                        text: "Alex, great job on the deploy. I want to give you some feedback on the meeting with Sarah, though.", 
+                        score: 2, 
+                        type: "Radical Candor",
+                        response: "Oh? I thought the meeting went fine. The code is live, isn't it?" 
+                    },
+                    { 
+                        text: "Hey Alex! Amazing work on the code. You're a rockstar! Just a tiny thing to chat about later, nothing big.", 
+                        score: 0, 
+                        type: "Ruinous Empathy",
+                        response: "Thanks! Yeah, the code is solid. What's the 'tiny thing'?" 
+                    },
+                    { 
+                        text: "Alex, we need to talk. Your attitude in that meeting was unacceptable.", 
+                        score: -2, 
+                        type: "Obnoxious Aggression",
+                        response: "Wow, okay. I just delivered a perfect feature and this is what I get?" 
+                    }
+                ]
+            },
+            {
+                // TURN 2: DESCRIBING BEHAVIOR (SBI Model)
+                advice: "Be specific about the behavior. Don't label him (Aggression) and don't be vague (Empathy). State facts.",
+                options: [
+                    { 
+                        text: "Specifically, when Sarah asked about the button placement, you rolled your eyes and said 'that's irrelevant'.", 
+                        score: 2, 
+                        type: "Radical Candor",
+                        response: "I mean, it was irrelevant at that stage. We were discussing backend logic." 
+                    },
+                    { 
+                        text: "I feel like you were being a bit too intense with the design team. Try to be nicer.", 
+                        score: 0, 
+                        type: "Ruinous Empathy",
+                        response: "Intense? I'm just passionate about shipping correctly. They slow us down." 
+                    },
+                    { 
+                        text: "You were being a total jerk to Sarah. You can't act like a primadonna.", 
+                        score: -2, 
+                        type: "Obnoxious Aggression",
+                        response: "I'm not a primadonna, I'm the only one who knows how this system works!" 
+                    }
+                ]
+            },
+            {
+                // TURN 3: IMPACT
+                advice: "Explain the impact of the behavior on the team/product. Show you care about the team dynamic.",
+                options: [
+                    { 
+                        text: "When you shut down questions like that, the designers stop offering ideas. We miss out on improvements, and it hurts the final product.", 
+                        score: 2, 
+                        type: "Radical Candor",
+                        response: "I... didn't realize they stopped offering ideas because of that. I just wanted to stay focused." 
+                    },
+                    { 
+                        text: "It just creates a bad vibe in the office. We want everyone to get along.", 
+                        score: 0, 
+                        type: "Ruinous Empathy",
+                        response: "I'm not here to make friends, I'm here to write code." 
+                    },
+                    { 
+                        text: "I'm tired of cleaning up your messes with HR. Stop making my life hard.", 
+                        score: -2, 
+                        type: "Manipulative Insincerity",
+                        response: "Whatever. Is there anything else?" 
+                    }
+                ]
+            },
+            {
+                // TURN 4: LISTENING & NEXT STEPS
+                advice: "Ask for their perspective (Listen) and agree on a concrete next step.",
+                options: [
+                    { 
+                        text: "I know you care about quality. What was going through your mind then? How can we handle that differently next time?", 
+                        score: 2, 
+                        type: "Radical Candor",
+                        response: "I was stressed about the deadline. I guess I could have said 'let's park that' instead of snapping." 
+                    },
+                    { 
+                        text: "So, maybe just buy Sarah a coffee and say sorry? That would be great.", 
+                        score: 0, 
+                        type: "Ruinous Empathy",
+                        response: "Fine. I'll buy the coffee." 
+                    },
+                    { 
+                        text: "Fix it. If I hear another complaint, I'm writing you up.", 
+                        score: -2, 
+                        type: "Obnoxious Aggression",
+                        response: "Understood." 
+                    }
+                ]
+            },
+            {
+                // TURN 5: CONCLUSION
+                advice: "Reaffirm your belief in them (Care Personally) while holding the standard (Challenge Directly).",
+                options: [
+                    { 
+                        text: "I'm telling you this because you're a talented engineer, and I know you can be a great leader too. I expect better because I know you can do it.", 
+                        score: 2, 
+                        type: "Radical Candor",
+                        response: "Thanks. I appreciate the honesty. I'll apologize to Sarah." 
+                    },
+                    { 
+                        text: "Anyway, aside from that, seriously great coding work! Keep it up!", 
+                        score: 0, 
+                        type: "Ruinous Empathy",
+                        response: "Cool. Back to work then." 
+                    },
+                    { 
+                        text: "Don't let me down again.", 
+                        score: -2, 
+                        type: "Obnoxious Aggression",
+                        response: "..." 
+                    }
+                ]
+            }
+        ];
+
+        // --- STATE & DOM ---
+        let currentScore = 0;
+        let turnIndex = 0;
+        let feedbackLog = [];
+
+        const chatStream = document.getElementById('chat-stream');
+        const optionsContainer = document.getElementById('options-container');
+        const mainModal = document.getElementById('main-modal');
+        const feedbackModal = document.getElementById('feedback-modal');
+        const typingBubble = document.getElementById('typing-bubble');
+        const scoreDisplay = document.getElementById('score-display');
+        const modalActions = document.getElementById('modal-actions');
+
+        // --- FUNCTIONS ---
+
+        function startGame() {
+            mainModal.classList.remove('active');
+            
+            // RESET GAME STATE
+            currentScore = 0;
+            turnIndex = 0;
+            feedbackLog = [];
+            updateScoreDisplay();
+
+            // CLEAR CHAT DOM & RE-ADD TYPING BUBBLE
+            chatStream.innerHTML = '';
+            
+            // 1. INJECT SCENARIO CONTEXT (Visible in chat stream)
+            const scenarioText = document.getElementById('modal-desc').innerHTML;
+            const contextDiv = document.createElement('div');
+            contextDiv.id = 'scenario-context';
+            contextDiv.className = 'system-message';
+            contextDiv.innerHTML = `<h4>Current Scenario</h4>${scenarioText}`;
+            chatStream.appendChild(contextDiv);
+
+            chatStream.appendChild(typingBubble);
+            hideTyping();
+
+            renderOptions();
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function updateScoreDisplay() {
+            scoreDisplay.innerText = currentScore;
+            if (currentScore >= 6) scoreDisplay.style.color = '#10b981'; // Green
+            else if (currentScore < 0) scoreDisplay.style.color = '#ef4444'; // Red
+            else scoreDisplay.style.color = 'white';
+        }
+
+        function appendMessage(text, sender) {
+            const label = document.createElement('div');
+            label.classList.add('message-label', sender);
+            label.innerText = sender === 'manager' ? 'You' : 'Alex';
+
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('message', sender);
+            msgDiv.innerText = text;
+
+            chatStream.insertBefore(label, typingBubble);
+            chatStream.insertBefore(msgDiv, typingBubble);
+            
+            // Auto scroll
+            chatStream.scrollTop = chatStream.scrollHeight;
+        }
+
+        function showTyping() {
+            typingBubble.style.display = 'block';
+            chatStream.scrollTop = chatStream.scrollHeight;
+        }
+
+        function hideTyping() {
+            typingBubble.style.display = 'none';
+        }
+
+        function renderOptions() {
+            optionsContainer.innerHTML = '';
+            if (turnIndex >= scenarioData.length) { endGame(); return; }
+
+            const currentTurn = scenarioData[turnIndex];
+            
+            let shuffledOptions = [...currentTurn.options];
+            shuffleArray(shuffledOptions);
+
+            shuffledOptions.forEach((option) => {
+                const btn = document.createElement('button');
+                btn.classList.add('option-card');
+                btn.innerText = option.text;
+                btn.onclick = () => handleChoice(option);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function handleChoice(option) {
+            // Remove context on first click to save space
+            if(turnIndex === 0) {
+                const contextDiv = document.getElementById('scenario-context');
+                if(contextDiv) contextDiv.remove();
+            }
+
+            const btns = document.querySelectorAll('.option-card');
+            btns.forEach(b => b.disabled = true);
+
+            // LOGIC
+            if (option.score < 2) {
+                feedbackLog.push({
+                    turn: turnIndex + 1,
+                    advice: scenarioData[turnIndex].advice,
+                    chosenType: option.type
+                });
+            }
+
+            currentScore += option.score;
+            updateScoreDisplay();
+            appendMessage(option.text, 'manager');
+            optionsContainer.innerHTML = ''; 
+
+            // Simulate delay for Employee response
+            setTimeout(() => {
+                showTyping();
+                setTimeout(() => {
+                    hideTyping();
+                    appendMessage(option.response, 'employee');
+                    turnIndex++;
+                    renderOptions();
+                }, 1200); 
+            }, 500);
+        }
+
+        function endGame() {
+            const title = document.getElementById('modal-title');
+            const desc = document.getElementById('modal-desc'); 
+            
+            mainModal.classList.add('active');
+            
+            let feedbackTitle = "";
+            let feedbackText = "";
+            let color = "";
+
+            if (currentScore >= 8) {
+                feedbackTitle = "Excellent! 🚀";
+                color = "var(--success-color)";
+                feedbackText = "You demonstrated true Radical Candor. You challenged Alex directly while showing you cared personally. This builds trust and fixes behavior.";
+            } else if (currentScore >= 0) {
+                feedbackTitle = "Mixed Results 😐";
+                color = "var(--warning-color)";
+                feedbackText = "You got the point across, but you often slipped into Ruinous Empathy (too nice/vague) or Obnoxious Aggression. Alex might be confused or defensive.";
+            } else {
+                feedbackTitle = "Relationship Damaged 📉";
+                color = "var(--danger-color)";
+                feedbackText = "The conversation went poorly. You likely fell into Obnoxious Aggression. Alex is now defensive and less likely to cooperate.";
+            }
+            
+            title.innerText = feedbackTitle;
+            title.style.color = color;
+
+            const resultHTML = `
+                <div style="font-size: 1.1rem; margin-bottom: 20px;">${feedbackText}</div>
+                <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; font-weight: bold; font-size: 1.2rem;">
+                    Final Score: ${currentScore}/10
+                </div>
+            `;
+            
+            document.getElementById('modal-desc').innerHTML = resultHTML;
+
+            // Setup Buttons
+            modalActions.innerHTML = ''; 
+
+            const replayBtn = document.createElement('button');
+            replayBtn.className = 'btn-primary';
+            replayBtn.innerText = 'Replay Scenario';
+            replayBtn.onclick = resetAndStart;
+            modalActions.appendChild(replayBtn);
+
+            if (currentScore < 10) {
+                const improveBtn = document.createElement('button');
+                improveBtn.className = 'btn-secondary';
+                improveBtn.innerText = 'Review Feedback';
+                improveBtn.onclick = showFeedback;
+                modalActions.appendChild(improveBtn);
+            }
+        }
+        
+        // Helper to reset the modal text before starting
+        function resetAndStart() {
+            document.getElementById('modal-title').innerText = 'Scenario: The "Brilliant Jerk"';
+            document.getElementById('modal-title').style.color = "var(--text-main)";
+            document.getElementById('modal-desc').innerHTML = `
+                <strong>Situation:</strong> Alex, your lead developer, just deployed a flawless feature. However, during the sprint review, he was dismissive and rude to the junior designer, Sarah, when she asked a question.
+                <br><br>
+                <strong>Goal:</strong> Use <span style="color:var(--primary-color); font-weight:bold;">Radical Candor</span> to correct the behavior without discouraging his technical performance.
+                <br><br>
+                <em style="color:#666; font-size:0.9rem;">Remember: Care Personally + Challenge Directly.</em>
+            `;
+            startGame();
+        }
+
+        function showFeedback() {
+            mainModal.classList.remove('active');
+            feedbackModal.classList.add('active');
+            
+            const contentDiv = document.getElementById('feedback-content');
+            contentDiv.innerHTML = '';
+
+            if(feedbackLog.length === 0 && currentScore < 10) {
+                 contentDiv.innerHTML = '<div class="feedback-item">You did well, but you missed some opportunities to be more direct or more empathetic.</div>';
+            } else {
+                feedbackLog.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'feedback-item';
+                    div.innerHTML = `
+                        <span class="badge badge-miss">Detected: ${item.chosenType}</span><br>
+                        <strong>Turn ${item.turn}:</strong> ${item.advice}`;
+                    contentDiv.appendChild(div);
+                });
+            }
+        }
+
+        function closeFeedback() {
+            feedbackModal.classList.remove('active');
+            mainModal.classList.add('active'); 
+        }
+
+    </script>
+</body>
+</html>
