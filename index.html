@@ -174,23 +174,7 @@
             </div>
 
 
-                        <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project9')">
-                <div class="relative overflow-hidden">
- <img src="https://placehold.co/600x400/ff0090/FFF?text=Leadership+%26+Learning" alt="Leadership Learning" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
-                    <div class="absolute top-4 left-4 bg-slate-900 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
-                        Leadership Development
-                    </div>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-secondary mb-2">Human Centred Learning</h3>
-                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
-                        Creating flexible leadership training that matters
-                    </p>
-                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
-                        <i class="fas fa-tools"></i>Gemini, Rise, Photoshop.
-                    </div>
-                </div>
-            </div>
+
 
             
             <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project2')">
@@ -249,7 +233,7 @@
 
             <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project5')">
                 <div class="relative overflow-hidden">
-                    <img src="https://placehold.co/600x400/ff5f1f/FFF?text=Video+Production" alt="Video Production" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
+                    <img src="https://placehold.co/600x400/f59e0b/FFF?text=Video+Production" alt="Video Production" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
                     <div class="absolute top-4 left-4 bg-pink-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
                         Video
                     </div>
@@ -331,7 +315,7 @@
     <li><strong>Delivery & leadership:</strong> Experienced working solo and leading remote, matrix and onsite teams</li>
 </ul>
 <br>
-<p><strong>My philosophy is simple: Learning is the process of applying knowledge, not just consuming it.</strong></p>
+<p><strong>My philosophy is simple: Learning is the process of applying knowledge, not just consuming it.</strong>strong></p>
 
                     </div>
                 </div>
@@ -468,15 +452,15 @@
                 </div>
 
                 <!-- NEW: Disclaimer Container for Project 4 -->
+                <!-- NEW: Disclaimer Container (Dynamic) -->
                 <div id="disclaimerContainer" class="hidden px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4 text-center rounded-lg">
                     <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-50 mb-4">
                          <i class="fas fa-info-circle text-2xl text-primary"></i>
                     </div>
                     <h3 class="text-xl leading-6 font-bold text-secondary mb-2">Notice</h3>
                     <div class="mt-2 max-w-lg mx-auto">
-                        <p class="text-md text-slate-600">
-                            Please note, this demonstration showcases an example of the use of the 7Taps tool and a microlearning pathway, but not of the stated case example. This is due to commercial sensitivities.
-                        </p>
+                        <!-- Added ID here to change text dynamically -->
+                        <p id="disclaimerText" class="text-md text-slate-600"></p>
                     </div>
                     <div class="mt-6 sm:flex sm:flex-row-reverse sm:justify-center gap-3">
                         <button type="button" onclick="proceedToDemo()" class="w-full sm:w-auto inline-flex justify-center rounded-md border border-transparent shadow-sm px-6 py-2 bg-primary text-base font-medium text-white hover:bg-primaryHover focus:outline-none sm:text-sm">
@@ -578,7 +562,7 @@
                 result: "'Great-byes' acted as an excellent introduction to upselling. Furthermore, the training halted a concerning trend of low repeat customer numbers.",
                 
                 showDemo: true,
-                demoUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/1/index.html',
+                demoUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/1/A/index.html',
                 
                 showProcess: false, 
                 processUrl: '#' 
@@ -591,6 +575,9 @@
                 solution: "Following procedural training rollout a week earlier, including a robust communications plan, short system simulations were rolled out to all colleagues. These simulations didn't follow 'perfect path' scenarios, but veered off to give typical day to day situations.",
                 result: 'Learners were able to settle into using the software in a safe space, resulting in extremely quick adoption and an accelerated rollout of the new service proposition.',
                 
+                // Added Disclaimer text for Project 2
+                disclaimer: "Please note that the demonstration shown is purely a limited functionality learning simulation composed of screen-captures. It is not a software copy of the live system. I hope you enjoy this demonstration.",
+
                 showDemo: true,
                 demoUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/2/index.html',
                 
@@ -614,11 +601,15 @@
             },
             'project4': {
                 title: 'Card Based Microlearning',
-                img: 'https://whoopthisismyusername.github.io/portfolio/projects/4/Screenshot 2026-01-08 113702.jpg',
+                img: 'https://whoopthisismyusername.github.io/portfolio/projects/4/7taps.jpg',
                 tools: '7Taps, Canva, Vyond',
                 challenge: 'After years of the business training retail colleagues on academic level pet nutrition, it was clear the level of detail was overwhelming colleagues, leading to poor quality conversations with customers and low confidence. The challenge... how do we simplify 5 hours of training into a 30 minute refresher without overwhelming them further.',
                 solution: "A flexible microlearning pathway that allowed colleagues to consume as little or as much as they needed in bitesized chunks. The content broken into knowledge and soft skills with key messages pulled out by AI, worked on with SMEs and then turned into engaging and targetted information that went straight to the heart of the questions the available data showed us our customers were asking.",
                 result: "A rapid delivery of training across deskless workforce that drove 15% uplift in colleagues engaging with customers in nutrition aisles and an above target launch of the 'Easy-Repeat-In-Store' proposition.",
+                
+                // Added Disclaimer text for Project 4
+                disclaimer: "Please note, this demonstration showcases an example of the use of the 7Taps tool and a microlearning pathway, but not of the stated case example. This is due to commercial sensitivities.",
+
                 showDemo: true,
                 demoUrl: 'https://app.7taps.com/folder/BQ2PfBw8fR0',
                 showProcess: false,
@@ -649,7 +640,7 @@
                 result: 'Formed part of a significant shift in CSAT scores, and provided managers a guide to use in the flow of work.',
                 
                 showDemo: true,
-                demoUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/6/CustomerSparkle.pdf',
+                demoUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/6/infographic1.pdf',
                 
                 showProcess: false,
                 processUrl: 'projects/6/process_carousel.html'
@@ -680,21 +671,6 @@
                 
                 showDemo: true,
                 demoUrl: 'https://player.vimeo.com/video/1148907962?',
-                
-                showProcess: false,
-                processUrl: '#'
-            },
-
-                        'project9': {
-                title: 'Leadership Scenarios - Code Developed Interactions',
-                img: 'https://placehold.co/800x400/ff0090/FFF?text=Leadership+Learning',
-                tools: 'Google Gemini, Rise, Photoshop',
-                challenge: 'Leaders across the business are struggling to deliver direct and impactful feedback. As a remove and geographically diverse population, how do you support their development of these skills.',
-                solution: 'Run virtual webinars supported with targeted flexible, digital interctions that allow leaders to test their understanding in real situations.',
-                result: 'Managers gained ability to test and learn in their role to improve their skill sets, increasing strength of management as business moved to more streamlined management and leadership approach.',
-                
-                showDemo: true,
-                demoUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/9/index.html',
                 
                 showProcess: false,
                 processUrl: '#'
@@ -781,13 +757,20 @@
                 return;
             }
 
-            // SPECIAL LOGIC FOR PROJECT 4 (Disclaimer)
-            if (currentProjectId === 'project4') {
+            // DYNAMIC DISCLAIMER LOGIC
+            const project = projects[currentProjectId];
+            
+            // Check if this project has a disclaimer property
+            if (project && project.disclaimer) {
+                // Set the text
+                document.getElementById('disclaimerText').innerText = project.disclaimer;
+                // Switch to disclaimer view
                 document.getElementById('modalContent').classList.add('hidden');
                 document.getElementById('disclaimerContainer').classList.remove('hidden');
                 return;
             }
 
+            // If no disclaimer, open immediately
             window.openIframe(currentDemoUrl, "Demo Preview");
         }
 
@@ -841,12 +824,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
