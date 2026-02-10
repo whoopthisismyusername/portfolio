@@ -789,10 +789,16 @@
             window.openIframe(currentProcessUrl, "Process Walkthrough");
         }
 
-        window.proceedToDemo = function() {
-            document.getElementById('disclaimerContainer').classList.add('hidden');
-            window.openIframe(pendingUrl, "Preview");
-        }
+window.proceedToDemo = function() {
+    console.log("Proceeding to:", pendingUrl); // Debugging line
+    if (!pendingUrl || pendingUrl === '#' || pendingUrl === '') {
+        alert("Destination URL not found.");
+        return;
+    }
+    document.getElementById('disclaimerContainer').classList.add('hidden');
+    window.openIframe(pendingUrl, "Preview");
+    pendingUrl = ''; // Clear it after use to prevent ghosting
+}
 
         window.cancelDisclaimer = function() {
             document.getElementById('disclaimerContainer').classList.add('hidden');
@@ -819,4 +825,5 @@
     </script>
 </body>
 </html>
+
 
