@@ -12,7 +12,6 @@
             theme: {
                 extend: {
                     colors: {
-                        // CHANGE THESE HEX CODES TO UPDATE YOUR SITE THEME
                         primary: '#0d9488',       /* Currently: Teal-600 */
                         primaryHover: '#0f766e', /* Darker Teal for hover states */
                         secondary: '#0f172a',    /* Currently: Slate-900 (Dark background) */
@@ -29,46 +28,36 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* === IMPORT FONTS === */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
         
-        /* === GLOBAL SETTINGS === */
         body {
             font-family: 'Inter', sans-serif;
         }
         html {
-            scroll-behavior: smooth; /* Enables smooth scrolling when clicking nav links */
+            scroll-behavior: smooth;
         }
 
-        /* === HERO SECTION === */
-        /* To change the main background image, replace the URL below */
         .hero-bg {
             background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), 
             url('https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Creates the parallax scrolling effect */
+            background-attachment: fixed;
         }
 
-        /* === PORTFOLIO CARDS === */
         .portfolio-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        /* The effect when you hover over a project box */
         .portfolio-card:hover {
-            transform: translateY(-5px); /* Lifts the card up */
+            transform: translateY(-5px);
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
         }
 
-        /* === CONTACT FORM === */
-        /* The colored ring that appears when you click a text box */
         .form-input:focus {
             ring: 2px solid var(--primary-color);
             border-color: var(--primary-color);
         }
 
-        /* === UTILITIES === */
-        /* Prevents scrolling when the modal is open */
         .no-scroll {
             overflow: hidden; 
         }
@@ -76,6 +65,7 @@
 </head>
 <body class="bg-light text-slate-800">
 
+    <!-- Navigation -->
     <nav class="bg-white shadow-sm fixed w-full z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
@@ -87,7 +77,6 @@
                     <a href="#about" class="text-slate-600 hover:text-primary font-medium transition">About</a>
                     <a href="#contact" class="bg-primary text-white px-5 py-2 rounded-full font-medium hover:bg-primaryHover transition shadow-md">Let's Talk</a>
                     
-                    <!-- LINKEDIN BUTTON ADDED HERE -->
                     <a href="https://www.linkedin.com/in/graham-betts-14908110" target="_blank" title="Connect on LinkedIn" class="text-slate-400 hover:text-[#0077b5] transition-colors duration-300 transform hover:scale-110">
                         <i class="fab fa-linkedin text-3xl"></i>
                     </a>
@@ -103,14 +92,14 @@
             <a href="#portfolio" class="block px-4 py-3 text-slate-600 hover:bg-light">Portfolio</a>
             <a href="#about" class="block px-4 py-3 text-slate-600 hover:bg-light">About</a>
             <a href="#contact" class="block px-4 py-3 text-primary font-bold hover:bg-light">Contact</a>
-            <!-- LINKEDIN ADDED TO MOBILE MENU -->
             <a href="https://www.linkedin.com/in/graham-betts-14908110" target="_blank" class="block px-4 py-3 text-slate-600 hover:bg-light hover:text-[#0077b5]">
                 <i class="fab fa-linkedin mr-2"></i> LinkedIn Profile
             </a>
         </div>
     </nav>
 
-    <header class="hero-bg h-screen flex items-center justify-center text-center px-4">
+    <!-- Hero Section -->
+    <header class="hero-bg h-screen flex items-center justify-center text-center px-4 flex-col">
         <div class="max-w-4xl mx-auto text-white" data-aos="fade-up">
             <div class="inline-block px-3 py-1 mb-4 border border-primary rounded-full text-primary text-sm font-semibold tracking-wide uppercase bg-secondary/50 backdrop-blur-sm">
                Digital Learning Design Portfolio
@@ -130,10 +119,15 @@
                 </a>
             </div>
         </div>
+
+        <div class="mt-16 animate-bounce">
+            <a href="#portfolio" class="text-white hover:text-primary transition duration-300">
+                <i class="fas fa-chevron-down text-3xl opacity-75"></i>
+            </a>
+        </div>
     </header>
 
-    
-    
+    <!-- Portfolio Grid -->
     <section id="portfolio" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div class="text-center mb-16">
             <h2 class="text-3xl font-bold text-secondary mb-4">Featured Projects</h2>
@@ -145,6 +139,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             
+            <!-- Project 1 -->
             <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project1')">
                 <div class="relative overflow-hidden">
                     <img src="https://placehold.co/600x400/ff9500/FFF?text=Scenario+Based+Learning" alt="Scenario Based Learning" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
@@ -163,15 +158,15 @@
                 </div>
             </div>
 
-   <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project7')">
+            <!-- Project 7 (AI) -->
+            <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project7')">
                 <div class="relative overflow-hidden">
                     <img src="https://placehold.co/600x400/2563eb/FFF?text=AI+%26+Emerging+Tech" alt="AI Technology" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
                     <div class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
                         AI Innovation
                     </div>
                 </div>
-
- <div class="p-6">
+                <div class="p-6">
                     <h3 class="text-xl font-bold text-secondary mb-2">AI Learning Assistant</h3>
                     <p class="text-slate-500 text-sm mb-4 line-clamp-2">
                         Integrating LLMs to provide real-time support on learner inputs, creating a dynamic and personalized experience.
@@ -182,8 +177,7 @@
                 </div>
             </div>
 
-
-            <!-- RESTORED: Project 9 -->
+            <!-- Project 9 (Leadership) -->
             <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project9')">
                 <div class="relative overflow-hidden">
                     <img src="https://placehold.co/600x400/ff0090/FFF?text=Leadership+%26+Learning" alt="Leadership Learning" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
@@ -202,7 +196,7 @@
                 </div>
             </div>
 
-            
+            <!-- Project 2 (Systems) -->
             <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project2')">
                 <div class="relative overflow-hidden">
                     <img src="https://placehold.co/600x400/0d9488/FFF?text=System+Simulation" alt="System Simulation" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
@@ -221,6 +215,7 @@
                 </div>
             </div>
 
+            <!-- Project 3 (Gamification) -->
             <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project3')">
                 <div class="relative overflow-hidden">
                     <img src="https://placehold.co/600x400/475569/FFF?text=Gamification" alt="Gamification" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
@@ -239,6 +234,7 @@
                 </div>
             </div>
 
+            <!-- Project 4 (Microlearning) -->
             <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project4')">
                 <div class="relative overflow-hidden">
                     <img src="https://placehold.co/600x400/e11d48/FFF?text=Microlearning" alt="Microlearning" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
@@ -257,6 +253,7 @@
                 </div>
             </div>
 
+            <!-- Project 5 (Video) -->
             <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project5')">
                 <div class="relative overflow-hidden">
                     <img src="https://placehold.co/600x400/ff5c00/FFF?text=Video+Production" alt="Video Production" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
@@ -275,6 +272,7 @@
                 </div>
             </div>
 
+            <!-- Project 6 (Job Aids) -->
             <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project6')">
                 <div class="relative overflow-hidden">
                     <img src="https://placehold.co/600x400/cc56db/FFF?text=Infographics" alt="Job Aids" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
@@ -293,6 +291,7 @@
                 </div>
             </div>
 
+            <!-- Project 8 (LMS) -->
             <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project8')">
                 <div class="relative overflow-hidden">
                     <img src="https://placehold.co/600x400/002a86/FFF?text=LMS Customisation" alt="LMS Customisation" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
@@ -310,14 +309,12 @@
                     </div>
                 </div>
             </div>
-
-
             
         </div>
     </section>
 
+    <!-- About Section -->
     <section id="about" class="flex flex-col lg:flex-row min-h-[600px]">
-        
         <div class="lg:w-2/3 bg-slate-100 p-10 lg:p-20 flex flex-col justify-center">
             <div class="max-w-5xl w-full">
                 <h4 class="text-primary font-bold uppercase tracking-wider mb-2 text-sm">About Me</h4>
@@ -327,25 +324,24 @@
                     <img src="https://placehold.co/150x150/0f172a/FFF?text=GB" alt="Graham Betts" class="w-24 h-24 rounded-full shadow-lg border-4 border-white object-cover shrink-0">
                     <div>
                         <p class="text-lg text-slate-700 leading-relaxed mb-4">
-<p>I’m Graham Betts, a Digital Learning Experience Manager who designs learning that respects the learner’s time — and drives performance.</p>
-
-<p>I create engaging learning experiences to create change, not just to drive completion. My focus is on practical, scenario-led design that helps colleagues build confidence, apply skills on the job, and achieve measurable outcomes.</p>
-<br>
-<p>What I do best:</p>
-<br>
-<ul style="list-style-type: disc; padding-left: 20px; margin-left: 15px;">
-    <li><strong>Learning Experience Design (LXD):</strong> Interactive, scenario-based learning that builds real capability</li>
-    <li><strong>Complexity made clear:</strong> Technical and regulated topics translated into engaging, digestible learning journeys</li>
-    <li><strong>SAP SuccessFactors LMS transformation:</strong> Improving the end-to-end learner experience (look & feel, navigation, structure, discoverability and adoption)</li>
-    <li><strong>Data-led design:</strong> Using analytics and stakeholder insight to shape content, journeys and evaluation</li>
-    <li><strong>Delivery & leadership:</strong> Experienced working solo and leading remote, matrix and onsite teams</li>
-</ul>
-<br>
-<p><strong>My philosophy is simple: Learning is the process of applying knowledge, not just consuming it.</strong></p>
-
+                            <p>I’m Graham Betts, a Digital Learning Experience Manager who designs learning that respects the learner’s time — and drives performance.</p>
+                            <p>I create engaging learning experiences to create change, not just to drive completion. My focus is on practical, scenario-led design that helps colleagues build confidence, apply skills on the job, and achieve measurable outcomes.</p>
+                            <br>
+                            <p>What I do best:</p>
+                            <br>
+                            <ul style="list-style-type: disc; padding-left: 20px; margin-left: 15px;">
+                                <li><strong>Learning Experience Design (LXD):</strong> Interactive, scenario-based learning that builds real capability</li>
+                                <li><strong>Complexity made clear:</strong> Technical and regulated topics translated into engaging, digestible learning journeys</li>
+                                <li><strong>SAP SuccessFactors LMS transformation:</strong> Improving the end-to-end learner experience (look & feel, navigation, structure, discoverability and adoption)</li>
+                                <li><strong>Data-led design:</strong> Using analytics and stakeholder insight to shape content, journeys and evaluation</li>
+                                <li><strong>Delivery & leadership:</strong> Experienced working solo and leading remote, matrix and onsite teams</li>
+                            </ul>
+                            <br>
+                            <p><strong>My philosophy is simple: Learning is the process of applying knowledge, not just consuming it.</strong></p>
+                        </p>
                     </div>
                 </div>
-<br>
+                <br>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
                     <div>
                         <h5 class="font-bold text-secondary mb-3 border-b border-slate-300 pb-2">Methodologies</h5>
@@ -368,7 +364,6 @@
                     <div>
                         <h5 class="font-bold text-secondary mb-3 border-b border-slate-300 pb-2">Certifications</h5>
                         <div class="flex flex-col items-center text-center">
-                            <!-- REPLACE src WITH YOUR UPLOADED BADGE IMAGE -->
                             <img src="https://whoopthisismyusername.github.io/portfolio/sap-certified-associate-implementation-consultant-s.37.png" alt="SAP Certified Associate" class="w-24 h-24 mb-2 object-contain"> 
                             <p class="text-xs text-slate-600 font-medium">SAP Certified Associate - Implementation Consultant</p>
                             <p class="text-[10px] text-slate-500">SAP SuccessFactors Learning</p>
@@ -422,19 +417,17 @@
         </div>
     </section>
 
+    <!-- Footer -->
     <footer class="bg-secondary text-slate-500 py-8 text-center text-sm border-t border-slate-900">
         <p>&copy; 2025 Graham Betts. All Rights Reserved.</p>
         <p class="mt-2">Instructional Designer | eLearning Developer | Learning Experience Design Expert</p>
     </footer>
 
+    <!-- Custom Modal for Projects -->
     <div id="projectModal" class="fixed inset-0 z-[60] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <!-- REPLACED: Wrapper now uses flex centering for all screen sizes -->
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:items-center sm:p-0">
             <div class="fixed inset-0 transition-opacity bg-secondary bg-opacity-75" aria-hidden="true" onclick="closeModal()"></div>
 
-            <!-- REMOVED: The ghost span <span>&#8203;</span> is no longer needed with flexbox -->
-
-            <!-- UPDATED: Modal Panel uses w-full by default and responsive centering -->
             <div id="modalPanel" class="relative w-full bg-white text-left shadow-xl transform transition-all sm:my-8 sm:max-w-5xl rounded-t-xl sm:rounded-lg">
                 
                 <div id="modalContent">
@@ -459,24 +452,21 @@
                                         </div>
                                     </div>
                                     <h4 class="mt-4 font-bold text-secondary">The Challenge</h4>
-                                    <p class="mb-3 text-sm text-slate-600" id="modalChallenge">
-                                        Employees were struggling to retain compliance information due to dry, text-heavy PDFs.
-                                    </p>
+                                    <p class="mb-3 text-sm text-slate-600" id="modalChallenge"></p>
                                     <h4 class="mt-4 font-bold text-secondary">The Solution</h4>
-                                    <p class="mb-3 text-sm text-slate-600" id="modalSolution">
-                                        I created a gamified, scenario-based module where learners had to identify risks in a virtual environment.
-                                    </p>
+                                    <p class="mb-3 text-sm text-slate-600" id="modalSolution"></p>
                                     <h4 class="mt-4 font-bold text-secondary">The Result</h4>
-                                    <p class="mb-3 text-sm text-slate-600" id="modalResult">
-                                    </p>
+                                    <p class="mb-3 text-sm text-slate-600" id="modalResult"></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="px-4 py-3 bg-slate-50 sm:px-6 sm:flex sm:flex-row-reverse gap-2">
+                        <!-- Button 1 (Demo) -->
                         <button id="modalLinkBtn" onclick="viewDemo()" class="inline-flex justify-center w-auto px-4 py-2 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primaryHover focus:outline-none sm:text-sm hidden">
                             Launch Demo
                         </button>
+                        <!-- Button 2 (Process/Other) -->
                         <button id="modalProcessBtn" onclick="viewProcess()" class="inline-flex justify-center w-auto px-4 py-2 text-base font-medium text-primary border border-primary rounded-md shadow-sm bg-white hover:bg-slate-50 focus:outline-none sm:text-sm hidden">
                             See the Process
                         </button>
@@ -486,15 +476,13 @@
                     </div>
                 </div>
 
-                <!-- NEW: Disclaimer Container for Project 4 -->
-                <!-- NEW: Disclaimer Container (Dynamic) -->
+                <!-- Disclaimer Container -->
                 <div id="disclaimerContainer" class="hidden px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4 text-center rounded-lg">
                     <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-50 mb-4">
                          <i class="fas fa-info-circle text-2xl text-primary"></i>
                     </div>
                     <h3 class="text-xl leading-6 font-bold text-secondary mb-2">Notice</h3>
                     <div class="mt-2 max-w-lg mx-auto">
-                        <!-- Added ID here to change text dynamically -->
                         <p id="disclaimerText" class="text-md text-slate-600"></p>
                     </div>
                     <div class="mt-6 sm:flex sm:flex-row-reverse sm:justify-center gap-3">
@@ -507,7 +495,8 @@
                     </div>
                 </div>
 
-                <div id="demoContainer" class="hidden h-[100vh] sm:h-[85vh] flex flex-col">
+                <!-- Preview Container -->
+                <div id="demoContainer" class="hidden h-[100vh] sm:h-[85vh] min-h-[85vh] flex flex-col w-full">
                     <div class="flex items-center justify-between px-4 py-2 border-b bg-slate-100">
                         <span class="font-bold text-secondary" id="iframeHeader">Preview</span>
                         <div class="flex gap-2">
@@ -519,7 +508,7 @@
                             </button>
                         </div>
                     </div>
-                    <iframe id="courseFrame" class="w-full h-full border-0 bg-slate-50" src=""></iframe>
+                    <iframe id="courseFrame" class="w-full h-full border-0 bg-slate-50 flex-grow" src=""></iframe>
                 </div>
 
             </div>
@@ -527,13 +516,11 @@
     </div>
 
     <script>
-        // Make functions global for inline onclick handlers
         window.toggleMobileMenu = function() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         }
 
-        // Form Submit Handler using FormSubmit.co (AJAX)
         window.handleFormSubmit = function(e) {
             e.preventDefault();
             const btn = e.target.querySelector('button');
@@ -543,7 +530,6 @@
             const yourEmail = "grahamjbetts@gmail.com"; 
             const endpoint = "https://formsubmit.co/ajax/" + yourEmail;
 
-            // Show loading state
             btn.innerText = 'Sending...';
             btn.classList.add('opacity-75');
             btn.disabled = true;
@@ -556,7 +542,6 @@
             })
             .then(response => response.json())
             .then(data => {
-                // Success
                 btn.innerText = 'Sent!';
                 btn.classList.remove('opacity-75');
                 btn.classList.add('bg-green-600');
@@ -570,7 +555,6 @@
                 }, 2000);
             })
             .catch(error => {
-                // Error
                 console.error('Error:', error);
                 btn.innerText = 'Error!';
                 btn.classList.add('bg-red-600');
@@ -585,7 +569,6 @@
             });
         }
 
-        // Project Modal Logic
         const projects = {
             'project1': {
                 title: 'Closing Customer Interactions with a Sales-led Mentality',
@@ -593,12 +576,9 @@
                 tools: 'Intellum Evolve, Vyond',
                 challenge: "Retail colleagues were closing interactions with customers in formal and transactional ways. Importantly, they weren't providing customers with compelling reasons to return to store. Colleagues didn't appear to understand the principles and wanted practical examples, however simply listing these in support documents didn't land.",
                 solution: 'Create a practical and gamified experience with branching that allowed learners to build on examples from previous linked training, whilst exploring scenrios that interested them. Logic variables ensured a minimum number of scenarios were explored, and the rest of the course built on these with tested examples.',
-                // Fixed: Double quotes
                 result: "'Great-byes' acted as an excellent introduction to upselling. Furthermore, the training halted a concerning trend of low repeat customer numbers.",
-                
                 showDemo: true,
                 demoUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/1/index.html',
-                
                 showProcess: false, 
                 processUrl: '#' 
             },
@@ -609,13 +589,9 @@
                 challenge: 'The company was launching a new Order Management System to Retail colleagues.',
                 solution: "Following procedural training rollout a week earlier, including a robust communications plan, short system simulations were rolled out to all colleagues. These simulations didn't follow 'perfect path' scenarios, but veered off to give typical day to day situations.",
                 result: 'Learners were able to settle into using the software in a safe space, resulting in extremely quick adoption and an accelerated rollout of the new service proposition.',
-                
-                // Added Disclaimer text for Project 2
                 disclaimer: "Please note that the demonstration shown is purely a limited functionality learning simulation composed of screen-captures. It is not a software copy of the live system. I hope you enjoy this demonstration.",
-
                 showDemo: true,
                 demoUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/2/index.html',
-                
                 showProcess: false,
                 processUrl: '#'
             },
@@ -625,12 +601,9 @@
                 tools: 'Storyline 360, JavaScript, Vyond, Photoshop',
                 challenge: 'Annual compliance training had low engagement and employees were clicking through without reading.',
                 solution: 'Stakeholder was looking at purchasing an external solution. Developed a bespoke, editable and low cost internal solution.',
-                // Fixed: Double quotes
                 result: "Course achieved a 'World Class' learner satisfaction NPS score. More importantly though, it generated a notable reduction in data breaches, and a significant uptick in reporting across the business.",
-                
                 showDemo: true,
                 demoUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/3/story.html',
-                
                 showProcess: false,
                 processUrl: '#'
             },
@@ -642,13 +615,17 @@
                 solution: "A flexible microlearning pathway that allowed colleagues to consume as little or as much as they needed in bitesized chunks. The content broken into knowledge and soft skills with key messages pulled out by AI, worked on with SMEs and then turned into engaging and targetted information that went straight to the heart of the questions the available data showed us our customers were asking.",
                 result: "A rapid delivery of training across deskless workforce that drove 15% uplift in colleagues engaging with customers in nutrition aisles and an above target launch of the 'Easy-Repeat-In-Store' proposition.",
                 
-                // Added Disclaimer text for Project 4
-                disclaimer: "Please note, this demonstration showcases an example of the use of the 7Taps tool and a microlearning pathway, but not of the stated case example. This is due to commercial sensitivities.",
-
+                // Demo button configuration (7Taps)
+                linkText: 'Open 7Taps Example',
                 showDemo: true,
                 demoUrl: 'https://app.7taps.com/folder/BQ2PfBw8fR0',
-                showProcess: false,
-                processUrl: '#'
+                disclaimer: "Please note, this demonstration showcases an example of the use of the 7Taps tool and a microlearning pathway, but not of the stated case example. This is due to commercial sensitivities.",
+                
+                // Process button configuration (Blended Series)
+                processText: 'Open Blended Microlearning Example',
+                showProcess: true,
+                processUrl: 'microlearning_player.html',
+                processDisclaimer: "The following example is a demonstration created for the Müller Brand to promote the launch of Mentoring internally. The content is not in use by Müller and is for demonstration purposes only. The original brief asked for a 10 minute microlearning course, however, demonstrating flexible design, the original course has been repurposed into a series of short, targeted micro-courses. I hope you enjoy."
             },
              'project5': {
                 title: 'Video Examples',
@@ -657,10 +634,8 @@
                 challenge: 'A variety of video examples, showcasing my ability to develop across a range of tools',
                 solution: 'Live action health & safety video, Interactive live action scenario, Comms promotional video',
                 result: 'All used and integrated across a range of blended solutions.',
-                
                 showDemo: true,
                 demoUrl: 'projects/5/video_carousel.html',
-                
                 showProcess: false,
                 processUrl: 'projects/5/video_carousel.html'
             },
@@ -668,19 +643,14 @@
                 title: 'Infographics',
                 img: 'https://placehold.co/800x400/64748b/FFF?text=Job+Aids',
                 tools: 'Canva, Adobe Illustrator',
-                // Fixed: Double quotes
                 challenge: "Retail colleagues needed 'offline' support reminders of a new customer service workflow. Needed to distil 3 eLearning courses into a snappy, useable format",
-                // Fixed: Double quotes
                 solution: "Worked with SME's to define core elements and refined content key points. Developed a visual that was both useable and engaging.",
                 result: 'Formed part of a significant shift in CSAT scores, and provided managers a guide to use in the flow of work.',
-                
                 showDemo: true,
                 demoUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/6/CustomerSparkle.pdf',
-                
                 showProcess: false,
                 processUrl: 'projects/6/process_carousel.html'
             },
-
             'project7': {
                 title: 'AI Learning Assistant',
                 img: 'https://placehold.co/800x400/2563eb/FFF?text=AI+Learning+Assistant',
@@ -688,14 +658,11 @@
                 challenge: 'Learners were asked to switch to a new core software platform with no \'down-time\'. A robust blended training package was launched, however, with over 200 new workflow processes, all covered across a wide array of training courses, a solution was needed to ensure colleagues were able to access knowledge when they needed it.',
                 solution: 'Develop a MS Copilot Studio agent that could be fed with \'ScribeHow\' step-by-step guides and deliver clear, and accurate support that matched learner needs in a high pressure environment.',
                 result: 'This supported a successful, and ahead of schedule rollout of the tool and allowed for a reduction in post launch support, creating cost savings for the project.',
-                
                 showDemo: true,
                 demoUrl: 'https://player.vimeo.com/video/1148896984?',
-                
                 showProcess: false,
                 processUrl: 'projects/6/process_carousel.html'
             },
-
             'project8': {
                 title: 'LMS Customisation & Development',
                 img: 'https://placehold.co/800x400/004dbc/FFF?text=LMS+Consultant',
@@ -703,15 +670,11 @@
                 challenge: 'SAP SuccessFactors launched a new Learning user experience. In a diverse business with multiple different audience groups, the platform needed to be customised to support the varied requirements of learners.',
                 solution: 'Utilised on-brand page designs and code based custom card dialogs, displayed across custom pages, combined with intelligent assignment rules, to ensure each core audience was services by a bespoke, but easily maintained solution.',
                 result: 'SAP SuccessFactors Learning successfully accepted by Veterinary business as the suitable solution to deploy Clinical Academy. Entire platform customsied with intuitive UI to help learners access their core training and self development pathways.',
-                
                 showDemo: true,
                 demoUrl: 'https://player.vimeo.com/video/1148907962?',
-                
                 showProcess: false,
                 processUrl: '#'
             },
-
-            // RESTORED: Project 9
             'project9': {
                 title: 'Leadership Scenarios - Code Developed Interactions',
                 img: 'https://placehold.co/800x400/ff0090/FFF?text=Leadership+Learning',
@@ -719,10 +682,8 @@
                 challenge: 'Leaders across the business are struggling to deliver direct and impactful feedback. As a remove and geographically diverse population, how do you support their development of these skills.',
                 solution: 'Run virtual webinars supported with targeted flexible, digital interctions that allow leaders to test their understanding in real situations.',
                 result: 'Managers gained ability to test and learn in their role to improve their skill sets, increasing strength of management as business moved to more streamlined management and leadership approach.',
-                
                 showDemo: true,
                 demoUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/9/index.html',
-                
                 showProcess: false,
                 processUrl: '#'
             },
@@ -730,21 +691,17 @@
 
         let currentDemoUrl = '';
         let currentProcessUrl = '';
-        let currentProjectId = ''; // Track the current project ID
+        let currentProjectId = ''; 
+        let pendingUrl = '';
 
-        // Helper to open Iframe (Shared by both buttons)
         window.openIframe = function(url, title) {
-            // Expand Modal Width
             const modalPanel = document.getElementById('modalPanel');
             modalPanel.classList.remove('sm:max-w-5xl');
-            // UPDATED: Removed 'w-full' from add list as it is now default
             modalPanel.classList.add('sm:max-w-7xl');
 
-            // Toggle Views
             document.getElementById('modalContent').classList.add('hidden');
             document.getElementById('demoContainer').classList.remove('hidden');
 
-            // Set Title & Load Iframe
             document.getElementById('iframeHeader').innerText = title;
             document.getElementById('courseFrame').src = url;
         }
@@ -754,122 +711,109 @@
             const project = projects[projectId];
             if (!project) return;
 
-            // Set current Project ID
             currentProjectId = projectId;
 
-            // Reset view to content and ensure disclaimer is hidden
             document.getElementById('modalContent').classList.remove('hidden');
             document.getElementById('demoContainer').classList.add('hidden');
             document.getElementById('disclaimerContainer').classList.add('hidden');
             
-            // Reset width to standard
             const modalPanel = document.getElementById('modalPanel');
-            // UPDATED: Removed 'w-full' from remove list
             modalPanel.classList.remove('sm:max-w-7xl');
             modalPanel.classList.add('sm:max-w-5xl');
 
-            // Populate Content
             document.getElementById('modalTitle').innerText = project.title;
             document.getElementById('modalImg').src = project.img;
             document.getElementById('modalTools').innerText = project.tools;
             document.getElementById('modalChallenge').innerText = project.challenge;
             document.getElementById('modalSolution').innerText = project.solution;
-            document.getElementById('modalResult').innerText = project.result; // New Result Field
+            document.getElementById('modalResult').innerText = project.result;
 
-            // Toggle Buttons & Store URLs
             const demoBtn = document.getElementById('modalLinkBtn');
             const processBtn = document.getElementById('modalProcessBtn');
 
-            // Handle Demo Button
             if (project.showDemo) {
                 demoBtn.classList.remove('hidden');
+                demoBtn.innerText = project.linkText || 'Launch Demo';
                 currentDemoUrl = project.demoUrl;
             } else {
                 demoBtn.classList.add('hidden');
             }
 
-            // Handle Process Button
             if (project.showProcess) {
                 processBtn.classList.remove('hidden');
+                processBtn.innerText = project.processText || 'See the Process';
                 currentProcessUrl = project.processUrl;
             } else {
                 processBtn.classList.add('hidden');
             }
 
-            // Show Modal
             document.getElementById('projectModal').classList.remove('hidden');
             document.body.classList.add('no-scroll');
         }
 
-        // View the Interactive Course
         window.viewDemo = function() {
             if (!currentDemoUrl || currentDemoUrl === '#') {
                 alert("Demo link coming soon!");
                 return;
             }
 
-            // DYNAMIC DISCLAIMER LOGIC
             const project = projects[currentProjectId];
             
-            // Check if this project has a disclaimer property
             if (project && project.disclaimer) {
-                // Set the text
                 document.getElementById('disclaimerText').innerText = project.disclaimer;
-                // Switch to disclaimer view
+                pendingUrl = currentDemoUrl;
                 document.getElementById('modalContent').classList.add('hidden');
                 document.getElementById('disclaimerContainer').classList.remove('hidden');
                 return;
             }
 
-            // If no disclaimer, open immediately
             window.openIframe(currentDemoUrl, "Demo Preview");
         }
 
-        // Proceed function for the disclaimer
+        window.viewProcess = function() {
+            if (!currentProcessUrl || currentProcessUrl === '#') {
+                alert("Link coming soon!");
+                return;
+            }
+
+            const project = projects[currentProjectId];
+
+            if (project && project.processDisclaimer) {
+                 document.getElementById('disclaimerText').innerText = project.processDisclaimer;
+                 pendingUrl = currentProcessUrl;
+                 document.getElementById('modalContent').classList.add('hidden');
+                 document.getElementById('disclaimerContainer').classList.remove('hidden');
+                 return;
+            }
+
+            window.openIframe(currentProcessUrl, "Process Walkthrough");
+        }
+
         window.proceedToDemo = function() {
             document.getElementById('disclaimerContainer').classList.add('hidden');
-            window.openIframe(currentDemoUrl, "Demo Preview");
+            window.openIframe(pendingUrl, "Preview");
         }
 
-        // Cancel function for the disclaimer (goes back to details)
         window.cancelDisclaimer = function() {
             document.getElementById('disclaimerContainer').classList.add('hidden');
             document.getElementById('modalContent').classList.remove('hidden');
         }
 
-        // View the Process Documentation
-        window.viewProcess = function() {
-            if (!currentProcessUrl || currentProcessUrl === '#') {
-                alert("Process documentation coming soon!");
-                return;
-            }
-            window.openIframe(currentProcessUrl, "Process Walkthrough");
-        }
-
         window.backToDetails = function() {
-            // Shrink Modal Width
             const modalPanel = document.getElementById('modalPanel');
             modalPanel.classList.add('sm:max-w-5xl');
-            // UPDATED: Removed 'w-full' from remove list
             modalPanel.classList.remove('sm:max-w-7xl');
 
-            // Toggle Views
             document.getElementById('modalContent').classList.remove('hidden');
-            // Fixed: This was remove('hidden'), changed to add('hidden') to actually hide it
             document.getElementById('demoContainer').classList.add('hidden');
 
-            // Stop Iframe (Audio)
             document.getElementById('courseFrame').src = '';
         }
 
         window.closeModal = function() {
             document.getElementById('projectModal').classList.add('hidden');
             document.body.classList.remove('no-scroll');
-            
-            // Ensure disclaimer is reset
             document.getElementById('disclaimerContainer').classList.add('hidden');
-
-            // Stop Iframe (Audio)
             document.getElementById('courseFrame').src = '';
         }
     </script>
