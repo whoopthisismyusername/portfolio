@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staggered Layout</title>
+    <style>
+        /* --- USER PROVIDED CSS & FONTS --- */
+        @charset "UTF-8";
+        @import"https://p.typekit.net/p.css?s=1&k=slj1ikw&ht=tk&f=753.755.28509&a=4177014&app=typekit&e=css";
+
+        /* Fonts Definitions */
+        @font-face {
+            font-family: adrianna;
+            src: url(https://use.typekit.net/af/a56e2e/0000000000000000773597b3/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3) format("woff2"),url(https://use.typekit.net/af/a56e2e/0000000000000000773597b3/31/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3) format("woff"),url(https://use.typekit.net/af/a56e2e/0000000000000000773597b3/31/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3) format("opentype");
+            font-display: swap;
+            font-style: normal;
+            font-weight: 600;
+            font-stretch: normal
+        }
+
+        @font-face {
+            font-family: adrianna;
+            src: url(https://use.typekit.net/af/41aeea/0000000000000000773597ca/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3) format("woff2"),url(https://use.typekit.net/af/41aeea/0000000000000000773597ca/31/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3) format("woff"),url(https://use.typekit.net/af/41aeea/0000000000000000773597ca/31/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3) format("opentype");
+            font-display: swap;
+            font-style: normal;
+            font-weight: 700;
+            font-stretch: normal
+        }
+
+        @font-face {
+            font-family: program;
+            src: url(https://use.typekit.net/af/0ea1d5/00000000000000007735b2e6/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3) format("woff2"),url(https://use.typekit.net/af/0ea1d5/00000000000000007735b2e6/31/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3) format("woff"),url(https://use.typekit.net/af/0ea1d5/00000000000000007735b2e6/31/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3) format("opentype");
+            font-display: swap;
+            font-style: normal;
+            font-weight: 700;
+            font-stretch: normal
+        }
+
+        :root {
+            /* Icon Variables */
+            --icon-size: 1em;
+            --icon-spacer: .5em;
+            --icon-color: #111; /* fallback for light-dark */
+            --icon-arrow-down: url("data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='utf-8'?%3e%3c!--%20Generator:%20Adobe%20Illustrator%2028.2.0,%20SVG%20Export%20Plug-In%20.%20SVG%20Version:%206.00%20Build%200)%20--%3e%3csvg%20version='1.1'%20id='arrow-down'%20xmlns='http://www.w3.org/2000/svg'%20xmlns:xlink='http://www.w3.org/1999/xlink'%20x='0px'%20y='0px'%20viewBox='0%200%20100%20100'%20style='enable-background:new%200%200%20100%20100;'%20xml:space='preserve'%3e%3cstyle%20type='text/css'%3e%20.st0{fill:%23212529;}%20%3c/style%3e%3cpath%20class='st0'%20d='M49.3,94.2c0.2,0.1,0.4,0.2,0.7,0.2c0.3,0,0.5,0,0.7-0.2l38.3-38.3l-7.8-7.8L55.5,73.8V5.6h-11v68.2L18.8,48.1%20l-7.8,7.8L49.3,94.2'/%3e%3c/svg%3e");
+            --icon-arrow-left: url("data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M11.3911%202.52783C12.154%201.8246%2013.3909%201.82465%2014.1538%202.52783C14.9167%203.2311%2014.9167%204.37145%2014.1538%205.07471L8.61279%2010.1821H20.1812C21.1851%2010.1821%2021.9993%2010.9956%2021.9995%2011.9995C21.9995%2013.0036%2021.1853%2013.8179%2020.1812%2013.8179H8.61377L14.1538%2018.9263C14.9167%2019.6295%2014.9167%2020.7699%2014.1538%2021.4731C13.391%2022.1757%2012.1548%2022.1757%2011.3921%2021.4731L2.56982%2013.3403C2.17105%2012.9725%201.98212%2012.4851%202.00049%2012.0034C1.98017%2011.5195%202.16916%2011.0291%202.56982%2010.6597L11.3911%202.52783Z'%20fill='black'/%3e%3c/svg%3e");
+            --icon-arrow-right: url("data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M12.6074%2021.4724C11.8445%2022.1756%2010.6076%2022.1757%209.84473%2021.4724C9.08194%2020.7691%209.08189%2019.6288%209.84473%2018.9255L15.3857%2013.8181L3.81738%2013.8181C2.8134%2013.818%202%2013.0038%202%2011.9998C2.00026%2010.996%202.81356%2010.1825%203.81738%2010.1824L15.3848%2010.1824L9.84473%205.07397C9.08196%204.37073%209.08194%203.23132%209.84473%202.52808C10.6076%201.82486%2011.8446%201.82485%2012.6074%202.52808L21.4287%2010.6599C21.8287%2011.0287%2022.0176%2011.5177%2021.998%2012.0007C22.0172%2012.4834%2021.8284%2012.9721%2021.4287%2013.3406L12.6074%2021.4724Z'%20fill='black'/%3e%3c/svg%3e");
+            --icon-x-close: url("data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M17.209%203.65039C18.0761%202.78331%2019.4825%202.78328%2020.3496%203.65039C21.2167%204.51749%2021.2166%205.92388%2020.3496%206.79102L15.1396%2012L20.3496%2017.21C21.2166%2018.0771%2021.2167%2019.4835%2020.3496%2020.3506C19.4825%2021.2176%2018.0761%2021.2176%2017.209%2020.3506L11.999%2015.1406L6.79004%2020.3506C5.92301%2021.2173%204.51742%2021.2173%203.65039%2020.3506C2.78328%2019.4835%202.78328%2018.0771%203.65039%2017.21L8.85938%2012L3.65039%206.79102C2.78328%205.92388%202.78328%204.51752%203.65039%203.65039C4.51743%202.78361%205.92299%202.78364%206.79004%203.65039L11.999%208.85938L17.209%203.65039Z'%20fill='black'/%3e%3c/svg%3e");
+
+            /* Font Variables */
+            --font-program: "program", sans-serif;
+            --font-adrianna: "adrianna", sans-serif;
+            --font-headline: var(--font-program);
+            --font-body: var(--font-adrianna);
+            
+            /* Text Variables */
+            --text-color: #111; /* Changed to dark for white background */
+            --link-color: #da281c; /* Updated Red */
+            
+            /* Typography Sizing Defaults */
+            --font-h1: 3.5rem; --line-height-h1: 1.1;
+            --font-h2: 2.5rem; --line-height-h2: 1.2;
+            --font-h3: 2rem; --line-height-h3: 1.3;
+            --font-h4: 1.5rem; --line-height-h4: 1.4;
+            --font-h5: 1.25rem; --line-height-h5: 1.5;
+            --font-h6: 1rem; --line-height-h6: 1.6;
+            --font-body-large: 1.125rem; --line-height-body-large: 1.6;
+            --font-size-xs: 0.8rem;
+            
+            --column-gutter: 1rem;
+            --grid-gap: 1.5rem;
+        }
+
+        /* Modern Reset & Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: white; /* Changed to white */
+            color: var(--text-color);
+            line-height: 1.5;
+            overflow-x: hidden;
+            overflow-y: hidden; /* Prevent scrolling since we are full screen */
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-headline);
+            margin-top: 0;
+        }
+
+        /* The Main Full-Screen Layout Container */
+        .layout-container {
+            width: 100vw;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #da281c; /* Updated Red */
+            border-radius: 0;
+            box-shadow: none;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center; /* Center the stage vertically on screen */
+            justify-content: center;
+            flex-wrap: nowrap;
+            padding: 2rem;
+        }
+
+        /* --- CONTENT STAGE (Limits content area) --- */
+        .content-stage {
+            position: relative;
+            width: 100%;
+            max-width: 1600px;
+            
+            /* Responsive Height: 
+               At 1600px width, 37.5vw = 600px.
+               Uses min() to scale down on smaller screens but cap at 600px max.
+            */
+            height: min(600px, 37.5vw); 
+            
+            /* Limit: Ensure it never exceeds 80% of the viewport height */
+            max-height: 80vh; 
+            display: flex;
+            align-items: flex-end; /* Align cards to bottom of this stage */
+            justify-content: center;
+            /* Optional: Move stage up slightly to mimic visual balance */
+            /* REVERTED: Back to -5% to undo the previous lift */
+            transform: translateY(-5%); 
+        }
+
+        /* --- BACKGROUND TEXT --- */
+        .background-text {
+            /* Typography */
+            font-family: var(--font-headline); /* using 'program' */
+            
+            /* Responsive Font Size: 128px at 1600px width is 8vw */
+            font-size: min(128px, 8vw);
+            
+            font-weight: 700;
+            line-height: 0.8; /* Tighter line height for stacked text */
+            color: #ffffff;
+            text-align: center;
+            text-transform: uppercase;
+            white-space: nowrap;
+            
+            /* Positioning & Transform */
+            position: absolute;
+            
+            /* SEPARATION: Moved to absolute top (0) to pull away from cards */
+            top: 0; 
+            
+            left: 50%;
+            width: 100%;
+            
+            /* Center horizontally, apply rotation */
+            transform: translateX(-50%) rotate(-10deg);
+            transform-origin: center center;
+            
+            z-index: 1; /* Behind images */
+            pointer-events: none;
+            user-select: none;
+            
+            padding-top: 0; 
+        }
+
+        /* The Sliding Images */
+        .slide-image {
+            /* Responsive Image Size: 
+               Reduced from 18.75vw to 15vw to make them scale smaller.
+               Capped at 300px max. 
+            */
+            width: min(300px, 15vw);
+            height: min(300px, 15vw);
+            
+            /* Responsive Radius */
+            border-radius: min(25px, 1.56vw);
+            
+            object-fit: cover;
+            
+            /* Responsive Shadow */
+            box-shadow: calc(min(7.5px, 0.47vw) * -1) min(7.5px, 0.47vw) 0px rgba(0,0,0,0.4);
+            
+            background-color: #ddd;
+            flex-shrink: 0;
+            
+            /* Responsive Negative Margin: 
+               Adjusted for 15vw base. 45px is approx 15% of 300px. 
+               15% of 15vw is 2.25vw.
+            */
+            margin-left: calc(min(45px, 2.25vw) * -1);
+            
+            cursor: pointer;
+            z-index: 2; /* In front of text */
+            opacity: 0;
+            transform: translateX(-100vw) rotate(-15deg); 
+            transition: all 0.3s ease-out;
+            will-change: transform, opacity;
+            
+            /* SEPARATION: Reduced margin to 30px (1.8vw) to sink the cards lower */
+            margin-bottom: min(30px, 1.8vw); 
+        }
+
+        .slide-image:first-child {
+            margin-left: 0;
+        }
+
+        /* Active State (Triggered by JS) */
+        .layout-container.in-view .slide-image:nth-child(odd) {
+            opacity: 1;
+            transform: translateX(0) rotate(-15deg);
+        }
+
+        .layout-container.in-view .slide-image:nth-child(even) {
+            opacity: 1;
+            transform: translateX(0) rotate(15deg);
+        }
+
+        /* Hover Effects */
+        .layout-container.in-view .slide-image:nth-child(odd):hover {
+            transform: scale(1.25) rotate(-15deg);
+            z-index: 100;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .layout-container.in-view .slide-image:nth-child(even):hover {
+            transform: scale(1.25) rotate(15deg);
+            z-index: 100;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Staggered Delays */
+        .slide-image:nth-child(1) { transition-delay: 0.05s; }
+        .slide-image:nth-child(2) { transition-delay: 0.1s; }
+        .slide-image:nth-child(3) { transition-delay: 0.15s; }
+        .slide-image:nth-child(4) { transition-delay: 0.2s; }
+
+
+        /* --- MODAL & TRANSITION --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+            visibility: hidden;
+            transition: visibility 0s 0.8s;
+            color: #111; /* Reset text color for modal */
+        }
+
+        .modal-overlay.active {
+            visibility: visible;
+            pointer-events: auto;
+            transition-delay: 0s;
+        }
+
+        .curtain-layer {
+            position: absolute;
+            top: -120%;
+            left: 0;
+            width: 100%;
+            height: 120%;
+            background-color: #da281c; /* Updated Red */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .modal-overlay.active .curtain-layer {
+            transform: translateY(100%);
+        }
+
+        .curtain-edge {
+            position: absolute;
+            bottom: -15vw;
+            left: 0;
+            width: 100%;
+            height: 15vw;
+            min-height: 150px;
+            pointer-events: none;
+        }
+        
+        .curtain-edge svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            transform: scaleY(-1);
+            fill: #da281c; /* Updated Red */
+        }
+
+        .modal-content-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 90%;
+            max-width: 1000px;
+            background: white;
+            /* Reduced padding to shrink height */
+            padding: 2rem; 
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            opacity: 0;
+            transition: all 0.5s ease-out;
+            transition-delay: 0s;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 2rem;
+            font-family: var(--font-body);
+            
+            /* Added safety constraints for smaller iframes */
+            max-height: 85vh; 
+            overflow-y: auto; 
+        }
+
+        .modal-overlay.active .modal-content-box {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            transition-delay: 0.5s; /* Wait for curtain */
+        }
+
+        .modal-image {
+            /* Changed to 30% width */
+            width: 30%;
+            height: auto;
+            /* Reduced from 60vh to 45vh to shrink modal height by ~20% */
+            max-height: 45vh; 
+            object-fit: cover;
+            border-radius: 15px;
+            display: block;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .modal-text {
+            /* Changed to flex 1 to fill remaining space (approx 70%) */
+            flex: 1;
+            color: #333;
+            text-align: left;
+        }
+
+        .modal-text h2 {
+            margin-bottom: 1rem;
+            color: #da281c; /* Updated Red */
+            font-size: 2rem;
+            line-height: 1.2;
+        }
+
+        /* Styling for the structured content in modal */
+        .modal-text h3 {
+            font-size: 1.25rem;
+            color: #111;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .modal-text p {
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+            color: #555;
+            font-size: 1rem;
+        }
+        
+        .modal-text ul {
+            padding-left: 1.2rem;
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        
+        .modal-text li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .modal-text strong {
+            color: #333;
+        }
+
+        .close-btn {
+            position: absolute;
+            /* Moved inside the container to prevent clipping by overflow:auto */
+            top: 15px;
+            right: 15px;
+            background: white;
+            color: #da281c; /* Updated Red */
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Softer shadow since it's inside */
+            transition: transform 0.2s;
+            z-index: 10; /* Ensure it sits above content */
+        }
+        
+        .close-btn:after {
+            content: '';
+            display: block; /* Ensure it renders */
+            width: 24px;
+            height: 24px;
+            background-color: #da281c; /* Updated Red */
+            -webkit-mask: var(--icon-x-close) no-repeat center;
+            mask: var(--icon-x-close) no-repeat center;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Icon Utility Class (from user css) */
+        .icon-before:before, .icon-after:after {
+            content: "";
+            display: inline-block;
+            vertical-align: text-top;
+            background-color: var(--icon-color, var(--text-color));
+            width: var(--icon-size, 1em);
+            height: var(--icon-size, 1em);
+            -webkit-mask: var(--icon) no-repeat center;
+            mask: var(--icon) no-repeat center;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            flex-shrink: 0;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1400px) {
+            /* No longer need specific overrides here as the main classes are now fluid */
+        }
+        
+        /* Updated Breakpoint: Only stack on Mobile Portrait (approx < 700px) */
+        @media (max-width: 700px) {
+            body {
+                overflow-y: auto; /* Enable vertical scrolling */
+            }
+
+            .layout-container {
+                height: auto;
+                min-height: 100vh;
+                flex-direction: column;
+                padding: 1rem; /* Reduced padding on container */
+                align-items: center; 
+                justify-content: flex-start;
+                padding-top: 1rem; /* Removed the large padding here */
+                overflow: visible; /* Allow content to flow */
+            }
+            
+            .content-stage {
+                height: auto;
+                max-height: none;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                transform: none;
+                width: 100%;
+                /* Add padding to the STAGE instead to push cards down */
+                padding-top: 130px; 
+                position: relative;
+            }
+
+            .background-text {
+                position: absolute;
+                top: 0; /* Align to very top of the stage */
+                left: 50%;
+                width: 100%;
+                transform: translateX(-50%) rotate(-5deg); /* Slight rotation */
+                font-size: min(48px, 10vw); /* Readable size on mobile */
+                line-height: 1;
+                padding-top: 0;
+                z-index: 0; /* Lower z-index to sit BEHIND images */
+            }
+
+            .slide-image {
+                /* Responsive size for vertical stack on mobile - approx 40% width */
+                width: 40vw; 
+                height: 40vw;
+                max-width: 400px;
+                max-height: 400px;
+                
+                margin-left: 0;
+                margin-bottom: -8vw; /* Adjusted vertical overlap for smaller images */
+                
+                /* Ensure animations work */
+                transform: translateX(-100vw) rotate(-5deg);
+                
+                position: relative; 
+                z-index: 2; /* Higher z-index to sit ON TOP of text */
+            }
+            
+            .slide-image:last-child {
+                margin-bottom: 50px;
+            }
+
+            /* Adjust active states for vertical stack */
+            .layout-container.in-view .slide-image:nth-child(odd) {
+                transform: translateX(0) rotate(-3deg);
+            }
+
+            .layout-container.in-view .slide-image:nth-child(even) {
+                transform: translateX(0) rotate(3deg);
+            }
+            
+            /* Modal Adjustments */
+            .modal-content-box {
+                width: 95%;
+                flex-direction: column;
+                padding: 1.5rem;
+                max-height: 85vh;
+                overflow-y: auto;
+            }
+            .modal-image {
+                display: none; /* Hide image in modal on mobile */
+            }
+            .modal-text {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- The Target Layout (Full Screen) -->
+    <section class="layout-container" id="targetSection">
+        <div class="content-stage">
+            <div class="background-text">
+                THE 4 STAGES<br>
+                OF MENTORING
+            </div>
+            <!-- Added data-index to map to content -->
+            <img src="images/m1.jpg" alt="Phase 1: Pre-Meeting" class="slide-image" data-index="0">
+            <img src="images/m2.jpg" alt="Phase 2: The First Meeting - Contracting" class="slide-image" data-index="1">
+            <img src="images/m3.jpg" alt="Phase 3: The Active Cycle" class="slide-image" data-index="2">
+            <img src="images/m4.jpg" alt="Phase 4: Evaluation & Closure" class="slide-image" data-index="3">
+        </div>
+    </section>
+
+    <!-- Modal Structure -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="curtain-layer">
+            <div class="curtain-edge">
+                <!-- The Wavy Path SVG -->
+                <svg viewBox="0 0 1440 1287" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M 1440 1287 V 168.605 C 1438.85 168.021 1437.7 167.453 1436.55 166.899 C 1348.86 124.535 1286.8 170.271 1228.88 212.955 C 1226.42 214.769 1223.97 216.577 1221.52 218.373 C 1177 251.032 1150.25 232.35 1113.8 192.464 C 1107.78 185.879 1101.5 178.716 1094.83 171.11 L 1094.75 171.023 L 1094.73 170.991 L 1094.66 170.918 C 1083.81 158.543 1071.92 144.994 1058.48 130.866 C 1042.32 113.89 1026.56 102.168 1010.95 94.7393 C 957.105 69.1197 904.999 94.5601 844.381 131.613 C 766.986 178.921 761.471 173.704 667.693 84.9991 L 664.76 82.2237 C 568.155 -9.14304 460.79 19.5606 401.809 81.4385 C 342.828 143.316 309.224 120.973 282.233 98.9063 C 255.242 76.8394 172.224 23.0347 91.3369 18.4043 C 84.9264 18.0372 78.5584 17.9249 72.2393 18.0479 C 47.2497 18.5338 23.0273 22.7047 0 29.4106 V 1287 H 1440 Z"/>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="modal-content-box">
+            <!-- Close button using CSS icon mask -->
+            <button class="close-btn" id="closeModal" aria-label="Close"></button>
+            <img src="" alt="Selected Image" class="modal-image" id="modalImage">
+            <div class="modal-text" id="modalContentArea">
+                <!-- Content will be injected via JS -->
+                <h2 id="modalTitle">Image Title</h2>
+                <p>Content loading...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Content Data for Modals ---
+            const mentoringPhases = [
+                {
+                    title: "Phase 1: Pre-Meeting",
+                    content: `
+                        <p>Before the first meeting occurs, both parties must understand their distinct responsibilities to ensure you both get what's needed.</p>
+                        <p><strong>The Golden Rule:</strong> The Mentee drives the relationship; the Mentor guides the journey.</p>
+                        <p><strong>The Mentee's Role:</strong> Responsible for booking meetings, doing 'homework', understanding what they want to achieve</p>
+                        <p><strong>The Mentor's Role:</strong> Facilitator, Sounding Board, Advisor. Focus on asking thought-provoking questions and sharing experiences to facilitate growth.</p>
+                    `
+                },
+                {
+                    title: "Phase 2: The First Meeting - \"Contracting\"",
+                    content: `
+                        <p>The first official session shouldn't be about solving problems immediately. It is about establishing the Rules of Engagement.</p>
+                        <p>1. <strong>Logistics & Frequency:</strong> How often will you meet? (e.g., Bi-weekly) & Where/How? (Teams, In Person?)</p>
+                        <p>2. <strong>Confidentiality:</strong> Agree explicitly that what is said in the room stays in the room to build psychological safety.</p>
+                        <p>3. <strong>Goal Setting:</strong> The Mentee should present 1–3 goals , which you can work on to make SMART.</p>
+                    `
+                },
+                {
+                    title: "Phase 3: The Active Cycle - Multiple future meetings",
+                    content: `
+                        <p>As a mentor you will be provided with simple and clear models that help you direct open and clear discovery and make plans. This is the bulk of the relationship and can be spread across weeks or months.</p>
+                        <p>In these sessions Mentors will ask questions to understand problems and context. </p>
+                        <p>They will listen, but challenge the mentee to stay focused on the goals. </p>
+                        <p>They will share relevant experience, and then guide the Mentee to put in place a plan - a specific step to achieve for the next session.</p>
+                    `
+                },
+                {
+                    title: "Phase 4: Evaluation & Closure",
+                    content: `
+                        <p>Mentoring is a job where the mentor's aim is to successfully take away the need for the relationship to continue.</p>
+                        <p>Regular check-ins are used to evaluate progress against plans and goals</p>
+                        <p>Once the Mentee has achieved their goals, share feedback on what was learned and gained.</p>
+                    `
+                }
+            ];
+
+            // Intersection Observer for Slide-in Animation
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.3
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const target = document.getElementById('targetSection');
+            if (target) {
+                observer.observe(target);
+            }
+
+            // --- Modal Logic ---
+            const modal = document.getElementById('modalOverlay');
+            const modalImg = document.getElementById('modalImage');
+            const modalContentArea = document.getElementById('modalContentArea');
+            const closeBtn = document.getElementById('closeModal');
+            const images = document.querySelectorAll('.slide-image');
+
+            // Open Modal
+            images.forEach(img => {
+                img.addEventListener('click', () => {
+                    modalImg.src = img.src;
+                    
+                    // Get Index from data attribute
+                    const index = img.getAttribute('data-index');
+                    const data = mentoringPhases[index];
+
+                    if(data && modalContentArea) {
+                        modalContentArea.innerHTML = `<h2>${data.title}</h2>${data.content}`;
+                    } else {
+                        // Fallback
+                        modalContentArea.innerHTML = `<h2>${img.alt}</h2><p>Content details unavailable.</p>`;
+                    }
+                    
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden'; 
+                });
+            });
+
+            // Close Modal Function
+            const closeModal = () => {
+                modal.classList.remove('active');
+                document.body.style.overflow = ''; 
+            };
+
+            closeBtn.addEventListener('click', closeModal);
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal || e.target.closest('.curtain-layer')) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

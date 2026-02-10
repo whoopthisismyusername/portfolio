@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Müller Mentoring Career 'Milk Round'</title>
+    <style>
+        /* --- CSS STYLES --- */
+        :root {
+            --muller-red: #E30613;
+            --muller-red-dark: #c20510;
+            --text-light: #ffffff;
+            --text-dark: #333333;
+            --bg-dark-blue: #002458;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg-dark-blue);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+            color: var(--text-light);
+        }
+
+        /* Main Container - Flexbox for responsiveness */
+        .game-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: stretch;
+            width: 100%;
+            max-width: 1200px;
+            background-color: var(--bg-dark-blue);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: none;
+        }
+
+        /* Side Panels (Bottle Areas) */
+        .side-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .bottle-img {
+            max-width: 100%;
+            height: auto;
+            min-width: 120px; 
+            transition: all 0.3s ease;
+        }
+
+        .panel-label {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--text-light);
+        }
+
+        /* Center Activity Space */
+        .activity-space {
+            flex: 2;
+            background-color: var(--muller-red);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 20px;
+            min-height: 400px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .progress-indicator {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 40px;
+            line-height: 1.4;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* Standard Game Buttons */
+        .answer-btn {
+            padding: 15px 25px;
+            border: 2px solid white;
+            background-color: transparent;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+            max-width: 250px;
+        }
+
+        .answer-btn:hover {
+            background-color: white;
+            color: var(--muller-red);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* --- MODAL STYLES --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto; /* Allow scroll on small screens if content is tall */
+        }
+
+        #start-modal {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border-top: 10px solid var(--muller-red);
+            color: #333;
+            position: relative;
+        }
+
+        .modal-title {
+            color: var(--muller-red);
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .modal-body {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .restart-btn {
+            padding: 10px 20px;
+            background-color: transparent;
+            color: #666;
+            border: 1px solid #ccc;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+            margin-top: 30px; /* Space from CTAs */
+        }
+
+        .restart-btn:hover {
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* --- MÜLLER CTA BUTTON STYLES (From Previous Interaction) --- */
+        
+        .cta-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn-wrapper {
+            /* Radius matches button */
+            --_border-radius: 12px; 
+            --_transition-duration: .3s;
+            --_transition-easing: cubic-bezier(.5, .7, .4, 1);
+            
+            /* Black Outline */
+            --_border-color: #000000; 
+            
+            /* Reduced Black Shadow Opacity */
+            --_shadow-color: rgba(0, 0, 0, 0.25); 
+            
+            /* Red Background */
+            --_background-color: var(--muller-red);
+            
+            display: inline-flex;
+            justify-content: center;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* The Shadow/Back Plate */
+        .btn-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; 
+            width: 100%; height: 100%;
+            background-color: var(--_shadow-color); 
+            border-radius: var(--_border-radius);
+            transition: transform var(--_transition-duration) var(--_transition-easing);
+            transform: translate(0, 0); 
+            z-index: -1;
+        }
+
+        /* Hover: Shadow Moves Down-Left */
+        .btn-wrapper:hover::before {
+            transform: translate(-6px, 6px);
+        }
+
+        /* The Button Face */
+        .action-btn {
+            --_padding-x: 32px;
+            --_padding-y: 14px;
+            
+            position: relative;
+            z-index: 1;
+            padding: var(--_padding-y) var(--_padding-x);
+            border-radius: var(--_border-radius);
+            border: 2px solid var(--_border-color);
+            background-color: var(--_background-color);
+            color: white;
+            text-decoration: none;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 1rem; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all var(--_transition-duration) var(--_transition-easing);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translate(0, 0);
+            cursor: pointer;
+            width: 100%; /* Ensure full width inside wrapper */
+            white-space: nowrap;
+        }
+
+        /* Hover: Button Moves Up-Right */
+        .btn-wrapper:hover .action-btn {
+            transform: translate(4px, -4px); 
+            background-color: var(--muller-red-dark);
+            border-color: #000000;
+        }
+
+        .action-btn::after {
+            content: '→';
+            margin-left: 8px;
+            transition: margin 0.2s;
+        }
+
+        .btn-wrapper:hover .action-btn::after {
+            margin-left: 12px;
+        }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 900px) {
+            .game-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .activity-space {
+                 order: 1; 
+                 width: 90%;
+                 margin: 0;
+                 min-height: 300px;
+                 padding-top: 10px;
+                 padding-bottom: 15px;
+            }
+
+            .side-panel {
+                flex-direction: row;
+                width: 100%;
+                justify-content: center;
+                margin-top: 15px; 
+            }
+            
+            .side-panel.left { order: 2; }
+            .side-panel.right { order: 3; margin-top: 5px; margin-bottom: 20px; }
+
+            .bottle-img {
+                max-width: 80px;
+                min-width: auto;
+                margin-right: 20px;
+            }
+            .panel-label { margin-top: 0; }
+
+            .btn-container { flex-direction: column; align-items: center; }
+            .answer-btn { width: 100%; }
+            
+            .action-btn { font-size: 0.85rem; padding: 12px 20px; white-space: normal; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        
+        <div class="side-panel left">
+            <img id="mentor-img" class="bottle-img" src="images/leftstart.svg" alt="Mentor Progress Bottle">
+            <div class="panel-label">Mentor Skills</div>
+        </div>
+
+        <div class="activity-space" id="quiz-interface">
+            <div class="progress-indicator" id="progress-text">Question 1 of 12</div>
+            <div class="question-text" id="question-display">Loading question...</div>
+            
+            <div class="btn-container">
+                <button class="answer-btn" id="btn-a">Option A</button>
+                <button class="answer-btn" id="btn-b">Option B</button>
+            </div>
+        </div>
+
+        <div class="side-panel right">
+             <img id="mentee-img" class="bottle-img" src="images/rightstart.svg" alt="Mentee Progress Bottle">
+            <div class="panel-label">Mentee Needs</div>
+        </div>
+
+    </div>
+
+    <!-- Start Instruction Overlay -->
+    <div class="modal-overlay" id="start-modal">
+        <div class="modal-content">
+            <h2 class="modal-title">Is mentoring for you?</h2>
+            <div class="modal-body">
+                Mentoring brings opportunities, not just to be a mentor, but to be a mentee too. Which is right for you depends on where you are in your career, thinking and energy. These short questions will build your mentor or mentee meters to see where you could benefit.
+            </div>
+            <!-- Using standard btn style for start, but could upgrade if desired -->
+            <div class="btn-wrapper">
+                <button class="action-btn" id="start-btn">Get Started</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Result Modal -->
+    <div class="modal-overlay" id="result-modal">
+        <div class="modal-content">
+            <h2 class="modal-title" id="modal-heading">Results Header</h2>
+            <div class="modal-body" id="modal-text">
+                Results body text goes here.
+            </div>
+            
+            <!-- Dynamic CTA Buttons Container -->
+            <div id="cta-container" class="cta-group">
+                <!-- Buttons injected via JS -->
+            </div>
+
+            <button class="restart-btn" onclick="location.reload()">Restart Activity</button>
+        </div>
+    </div>
+
+
+    <script>
+        /* --- JAVASCRIPT LOGIC --- */
+
+        // 1. State Variables
+        let currentQuestionIndex = 0;
+        let mentorScore = 0; 
+        let menteeScore = 0; 
+        const totalQuestions = 12;
+
+        // 2. The Question Data 
+        const questions = [
+            {
+                question: "When looking at your daily tasks at Müller, you usually feel:",
+                optionA: { text: "Comfortable and looking for a new challenge.", type: "mentor" },
+                optionB: { text: "Stretched and sometimes unsure of the best approach.", type: "mentee" }
+            },
+            {
+                question: "In team meetings, you are more likely to:",
+                optionA: { text: "Listen and absorb information to learn the ropes.", type: "mentee" },
+                optionB: { text: "Share past experiences to help solve current problems.", type: "mentor" }
+            },
+            {
+                question: "Regarding your career path over the next 3 years:",
+                optionA: { text: "I have a clear plan and know how to get there.", type: "mentor" },
+                optionB: { text: "I have ambition, but the path isn't clear yet.", type: "mentee" }
+            },
+             {
+                question: "When a new starter joins your shift or team, you instinctively:",
+                optionA: { text: "Offer to show them the 'unwritten rules' of the site.", type: "mentor" },
+                optionB: { text: "Hope someone else guides them so you can focus on your tasks.", type: "mentee" }
+            },
+            {
+                question: "How well do you understand how different Müller departments connect?",
+                optionA: { text: "I'm still figuring out who does what outside my team.", type: "mentee" },
+                optionB: { text: "I have a good network and understand the wider supply chain flow.", type: "mentor" }
+            },
+            {
+                question: "You've just made a mistake on a task. Your immediate thought is:",
+                optionA: { text: "I wish I had someone trusted to talk this through with.", type: "mentee" },
+                optionB: { text: "I know how to fix this, and I'll remember this lesson for others.", type: "mentor" }
+            },
+             {
+                question: "Your attitude towards leadership skills (like active listening and feedback):",
+                optionA: { text: "I want to practice these skills to prepare for future roles.", type: "mentor" },
+                optionB: { text: "I need to be on the receiving end of these skills right now.", type: "mentee" }
+            },
+             {
+                question: "When facing a complex stakeholder issue, you feel:",
+                optionA: { text: "Confident in navigating the politics and personalities.", type: "mentor" },
+                optionB: { text: "Unsure how to influence the outcome effectively.", type: "mentee" }
+            },
+             {
+                question: "You have accumulated significant 'insider knowledge' about how Müller works:",
+                optionA: { text: "Yes, and it's time I shared it before I move on.", type: "mentor" },
+                optionB: { text: "Not really, I'm still gathering that knowledge myself.", type: "mentee" }
+            },
+            {
+                question: "Looking at your current workload capacity:",
+                optionA: { text: "I have some bandwidth to give back to others.", type: "mentor" },
+                optionB: { text: "I am fully stretched just keeping my own head above water.", type: "mentee" }
+            },
+             {
+                question: "What energises you more?",
+                optionA: { text: "Gaining new insights from someone more senior.", type: "mentee" },
+                optionB: { text: "Watching someone else grow because of your support.", type: "mentor" }
+            },
+            {
+                question: "Ultimately, right now you need to focus on:",
+                optionA: { text: "Increasing your own performance and potential.", type: "mentee" },
+                optionB: { text: "Expanding your influence and leaving a legacy.", type: "mentor" }
+            }
+        ];
+
+        // 3. DOM Elements references
+        const mentorImg = document.getElementById('mentor-img');
+        const menteeImg = document.getElementById('mentee-img');
+        const questionDisplay = document.getElementById('question-display');
+        const progressText = document.getElementById('progress-text');
+        const btnA = document.getElementById('btn-a');
+        const btnB = document.getElementById('btn-b');
+        const modal = document.getElementById('result-modal');
+        const startModal = document.getElementById('start-modal'); 
+        const startBtn = document.getElementById('start-btn'); 
+        const modalHeading = document.getElementById('modal-heading');
+        const modalText = document.getElementById('modal-text');
+        const ctaContainer = document.getElementById('cta-container'); // Container for buttons
+
+        // 4. Functions
+
+        function loadQuestion() {
+            const currentQ = questions[currentQuestionIndex];
+            questionDisplay.textContent = currentQ.question;
+            btnA.textContent = currentQ.optionA.text;
+            btnB.textContent = currentQ.optionB.text;
+            progressText.textContent = `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
+        }
+
+        function updateImages() {
+            const mentorSuffix = mentorScore === 0 ? 'start' : mentorScore;
+            const menteeSuffix = menteeScore === 0 ? 'start' : menteeScore;
+
+            mentorImg.src = `images/left${mentorSuffix}.svg`;
+            menteeImg.src = `images/right${menteeSuffix}.svg`;
+            
+            mentorImg.style.transform = "scale(1.05)";
+            setTimeout(() => mentorImg.style.transform = "scale(1)", 200);
+        }
+
+        function handleAnswer(selectedOptionType) {
+            if (selectedOptionType === 'mentor') {
+                mentorScore++;
+            } else {
+                menteeScore++;
+            }
+
+            updateImages();
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex < totalQuestions) {
+                loadQuestion();
+            } else {
+                finishGame();
+            }
+        }
+
+        // Helper to create the styled button HTML
+        function createCTAButton(text, link) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'btn-wrapper';
+            
+            // In a real app, you would use window.location.href = link;
+            // Here we use an alert for demonstration
+            const btn = document.createElement('button');
+            btn.className = 'action-btn';
+            btn.innerText = text;
+            btn.onclick = () => alert(`Navigating to: ${text}`); 
+            
+            wrapper.appendChild(btn);
+            return wrapper;
+        }
+
+        // Final Results Logic
+        function finishGame() {
+            document.getElementById('quiz-interface').style.display = 'none';
+            
+            let title, body;
+            
+            // Clear existing buttons
+            ctaContainer.innerHTML = '';
+
+            // Scoring logic
+            // 12-9: Mentor / 8-5: Both / 4-1: Mentee
+            if (mentorScore >= 9) {
+                // MENTOR ONLY
+                title = "Your Milk Cartons are Full: You're a Mentor!";
+                body = "You have valuable experience, knowledge of the Müller landscape, and capacity to share. Your answers suggest you are ready to step up and guide others. Sign up for the 'Mentor Skills' module.";
+                
+                ctaContainer.appendChild(createCTAButton("Register Interest: Being a Mentor", "#"));
+
+            } else if (mentorScore >= 5 && mentorScore <= 8) {
+                // BOTH
+                title = "The Perfect Blend: Consider Both Roles!";
+                body = "You are in the 'sweet spot'. You have solid experience to share with newer colleagues, but you still have clear areas where you want to grow. The best leaders do both—consider signing up as a Mentor AND finding one for yourself.";
+                
+                // Add BOTH buttons
+                ctaContainer.appendChild(createCTAButton("Register Interest: Being a Mentor", "#"));
+                ctaContainer.appendChild(createCTAButton("Register Interest: Being Mentored", "#"));
+
+            } else {
+                // MENTEE ONLY
+                title = "Ready to Fill Your Carton: You're a Mentee!";
+                body = "You have ambition and drive, but you've identified gaps in your knowledge or career path. That's great self-awareness. A Mentor can help you navigate Müller and accelerate your growth. Sign up to find a Mentor today.";
+                
+                ctaContainer.appendChild(createCTAButton("Register Interest: Being Mentored", "#"));
+            }
+
+            modalHeading.textContent = title;
+            modalText.textContent = body;
+            modal.style.display = 'flex'; 
+        }
+
+
+        // 5. Event Listeners
+        btnA.addEventListener('click', () => handleAnswer(questions[currentQuestionIndex].optionA.type));
+        btnB.addEventListener('click', () => handleAnswer(questions[currentQuestionIndex].optionB.type));
+        
+        startBtn.addEventListener('click', () => {
+            startModal.style.display = 'none';
+        });
+
+        // 6. Initialize
+        loadQuestion();
+        updateImages(); 
+
+    </script>
+</body>
+</html>

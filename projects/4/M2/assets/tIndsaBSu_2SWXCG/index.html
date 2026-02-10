@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Müller Mentoring: The Signal & The Noise</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --muller-blue: #002458;
+            --muller-red: #E30613;
+            --muller-red-hover: #c20510;
+            --text-dark: #333333;
+            --text-light: #ffffff;
+            --success-green: #28a745;
+            --error-red: #dc3545;
+            --bg-light: #f9f9f9;
+            --font-family: 'Arial', sans-serif; /* Replace with 'adrianna' if loaded */
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-family);
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            height: 100vh;
+            overflow: hidden; 
+        }
+
+        /* --- INTRO & SUMMARY SCREENS (Full Screen Overlays) --- */
+        #screen-intro, #screen-summary {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--muller-blue);
+            color: white;
+            z-index: 200; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.5s ease-in-out;
+            overflow-y: auto;
+        }
+
+        #screen-intro.hidden { transform: translateY(-100%); }
+        
+        #screen-summary { 
+            z-index: 600; /* Above everything */
+            transform: translateY(100%); /* Start hidden below */
+        }
+        
+        #screen-summary.visible { transform: translateY(0); }
+
+        .intro-content { max-width: 600px; margin: auto; }
+
+        .brand-logo {
+            width: 80px; height: 80px;
+            background-color: var(--muller-red);
+            color: white;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-weight: bold; font-size: 2rem;
+            margin: 0 auto 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .intro-title { font-size: 2.5rem; margin-bottom: 20px; font-weight: 800; line-height: 1.1; }
+        .intro-text { font-size: 1.2rem; margin-bottom: 40px; opacity: 0.9; line-height: 1.6; }
+
+        /* Summary List Styles */
+        .summary-list {
+            text-align: left;
+            margin: 0 auto 40px;
+            padding-left: 20px;
+            max-width: 500px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        .summary-list li { margin-bottom: 15px; }
+
+        /* --- LAYOUT --- */
+        .game-wrapper {
+            display: grid;
+            grid-template-columns: 400px 1fr; 
+            height: 100vh;
+            width: 100%;
+            opacity: 0; 
+            transition: opacity 0.5s ease 0.5s;
+        }
+
+        .game-wrapper.visible { opacity: 1; }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            background-color: var(--muller-blue);
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 5px 0 20px rgba(0,0,0,0.1);
+            z-index: 10;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .level-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .sidebar-title { font-size: 2rem; font-weight: bold; margin: 0 0 10px 0; }
+        .sidebar-desc { opacity: 0.9; line-height: 1.5; margin-bottom: 40px; font-size: 1.2rem; }
+
+        .progress-container { margin-bottom: 40px; }
+        .progress-label { display: flex; justify-content: space-between; font-size: 1.2rem; margin-bottom: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+        .progress-track { width: 100%; height: 20px; background: rgba(255,255,255,0.2); border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--muller-red); width: 0%; transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+        /* --- AUDIO CARD (IMAGE FRAME) --- */
+        .audio-card {
+            background-color: #333;
+            /* Update: Standard relative path 'images/' */
+            background-image: linear-gradient(to bottom, rgba(0, 36, 88, 0.2), rgba(0, 36, 88, 0.9)), url('images/Gemini_Generated_Image_x3fcuax3fcuax3fc.png');
+            background-size: cover;
+            background-position: center top;
+            color: white;
+            border-radius: 15px;
+            padding: 30px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end; /* Push text to bottom */
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            min-height: 380px; /* Taller frame */
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Hide the old avatar circle, using background instead */
+        .persona-avatar { display: none; }
+
+        .persona-name { font-weight: 800; font-size: 2rem; margin-bottom: 5px; text-shadow: 0 2px 10px rgba(0,0,0,0.6); }
+        .persona-role { font-size: 1rem; color: rgba(255,255,255,0.9); margin-bottom: 0; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 2px 10px rgba(0,0,0,0.6); }
+        
+        .persona-info {
+            z-index: 2;
+        }
+
+        .play-btn {
+            width: 80px; height: 80px;
+            background-color: var(--muller-red);
+            border-radius: 50%;
+            border: 5px solid white; /* White Outline */
+            cursor: pointer;
+            display: flex; justify-content: center; align-items: center;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            margin-bottom: auto; /* Push to top/center vertical space */
+            margin-top: auto;
+            z-index: 2;
+        }
+        .play-btn:hover { transform: scale(1.1); background-color: var(--muller-red-hover); }
+        .play-btn.disabled { background-color: #ccc; cursor: default; box-shadow: none; transform: none; border-color: #eee; }
+        .play-btn svg { fill: white; width: 30px; height: 30px; margin-left: 5px; }
+
+        /* --- CONTENT AREAS --- */
+        .main-content {
+            background-color: white;
+            padding: 60px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; 
+        }
+
+        /* Generic Screen container for switching levels */
+        .level-screen {
+            width: 100%;
+            max-width: 800px;
+            display: none; /* Hidden by default */
+            animation: fadeIn 0.5s ease;
+        }
+        .level-screen.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Banner Styles */
+        .instruction-banner {
+            background-color: rgba(0, 36, 88, 0.05);
+            border-left: 6px solid var(--muller-blue);
+            padding: 20px 25px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            display: none; 
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: #222;
+        }
+
+        .transcript-box {
+            font-size: 1.5rem; 
+            line-height: 1.8;
+            color: #444;
+            min-height: 100px;
+            margin-bottom: 30px;
+        }
+
+        .text-chunk {
+            border-radius: 4px; padding: 2px 0; transition: all 0.2s; cursor: default; border-bottom: 3px solid transparent;
+        }
+        .transcript-box.interactive .text-chunk { cursor: pointer; border-bottom: 3px solid #eee; }
+        .transcript-box.interactive .text-chunk:hover { background-color: rgba(0, 36, 88, 0.05); border-bottom-color: var(--muller-blue); }
+        .text-chunk.correct { background-color: rgba(40, 167, 69, 0.15); border-bottom-color: var(--success-green); color: #155724; }
+        .text-chunk.distraction { background-color: rgba(220, 53, 69, 0.1); border-bottom-color: var(--error-red); color: #721c24; }
+
+        /* Card Styles */
+        .question-card, .memory-card, .goal-card {
+            background: white;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1.2rem;
+            line-height: 1.5;
+            color: var(--text-dark);
+            position: relative;
+        }
+        
+        .memory-card { border-left: 6px solid #ccc; }
+        .goal-card { border-left: 6px solid var(--muller-blue); } /* Goal cards styled distinctly */
+        
+        .question-card:hover, .memory-card:hover, .goal-card:hover { border-color: var(--muller-blue); transform: translateX(5px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        
+        .question-card.correct, .memory-card.correct, .goal-card.correct { border-color: var(--success-green); background-color: rgba(40, 167, 69, 0.05); border-left-color: var(--success-green); }
+        .question-card.incorrect, .memory-card.incorrect, .goal-card.incorrect { border-color: var(--error-red); background-color: rgba(220, 53, 69, 0.05); border-left-color: var(--error-red); }
+
+        /* --- TOAST & MODALS --- */
+        .feedback-toast {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            width: 350px;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            transform: translateY(150%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 100;
+            border-left: 8px solid var(--muller-blue);
+        }
+        .feedback-toast.visible { transform: translateY(0); }
+        .feedback-toast.success { border-left-color: var(--success-green); }
+        .feedback-toast.error { border-left-color: var(--error-red); }
+
+        .toast-content { padding: 20px; position: relative; }
+        .toast-header { font-weight: bold; font-size: 1.1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .toast-body { font-size: 0.95rem; color: #333; line-height: 1.5; }
+        .close-toast { position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 1.2rem; color: #999; cursor: pointer; }
+
+        /* Level Complete Modal */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 500;
+            display: none;
+            justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .modal-overlay.visible { opacity: 1; }
+        
+        .modal-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            transform: scale(0.9); transition: transform 0.3s;
+            border-top: 10px solid var(--muller-red);
+        }
+        .modal-overlay.visible .modal-card { transform: scale(1); }
+        .modal-title { font-size: 2rem; color: var(--muller-blue); margin-bottom: 15px; font-weight: bold; }
+        
+        /* Updated: Allow HTML content formatting */
+        .modal-text { font-size: 1.1rem; color: #555; margin-bottom: 30px; line-height: 1.5; }
+
+        /* --- BUTTONS --- */
+        .btn-large {
+            background-color: var(--muller-red);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 15px rgba(227, 6, 19, 0.3);
+        }
+        .btn-large:hover { background-color: var(--muller-red-hover); transform: translateY(-2px); }
+
+        .mobile-progress { display: none; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 900px) {
+            body { overflow-y: auto; height: auto; }
+            .game-wrapper { display: flex; flex-direction: column; height: auto; min-height: 100vh; overflow: visible; }
+            .sidebar { padding: 30px 20px; flex-direction: column; align-items: stretch; gap: 20px; position: sticky; top: 0; width: 100%; z-index: 150; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+            .sidebar-title { font-size: 1.5rem; margin-bottom: 10px; }
+            .sidebar-desc { display: block; font-size: 1rem; margin-bottom: 20px; } 
+            .level-badge { display: inline-block; margin-bottom: 10px; } 
+            .progress-container { display: block; margin-bottom: 20px; } 
+            
+            /* Revised Mobile Expanded Audio Card */
+            .audio-card { 
+                padding: 15px; 
+                flex-direction: row; 
+                gap: 15px; 
+                justify-content: space-between; 
+                box-shadow: none; 
+                /* Update: Standard relative path */
+                min-height: 120px; 
+                background-image: linear-gradient(to right, rgba(0, 36, 88, 0.8), rgba(0, 36, 88, 0.2)), url('images/Gemini_Generated_Image_x3fcuax3fcuax3fc.png');
+                background-position: top center;
+                align-items: center;
+                border: none;
+            }
+            .persona-name { font-size: 1.4rem; text-align: left; margin-bottom: 2px; }
+            .persona-role { margin-bottom: 0; text-align: left; }
+            
+            .play-btn { width: 60px; height: 60px; box-shadow: none; margin: 0; border: 4px solid white; }
+            .play-btn svg { width: 24px; height: 24px; margin: 0; }
+
+            /* New Logic: Hide Audio Card entirely on specific mobile levels */
+            .sidebar.level-no-audio .audio-card { display: none; }
+
+            /* Compact Mode */
+            .sidebar.compact-mode { padding: 10px 20px; flex-direction: row; align-items: center; gap: 15px; }
+            .sidebar.compact-mode .sidebar-desc, .sidebar.compact-mode .level-badge, .sidebar.compact-mode .progress-container, .sidebar.compact-mode .persona-avatar, .sidebar.compact-mode .persona-info { display: none; }
+            .sidebar.compact-mode .sidebar-title { font-size: 1.1rem; margin: 0; }
+            .sidebar.compact-mode .audio-card { padding: 5px; background: transparent; width: auto; min-height: 0; }
+            .sidebar.compact-mode .play-btn { width: 40px; height: 40px; border: 2px solid white; }
+            .sidebar.compact-mode .play-btn svg { width: 18px; height: 18px; }
+
+            .main-content { padding: 30px 20px 100px 20px; height: auto; display: block; overflow: visible; }
+            .transcript-box { font-size: 1.2rem; line-height: 2.2; }
+            .instruction-banner { font-size: 1rem; padding: 15px; }
+            
+            .mobile-progress { display: none; height: 4px; background: rgba(255,255,255,0.3); width: 100%; position: absolute; bottom: 0; left: 0; }
+            .sidebar.compact-mode .mobile-progress { display: block; }
+            
+            /* Feedback Modal on Mobile */
+            .feedback-toast {
+                position: fixed; top: 50%; left: 50%; bottom: auto; right: auto; transform: translate(-50%, -50%) scale(0.9);
+                width: 90%; max-width: 400px; max-height: 600px; overflow-y: auto;
+                border-radius: 15px; 
+                /* Replaced backdrop pseudo-element with massive shadow to prevent grey background issue */
+                box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 0 100vmax rgba(0,0,0,0.6);
+                border-left: none; border-top: 8px solid var(--muller-blue);
+                background-color: #ffffff; opacity: 0; pointer-events: none; z-index: 300;
+            }
+            .feedback-toast.visible { transform: translate(-50%, -50%) scale(1); opacity: 1; pointer-events: auto; }
+            
+            /* Remove old pseudo backdrop */
+            .feedback-toast.visible::before { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- INTRO SCREEN -->
+    <div id="screen-intro">
+        <div class="intro-content">
+            <div class="brand-logo">M</div>
+            <h1 class="intro-title">Mentoring Skills</h1>
+            <p class="intro-text">Learn the skills of a mentor in this short roleplay - Make the selections you think demonstrate each skill we uncover.</p>
+            <p style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 20px;">This activity works best when using audio.</p>
+            <button class="btn-large" onclick="startGame()">Start Level 1</button>
+        </div>
+    </div>
+
+    <!-- SUMMARY SCREEN -->
+    <div id="screen-summary">
+        <div class="intro-content">
+            <div class="brand-logo">M</div>
+            <h1 class="intro-title">Excellent!</h1>
+            <p class="intro-text" style="margin-bottom: 20px;">You've now explored 5 key skills of a mentor.</p>
+            <ul class="summary-list">
+                <li>Active Listening</li>
+                <li>Effective probing Questioning</li>
+                <li>Being willing, constructive and empathetic with your challenging</li>
+                <li>Open and sharing with your experience, in a way that focuses on what they need to hear</li>
+                <li>Goal focussed, both long term, and realistic</li>
+            </ul>
+            <p class="intro-text">It's not a one hit meeting, it's a relationship, allowing you to break down their challenges one by one.</p>
+            <button class="btn-large" onclick="location.reload()">Restart Module</button>
+        </div>
+    </div>
+
+    <!-- LEVEL COMPLETE MODAL -->
+    <div class="modal-overlay" id="level-complete-modal">
+        <div class="modal-card">
+            <div class="modal-title">Level Complete!</div>
+            <div class="modal-text" id="modal-text">You identified the signals correctly. Karl is open to talking.</div>
+            <button class="btn-large" id="modal-action-btn">Next Level</button>
+        </div>
+    </div>
+
+    <!-- MAIN GAME AREA -->
+    <div class="game-wrapper" id="game-wrapper">
+        
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-title-group">
+                <span class="level-badge" id="level-badge">Level 1</span>
+                <h2 class="sidebar-title" id="sidebar-title">Active Listening</h2>
+                <p class="sidebar-desc" id="sidebar-desc">Karl is venting. Can you cut through the noise and identify the <strong>3 critical signals</strong> that indicate a deeper problem?</p>
+                
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span id="progress-label-text">Signals Found</span>
+                        <span id="score-text">0 / 3</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="audio-card">
+                <div class="persona-avatar"></div> 
+                <div class="persona-info">
+                    <div class="persona-name">Karl</div>
+                    <div class="persona-role">Shift Manager</div>
+                </div>
+                <button id="play-btn" class="play-btn" onclick="playAudio()">
+                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </button>
+            </div>
+            
+            <div class="mobile-progress"><div class="progress-fill" id="mobile-progress-fill"></div></div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            
+            <!-- LEVEL 1 CONTENT -->
+            <div class="transcript-wrapper level-screen" id="level1-screen">
+                <div class="instruction-banner" id="instruction-banner">
+                    <strong>Your Turn:</strong> Karl has finished speaking. Click the <strong>3 phrases</strong> that indicate Burnout, Identity Crisis, or Retention Risk.
+                </div>
+                <div class="transcript-box" id="transcript-box">
+                    <span id="typing-text" style="color: #999;">Press play to listen to Karl...</span>
+                </div>
+            </div>
+
+            <!-- LEVEL 2 CONTENT (Questioning) -->
+            <div class="transcript-wrapper level-screen" id="level2-screen">
+                <div class="instruction-banner" style="display:block">
+                    <strong>Your Turn:</strong> Being a mentor involves using your questioning skills to get the mentee to open up. Which of these questions would progress the conversation with Karl further?
+                </div>
+                <div id="questions-container-l2">
+                    <!-- Questions injected via JS -->
+                </div>
+            </div>
+
+            <!-- LEVEL 3 CONTENT (Constructive Challenge) -->
+            <div class="transcript-wrapper level-screen" id="level3-screen">
+                <div class="instruction-banner" id="instruction-banner-l3">
+                    <strong>Your Turn:</strong> Karl's definition of his role is limiting him. Choose the best way to <strong>Constructively Challenge</strong> him.
+                </div>
+                <div class="transcript-box" id="transcript-box-l3">
+                    <span id="typing-text-l3" style="color: #999;">Press play to listen to Karl's response...</span>
+                </div>
+                <div id="questions-container-l3" style="display:none; margin-top: 30px;">
+                    <!-- Challenges injected via JS -->
+                </div>
+            </div>
+
+            <!-- LEVEL 4 CONTENT (Storytelling) -->
+            <div class="transcript-wrapper level-screen" id="level4-screen">
+                <div class="instruction-banner" id="instruction-banner-l4">
+                    <strong>Your Turn:</strong> Karl admits he's scared to let go. This is a moment for vulnerability. Choose a <strong>Relevant Failure</strong> story to share.
+                </div>
+                <div class="transcript-box" id="transcript-box-l4">
+                    <span id="typing-text-l4" style="color: #999;">Press play to listen to Karl's confession...</span>
+                </div>
+                <div id="questions-container-l4" style="display:none; margin-top: 30px;">
+                    <!-- Memory Cards injected via JS -->
+                </div>
+            </div>
+
+            <!-- LEVEL 5 CONTENT (Goal Setting) -->
+            <div class="transcript-wrapper level-screen" id="level5-screen">
+                <div class="instruction-banner" id="instruction-banner-l5">
+                    <strong>The Mentor's Role:</strong> Karl has identified a specific pain point (The Handover) and a specific fear (Loss of control). You need to help him set a <strong>"Safe-to-Fail" experiment</strong>—a small step to test his new mindset without risking the whole factory.
+                </div>
+                <div class="transcript-box" id="transcript-box-l5">
+                    <span id="typing-text-l5" style="color: #999;">Press play to listen to Karl's breakthrough...</span>
+                </div>
+                <div id="questions-container-l5" style="display:none; margin-top: 30px;">
+                    <!-- Goal Cards injected via JS -->
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- FEEDBACK TOAST -->
+    <div id="feedback-toast" class="feedback-toast">
+        <div class="toast-content">
+            <button class="close-toast" onclick="closeToast()">&times;</button>
+            <div class="toast-header" id="toast-header"></div>
+            <div class="toast-body" id="toast-body"></div>
+        </div>
+    </div>
+
+    <script>
+        /* --- STATE VARIABLES --- */
+        let currentLevel = 1;
+        let isPlaying = false;
+        let isInteractive = false;
+        
+        // Level 1 Vars
+        let correctFound = 0;
+        const totalCorrect = 3;
+        let foundIds = [];
+
+        /* --- GAME DATA --- */
+        const level1Data = [
+            { id: 1, text: "Honestly? I sat in my car for twenty minutes this morning just building up the energy to walk through the turnstiles. It feels like I'm wading through treacle.", type: 'correct', title: "Well Identified - The Car Park Dread", feedback: "\"sat in my car... building up energy\" (This suggests Karl is feeling burnout and needs support)." },
+            { id: 2, text: " I feel less like a manager and more like a referee.", type: 'correct', title: "That’s good - The Identity Crisis", feedback: "\"less like a manager... more like a referee\" (Paints a picture he feels disempowered in his role)." },
+            { id: 4, text: " The production plan changed five minutes into the shift -standard chaos,", type: 'distraction', title: "Not a key detail - The Chaos", feedback: "\"production plan changed\" (For mentoring, this isn’t too relevant, as it’s an operational reality, possibly performance coaching can help)." },
+            { id: 5, text: " but when I asked the Filling Team to just double-check the date codes, you’d think I asked for a kidney.", type: 'distraction', title: "Not a key detail - The Specific Team and Task", feedback: "\"Filling Team - check the date codes\" (These details aren’t the cause of their larger issues – mentoring focuses on long term.)." },
+            { id: 6, text: " The eye-rolling is relentless.", type: 'distraction', title: "Not a key detail – Emotional leakage", feedback: "\"eye-rolling\" (This is a bit of venting, picking up on small cues that frustrate, but aren’t a pointer to any larger issues)." },
+            { id: 3, text: " I honestly don't know if I have the battery life for this anymore.", type: 'correct', title: "Good spot- The Flight Risk", feedback: "\"don't know if I have the battery life\" (Suggests there is a retention risk and builds on the wellbeing picture)." }
+        ];
+
+        const level2Questions = [
+            { id: 1, text: "Have you tried reporting the Filling Team's attitude to HR?", type: 'incorrect', title: "Too Directive", feedback: "This is a closed question and a 'fix-it' solution. It shuts down exploration and focuses on the wrong issue." },
+            { id: 2, text: "You mentioned feeling like a 'referee'. What does being a manager look like to you?", type: 'correct', title: "Great Question", feedback: "This is an Open Question. It encourages Karl to explore his feelings and his professional identity, moving away from the immediate venting." },
+            { id: 3, text: "Is the production plan the main reason you are stressed?", type: 'incorrect', title: "Closed Question", feedback: "This is a closed 'Yes/No' question. It narrows the focus onto operational chaos (which is normal) instead of his reaction to it." }
+        ];
+
+        const level3Data = [
+            { text: "Well, look at the job description. It says 'Manager', but the reality is I'm the backstop. If a line stops, I'm the one clearing the jam because I can do it faster. If someone calls in sick, I'm covering the gap. To me, being a manager just means I'm the most expensive operator on the floor. I can't trust them to do it right, so I do it myself." }
+        ];
+
+        const level3Challenges = [
+            { id: 1, text: "That is a terrible attitude. You'll never succeed if you don't trust your team. You need to stop micromanaging immediately.", type: 'incorrect', title: "Too Harsh (The Bad)", feedback: "This is aggressive. You are judging him rather than challenging him. He will likely become defensive and shut down." },
+            { id: 2, text: "I know it's hard when you're short-staffed. Have you tried asking for more resource? Maybe you need to take a holiday.", type: 'incorrect', title: "Too Soft (The OK)", feedback: "This is sympathetic, but it validates his victim mindset. You aren't challenging his core belief that he *must* do everything himself." },
+            { id: 3, text: "I hear that you are saving the day, every day. But I want to challenge that definition. If you are the most expensive operator on the floor... who is actually managing the shift?", type: 'correct', title: "Spot On (The Good)", feedback: "This is a Constructive Challenge. You acknowledged his effort ('I hear you'), but you firmly highlighted the logical gap in his thinking." }
+        ];
+
+        const level4Data = [
+            { text: "You're right... technically. But if I step back and they mess up the OEE scores, it's my neck on the block. I can't afford a bad week right now. It feels safer to just do it myself than to trust them and get burned." }
+        ];
+
+        const level4Options = [
+            { id: 1, text: "Memory: 'I remember when I won Manager of the Year by staying late every night for a month to check the numbers. It proved hard work pays off.'", type: 'incorrect', title: "The Hero Story", feedback: "This creates distance. It implies perfection is the standard and doesn't address his fear of failure." },
+            { id: 2, text: "Memory: 'I know that terror. In my first management role, I refused to let go. I burned out, missed a compliance check, and we failed an audit. That failure taught me that my grip was actually choking the team.'", type: 'correct', title: "The Vulnerable Story", feedback: "Perfect. Sharing a personal failure validates his feelings and shows that letting go is part of learning, not just a risk." },
+            { id: 3, text: "Memory: 'I recall a training course about delegation. The model showed that trust increases efficiency by 20%. You should read the manual on situational leadership.'", type: 'incorrect', title: "The Textbook Story", feedback: "Too theoretical. Karl is responding emotionally (fear); he needs empathy, not a textbook." }
+        ];
+
+        const level5Data = [
+            { text: "Okay, that story helps. I get it. I can't keep being the 'most expensive operator' on the floor. I need to let go. But honestly? I'm terrified. The shift handover tomorrow morning is usually chaos. If I don't control it, things get missed." }
+        ];
+
+        const level5Goals = [
+            { id: 1, text: "Action Plan: 'I (The Mentor) will come to your handover tomorrow and run it for you. You watch how I handle the team, then you can copy me next time.'", type: 'incorrect', title: "The Rescue", feedback: "This is rescuing, not mentoring. You just proved to his team (and him) that he needs a babysitter. It reinforces his belief that he can't do it." },
+            { id: 2, text: "Action Plan: 'Just go in there tomorrow and trust them. Stand back and see what happens. You've got this!'", type: 'incorrect', title: "The Vague Hope", feedback: "Too vague. 'Just trusting' without a framework is high-risk. If they fail, his fear is validated and he will never let go again." },
+            { id: 3, text: "Action Plan: 'Tomorrow, ask your Lead Operator to run the board. You stand physically one step back. Your only job is to spot safety risks. We will catch up at 10am to review.'", type: 'correct', title: "The Safe Experiment", feedback: "Perfect. This is a specific, low-risk experiment. You gave him a clear role (Observer) and a safety net (Review)." }
+        ];
+
+        /* --- GLOBAL FUNCTIONS --- */
+        function startGame() {
+            document.getElementById('screen-intro').classList.add('hidden');
+            document.getElementById('game-wrapper').classList.add('visible');
+            document.getElementById('level1-screen').classList.add('active');
+        }
+
+        function closeToast() {
+            document.getElementById('feedback-toast').classList.remove('visible');
+        }
+
+        function showModal(title, text, action, buttonText = "Next Level") {
+            const modal = document.getElementById('level-complete-modal');
+            document.querySelector('.modal-title').innerText = title;
+            document.getElementById('modal-text').innerHTML = text; // Changed to innerHTML to allow tags
+            const btn = document.getElementById('modal-action-btn');
+            
+            // Update button text
+            btn.innerText = buttonText;
+
+            // Remove old listeners to prevent stacking
+            let newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            
+            newBtn.onclick = () => {
+                modal.classList.remove('visible');
+                setTimeout(() => { modal.style.display = 'none'; action(); }, 300);
+            };
+            
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('visible'), 10);
+        }
+
+        function showSummaryScreen() {
+            closeToast(); // Added closeToast
+            document.getElementById('screen-summary').classList.add('visible');
+        }
+
+        function showFeedback(type, title, text) {
+            const toast = document.getElementById('feedback-toast');
+            const toastHeader = document.getElementById('toast-header');
+            const toastBody = document.getElementById('toast-body');
+
+            toast.classList.remove('success', 'error', 'visible');
+            void toast.offsetWidth; // Reset animation
+
+            if (type === 'correct') {
+                toast.classList.add('success');
+                toastHeader.innerHTML = `✅ ${title}`;
+            } else {
+                toast.classList.add('error');
+                toastHeader.innerHTML = `⚠️ ${title}`;
+            }
+
+            toastBody.innerText = text;
+            toast.classList.add('visible');
+        }
+
+        /* --- PLAY AUDIO ENGINE --- */
+        function playAudio() {
+            if (isPlaying || isInteractive) return;
+            
+            // L2 doesn't use audio button, but just in case
+            if (currentLevel === 2) return;
+
+            // --- ADD YOUR AUDIO FILES HERE ---
+            const audioPaths = {
+                1: "audio/level1_karl.mp3", 
+                3: "audio/level3_karl.mp3",
+                4: "audio/level4_karl.mp3",
+                5: "audio/level5_karl.mp3"
+            };
+
+            // This plays the real audio file if provided
+            if (audioPaths[currentLevel]) {
+                const audio = new Audio(audioPaths[currentLevel]);
+                audio.play().catch(e => {
+                    console.log("Audio not found or blocked: " + e);
+                    alert("Audio file not found: " + audioPaths[currentLevel]);
+                });
+            }
+            // --------------------------------
+
+            isPlaying = true;
+            document.getElementById('play-btn').classList.add('disabled');
+            document.getElementById('sidebar').classList.add('compact-mode');
+            
+            let targetBoxId = 'transcript-box';
+            if (currentLevel === 3) targetBoxId = 'transcript-box-l3';
+            if (currentLevel === 4) targetBoxId = 'transcript-box-l4';
+            if (currentLevel === 5) targetBoxId = 'transcript-box-l5';
+            
+            const transcriptBox = document.getElementById(targetBoxId);
+            transcriptBox.innerHTML = ""; 
+
+            let fullText = "";
+            if(currentLevel === 1) {
+                level1Data.forEach(chunk => fullText += chunk.text);
+            } else if (currentLevel === 3) {
+                fullText = level3Data[0].text;
+            } else if (currentLevel === 4) {
+                fullText = level4Data[0].text;
+            } else if (currentLevel === 5) {
+                fullText = level5Data[0].text;
+            }
+            
+            let i = 0;
+            const speed = 25; 
+
+            function typeWriter() {
+                if (i < fullText.length) {
+                    transcriptBox.innerHTML += fullText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                } else {
+                    isPlaying = false;
+                    if(currentLevel === 1) enableInteractionL1();
+                    if(currentLevel === 3) enableInteractionL3();
+                    if(currentLevel === 4) enableInteractionL4();
+                    if(currentLevel === 5) enableInteractionL5();
+                }
+            }
+            typeWriter();
+        }
+
+        /* --- LEVEL 1 LOGIC --- */
+        function enableInteractionL1() {
+            isInteractive = true;
+            const transcriptBox = document.getElementById('transcript-box');
+            transcriptBox.innerHTML = ""; 
+            transcriptBox.classList.add('interactive');
+            
+            const banner = document.getElementById('instruction-banner');
+            banner.style.display = 'block';
+            banner.style.animation = 'fadeIn 0.5s';
+
+            level1Data.forEach(chunk => {
+                const span = document.createElement('span');
+                span.className = "text-chunk";
+                span.innerText = chunk.text;
+                span.onclick = () => handleChunkClick(chunk.id, span);
+                transcriptBox.appendChild(span);
+            });
+        }
+
+        function handleChunkClick(id, element) {
+            if (foundIds.includes(id)) return;
+
+            const chunkData = level1Data.find(c => c.id === id);
+            
+            // Logic Change: Check if this click completes the level
+            const isWinningMove = (chunkData.type === 'correct' && correctFound === totalCorrect - 1);
+
+            if (chunkData.type === 'correct') {
+                element.classList.add('correct');
+                correctFound++;
+                updateScore(correctFound, totalCorrect);
+                foundIds.push(id);
+                
+                // If it's the last one, DON'T show toast, show Modal with feedback instead
+                if (isWinningMove) {
+                    setTimeout(() => {
+                        const winText = `<strong>${chunkData.title}</strong><br>${chunkData.feedback}<br><br><hr><br>Great work spotting the signals. Karl is feeling burnout and disempowered. Now, let's talk to him.`;
+                        showModal("Level 1 Complete", winText, startLevel2);
+                    }, 500); // Small delay for visual effect
+                } else {
+                    showFeedback(chunkData.type, chunkData.title, chunkData.feedback);
+                }
+
+            } else {
+                element.classList.add('distraction');
+                foundIds.push(id);
+                showFeedback(chunkData.type, chunkData.title, chunkData.feedback);
+            }
+        }
+
+        /* --- LEVEL 2 LOGIC --- */
+        function startLevel2() {
+            currentLevel = 2;
+            closeToast(); // Added closeToast
+            isInteractive = false; isPlaying = false;
+            
+            document.getElementById('level1-screen').classList.remove('active');
+            document.getElementById('level2-screen').classList.add('active');
+            document.getElementById('sidebar').classList.remove('compact-mode');
+            document.getElementById('sidebar').classList.add('level-no-audio');
+            
+            // Sidebar Updates
+            document.getElementById('level-badge').innerText = "Level 2";
+            document.getElementById('sidebar-title').innerText = "Questioning";
+            document.getElementById('sidebar-desc').innerHTML = "Use your questioning skills to get the mentee to open up. Which of these questions would <strong>progress the conversation</strong>?";
+            document.getElementById('score-text').innerText = "0 / 1";
+            document.getElementById('progress-fill').style.width = "0%";
+            document.getElementById('mobile-progress-fill').style.width = "0%";
+
+            document.getElementById('play-btn').classList.add('disabled');
+            document.getElementById('play-btn').style.opacity = '0.5';
+
+            const container = document.getElementById('questions-container-l2');
+            container.innerHTML = "";
+            level2Questions.forEach(q => {
+                const card = document.createElement('div');
+                card.className = "question-card";
+                card.innerText = q.text;
+                card.onclick = () => handleLevel2Answer(q, card);
+                container.appendChild(card);
+            });
+        }
+
+        function handleLevel2Answer(qData, cardElement) {
+            
+            if (qData.type === 'correct') {
+                cardElement.classList.add('correct');
+                updateScore(1, 1);
+                
+                // Show modal directly instead of toast
+                setTimeout(() => {
+                    const winText = `<strong>${qData.title}</strong><br>${qData.feedback}<br><br><hr><br>Excellent! You unlocked Karl's thinking.`;
+                    showModal("Level 2 Complete", winText, startLevel3);
+                }, 500);
+            } else {
+                cardElement.classList.add('incorrect');
+                showFeedback(qData.type === 'correct' ? 'correct' : 'incorrect', qData.title, qData.feedback);
+            }
+        }
+
+        /* --- LEVEL 3 LOGIC --- */
+        function startLevel3() {
+            currentLevel = 3;
+            closeToast(); // Added closeToast
+            isInteractive = false; isPlaying = false;
+
+            document.getElementById('level2-screen').classList.remove('active');
+            document.getElementById('level3-screen').classList.add('active');
+            document.getElementById('sidebar').classList.remove('compact-mode');
+            document.getElementById('sidebar').classList.remove('level-no-audio');
+
+            // Sidebar Updates
+            document.getElementById('level-badge').innerText = "Level 3";
+            document.getElementById('sidebar-title').innerText = "Constructive Challenge";
+            document.getElementById('sidebar-desc').innerHTML = "Karl admits he micromanages because he doesn't trust his team. He's stuck in a 'Fixer' mindset. Challenge his definition of the role.";
+            document.getElementById('score-text').innerText = "0 / 1";
+            document.getElementById('progress-fill').style.width = "0%";
+            document.getElementById('mobile-progress-fill').style.width = "0%";
+
+            // Re-enable Audio
+            document.getElementById('play-btn').classList.remove('disabled');
+            document.getElementById('play-btn').style.opacity = '1';
+        }
+
+        function enableInteractionL3() {
+            isInteractive = true;
+            document.getElementById('instruction-banner-l3').style.display = 'block';
+            document.getElementById('questions-container-l3').style.display = 'block';
+            
+            const container = document.getElementById('questions-container-l3');
+            container.innerHTML = "";
+            level3Challenges.forEach(q => {
+                const card = document.createElement('div');
+                card.className = "question-card";
+                card.innerText = q.text;
+                card.onclick = () => handleLevel3Answer(q, card);
+                container.appendChild(card);
+            });
+        }
+
+        function handleLevel3Answer(qData, cardElement) {
+            
+            if (qData.type === 'correct') {
+                cardElement.classList.add('correct');
+                updateScore(1, 1);
+                
+                // Show modal directly instead of toast
+                setTimeout(() => {
+                    const winText = `<strong>${qData.title}</strong><br>${qData.feedback}<br><br><hr><br>This is the 'Critical Friend' role in action.`;
+                    showModal("Level 3 Complete", winText, startLevel4);
+                }, 500);
+            } else {
+                cardElement.classList.add('incorrect');
+                showFeedback(qData.type === 'correct' ? 'correct' : 'incorrect', qData.title, qData.feedback);
+            }
+        }
+
+        /* --- LEVEL 4 LOGIC --- */
+        function startLevel4() {
+            currentLevel = 4;
+            closeToast(); // Added closeToast
+            isInteractive = false; isPlaying = false;
+
+            document.getElementById('level3-screen').classList.remove('active');
+            document.getElementById('level4-screen').classList.add('active');
+            document.getElementById('sidebar').classList.remove('compact-mode');
+
+            // Sidebar Updates
+            document.getElementById('level-badge').innerText = "Level 4";
+            document.getElementById('sidebar-title').innerText = "Storytelling";
+            document.getElementById('sidebar-desc').innerHTML = "Karl admits he's scared to fail. Use a <strong>Memory Card</strong> from your own career to show vulnerability and build trust.";
+            document.getElementById('score-text').innerText = "0 / 1";
+            document.getElementById('progress-fill').style.width = "0%";
+            document.getElementById('mobile-progress-fill').style.width = "0%";
+
+            document.getElementById('play-btn').classList.remove('disabled');
+            document.getElementById('play-btn').style.opacity = '1';
+        }
+
+        function enableInteractionL4() {
+            isInteractive = true;
+            document.getElementById('instruction-banner-l4').style.display = 'block';
+            document.getElementById('questions-container-l4').style.display = 'block';
+            
+            const container = document.getElementById('questions-container-l4');
+            container.innerHTML = "";
+            level4Options.forEach(q => {
+                const card = document.createElement('div');
+                card.className = "memory-card"; // Using memory card style
+                card.innerText = q.text;
+                card.onclick = () => handleLevel4Answer(q, card);
+                container.appendChild(card);
+            });
+        }
+
+        function handleLevel4Answer(qData, cardElement) {
+            
+            if (qData.type === 'correct') {
+                cardElement.classList.add('correct');
+                updateScore(1, 1);
+                
+                setTimeout(() => {
+                    const winText = `<strong>${qData.title}</strong><br>${qData.feedback}<br><br><hr><br>You've successfully built a connection with Karl. By sharing your own failure, you made it safe for him to learn.`;
+                    showModal("Level 4 Complete", winText, startLevel5);
+                }, 500);
+            } else {
+                cardElement.classList.add('incorrect');
+                showFeedback(qData.type === 'correct' ? 'correct' : 'incorrect', qData.title, qData.feedback);
+            }
+        }
+
+        /* --- LEVEL 5 LOGIC --- */
+        function startLevel5() {
+            currentLevel = 5;
+            closeToast(); // Added closeToast
+            isInteractive = false; isPlaying = false;
+
+            document.getElementById('level4-screen').classList.remove('active');
+            document.getElementById('level5-screen').classList.add('active');
+            document.getElementById('sidebar').classList.remove('compact-mode');
+
+            // Sidebar Updates
+            document.getElementById('level-badge').innerText = "Level 5";
+            document.getElementById('sidebar-title').innerText = "Goal Setting";
+            document.getElementById('sidebar-desc').innerHTML = "Karl accepts he needs to let go, but fears the Handover. Set a 'Safe-to-Fail' experiment.";
+            document.getElementById('score-text').innerText = "0 / 1";
+            document.getElementById('progress-fill').style.width = "0%";
+            document.getElementById('mobile-progress-fill').style.width = "0%";
+
+            document.getElementById('play-btn').classList.remove('disabled');
+            document.getElementById('play-btn').style.opacity = '1';
+        }
+
+        function enableInteractionL5() {
+            isInteractive = true;
+            document.getElementById('instruction-banner-l5').style.display = 'block';
+            document.getElementById('questions-container-l5').style.display = 'block';
+            
+            const container = document.getElementById('questions-container-l5');
+            container.innerHTML = "";
+            level5Goals.forEach(q => {
+                const card = document.createElement('div');
+                card.className = "goal-card"; // Using goal card style
+                card.innerText = q.text;
+                card.onclick = () => handleLevel5Answer(q, card);
+                container.appendChild(card);
+            });
+        }
+
+        function handleLevel5Answer(qData, cardElement) {
+            
+            if (qData.type === 'correct') {
+                cardElement.classList.add('correct');
+                updateScore(1, 1);
+                
+                setTimeout(() => {
+                    const winText = `<strong>${qData.title}</strong><br>${qData.feedback}<br><br><hr><br><strong>Module Complete!</strong><br><br>You guided Karl from burnout to a specific, actionable plan. You listened, questioned, challenged, shared, and set a goal. This is mentoring.`;
+                    showModal("Game Complete!", winText, showSummaryScreen, "View Summary");
+                }, 500);
+            } else {
+                cardElement.classList.add('incorrect');
+                showFeedback(qData.type === 'correct' ? 'correct' : 'incorrect', qData.title, qData.feedback);
+            }
+        }
+
+        /* --- UTILS --- */
+        function updateScore(found, total) {
+            const pct = (found / total) * 100;
+            document.getElementById('progress-fill').style.width = pct + "%";
+            document.getElementById('mobile-progress-fill').style.width = pct + "%";
+            document.getElementById('score-text').innerText = `${found} / ${total}`;
+        }
+
+    </script>
+</body>
+</html>

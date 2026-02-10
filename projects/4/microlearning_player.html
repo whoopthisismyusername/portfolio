@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microlearning Series</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Hide scrollbar for cleaner look */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 flex flex-col h-screen overflow-hidden">
+
+    <!-- Header Navigation -->
+    <div class="bg-white border-b border-slate-200 shadow-sm shrink-0 z-10">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            
+            <h1 class="text-lg font-bold text-slate-800 hidden sm:block">Leadership Fundamentals</h1>
+            
+            <!-- Mobile/Desktop Tabs -->
+            <div class="flex space-x-2 bg-slate-100 p-1 rounded-lg mx-auto sm:mx-0">
+                <button onclick="loadPart(0)" id="tab-0" class="px-4 py-1.5 rounded-md text-sm font-medium transition-all duration-200 text-teal-700 bg-white shadow-sm ring-1 ring-black/5">Part 1</button>
+                <button onclick="loadPart(1)" id="tab-1" class="px-4 py-1.5 rounded-md text-sm font-medium transition-all duration-200 text-slate-600 hover:text-slate-900">Part 2</button>
+                <button onclick="loadPart(2)" id="tab-2" class="px-4 py-1.5 rounded-md text-sm font-medium transition-all duration-200 text-slate-600 hover:text-slate-900">Part 3</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Content Area (Full Screen Iframe) -->
+    <div class="flex-1 relative bg-slate-50">
+        <!-- Loader Indicator -->
+        <div id="loader" class="absolute inset-0 flex items-center justify-center bg-white z-0">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600"></div>
+        </div>
+
+        <iframe id="courseFrame" 
+                class="w-full h-full border-0 relative z-10" 
+                src="" 
+                allowfullscreen>
+        </iframe>
+    </div>
+
+    <script>
+        // ==========================================
+        // CONFIGURATION: PASTE YOUR LINKS HERE
+        // ==========================================
+        const courses = [
+            {
+                id: 1,
+                url: 'https://whoopthisismyusername.github.io/portfolio/projects/4/M1/index.html', // Part 1
+            },
+            {
+                id: 2,
+                url: 'https://whoopthisismyusername.github.io/portfolio/projects/4/M1/index.html', // Part 2
+            },
+            {
+                id: 3,
+                url: 'https://whoopthisismyusername.github.io/portfolio/projects/4/M1/index.html', // Part 3
+            }
+        ];
+
+        let currentPart = 0;
+        const iframe = document.getElementById('courseFrame');
+        const loader = document.getElementById('loader');
+
+        function loadPart(index) {
+            currentPart = index;
+            
+            // Show loader while switching
+            loader.classList.remove('hidden');
+            
+            // Update Iframe
+            iframe.src = courses[index].url;
+            
+            // iframe load event to hide loader
+            iframe.onload = function() {
+                loader.classList.add('hidden');
+            };
+
+            // Update Tabs UI
+            updateTabs(index);
+        }
+
+        function updateTabs(activeIndex) {
+            for (let i = 0; i < 3; i++) {
+                const tab = document.getElementById(`tab-${i}`);
+                if (i === activeIndex) {
+                    // Active State
+                    tab.className = "px-4 py-1.5 rounded-md text-sm font-bold transition-all duration-200 text-teal-700 bg-white shadow-md ring-1 ring-black/5";
+                } else {
+                    // Inactive State
+                    tab.className = "px-4 py-1.5 rounded-md text-sm font-medium transition-all duration-200 text-slate-500 hover:text-slate-800 hover:bg-slate-200";
+                }
+            }
+        }
+
+        // Initialize with Part 1
+        loadPart(0);
+
+    </script>
+</body>
+</html>
