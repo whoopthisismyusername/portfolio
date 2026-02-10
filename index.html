@@ -13,7 +13,7 @@
                 extend: {
                     colors: {
                         // CHANGE THESE HEX CODES TO UPDATE YOUR SITE THEME
-                        primary: '#0d9488',      /* Currently: Teal-600 */
+                        primary: '#0d9488',       /* Currently: Teal-600 */
                         primaryHover: '#0f766e', /* Darker Teal for hover states */
                         secondary: '#0f172a',    /* Currently: Slate-900 (Dark background) */
                         light: '#f8fafc',        /* Currently: Slate-50 (Light background) */
@@ -86,6 +86,11 @@
                     <a href="#portfolio" class="text-slate-600 hover:text-primary font-medium transition">Portfolio</a>
                     <a href="#about" class="text-slate-600 hover:text-primary font-medium transition">About</a>
                     <a href="#contact" class="bg-primary text-white px-5 py-2 rounded-full font-medium hover:bg-primaryHover transition shadow-md">Let's Talk</a>
+                    
+                    <!-- LINKEDIN BUTTON ADDED HERE -->
+                    <a href="https://www.linkedin.com/in/graham-betts-14908110" target="_blank" title="Connect on LinkedIn" class="text-slate-400 hover:text-[#0077b5] transition-colors duration-300 transform hover:scale-110">
+                        <i class="fab fa-linkedin text-3xl"></i>
+                    </a>
                 </div>
                 <div class="md:hidden flex items-center">
                     <button onclick="toggleMobileMenu()" class="text-slate-600 hover:text-secondary focus:outline-none">
@@ -98,6 +103,10 @@
             <a href="#portfolio" class="block px-4 py-3 text-slate-600 hover:bg-light">Portfolio</a>
             <a href="#about" class="block px-4 py-3 text-slate-600 hover:bg-light">About</a>
             <a href="#contact" class="block px-4 py-3 text-primary font-bold hover:bg-light">Contact</a>
+            <!-- LINKEDIN ADDED TO MOBILE MENU -->
+            <a href="https://www.linkedin.com/in/graham-betts-14908110" target="_blank" class="block px-4 py-3 text-slate-600 hover:bg-light hover:text-[#0077b5]">
+                <i class="fab fa-linkedin mr-2"></i> LinkedIn Profile
+            </a>
         </div>
     </nav>
 
@@ -286,13 +295,13 @@
 
             <div class="portfolio-card bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer" onclick="openModal('project8')">
                 <div class="relative overflow-hidden">
-                    <img src="https://placehold.co/600x400/10b981/FFF?text=LMS Customisation" alt="LMS Customisation" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
-                    <div class="absolute top-4 left-4 bg-cyan-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                    <img src="https://placehold.co/600x400/002a86/FFF?text=LMS Customisation" alt="LMS Customisation" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
+                    <div class="absolute top-4 left-4 bg-blue-700 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
                         Learning Systems
                     </div>
                 </div>
                 <div class="p-6">
-                    <h3 class="text-xl font-bold text-secondary mb-2">SAP SuccessFactors Learning Customisation</h3>
+                    <h3 class="text-xl font-bold text-secondary mb-2">SAP SuccessFactors Learning Customisation & Implementation</h3>
                     <p class="text-slate-500 text-sm mb-4 line-clamp-2">
                         Leading the design, implementation and ongoing development and customisation of an Enterprise LMS
                     </p>
@@ -332,12 +341,12 @@
     <li><strong>Delivery & leadership:</strong> Experienced working solo and leading remote, matrix and onsite teams</li>
 </ul>
 <br>
-<p><strong>My philosophy is simple: Learning is the process of applying knowledge, not just consuming it.</strong>strong></p>
+<p><strong>My philosophy is simple: Learning is the process of applying knowledge, not just consuming it.</strong></p>
 
                     </div>
                 </div>
 <br>
-                <div class="grid grid-cols-2 gap-6 mt-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
                     <div>
                         <h5 class="font-bold text-secondary mb-3 border-b border-slate-300 pb-2">Methodologies</h5>
                         <ul class="space-y-2 text-slate-600 text-sm">
@@ -355,6 +364,15 @@
                             <li><i class="fas fa-video text-primary mr-2"></i>Camtasia / Premiere Pro / Synthesia / Vyond</li>
                             <li><i class="fas fa-server text-primary mr-2"></i>LMS Administration and Implementation (SAP SuccessFactors and Absorb)</li>
                         </ul>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-secondary mb-3 border-b border-slate-300 pb-2">Certifications</h5>
+                        <div class="flex flex-col items-center text-center">
+                            <!-- REPLACE src WITH YOUR UPLOADED BADGE IMAGE -->
+                            <img src="https://whoopthisismyusername.github.io/portfolio/sap-certified-associate-implementation-consultant-s.37.png" alt="SAP Certified Associate" class="w-24 h-24 mb-2 object-contain"> 
+                            <p class="text-xs text-slate-600 font-medium">SAP Certified Associate - Implementation Consultant</p>
+                            <p class="text-[10px] text-slate-500">SAP SuccessFactors Learning</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -680,9 +698,9 @@
 
             'project8': {
                 title: 'LMS Customisation & Development',
-                img: 'https://placehold.co/800x400/10b981/FFF?text=LMS+Consultant',
+                img: 'https://placehold.co/800x400/004dbc/FFF?text=LMS+Consultant',
                 tools: 'SAP SuccessFactors, MS Copilot Studio, ChatGPT, Photoshop',
-                challenge: 'SAP SuccessFactors launch new LMS user experience. In a diverse business with multiple different audience groups, the platform needed to be customised to support the varied requirements of learners.',
+                challenge: 'SAP SuccessFactors launched a new Learning user experience. In a diverse business with multiple different audience groups, the platform needed to be customised to support the varied requirements of learners.',
                 solution: 'Utilised on-brand page designs and code based custom card dialogs, displayed across custom pages, combined with intelligent assignment rules, to ensure each core audience was services by a bespoke, but easily maintained solution.',
                 result: 'SAP SuccessFactors Learning successfully accepted by Veterinary business as the suitable solution to deploy Clinical Academy. Entire platform customsied with intuitive UI to help learners access their core training and self development pathways.',
                 
@@ -857,20 +875,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
