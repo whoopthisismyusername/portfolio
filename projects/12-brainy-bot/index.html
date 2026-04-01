@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>'brAIny bot' | AI Academy</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- Google Fonts: Manrope & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"/>
+    
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface": "#f8f9fb",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d4dbdf",
+                        "primary-fixed": "#3784f7",
+                        "error-dim": "#67040d",
+                        "error": "#a83836",
+                        "surface-container-highest": "#dce4e8",
+                        "on-background": "#2c3437",
+                        "on-primary-fixed-variant": "#000b22",
+                        "surface-variant": "#dce4e8",
+                        "on-secondary-fixed": "#373f51",
+                        "on-error-container": "#6e0a12",
+                        "on-error": "#fff7f6",
+                        "on-primary": "#f9f8ff",
+                        "tertiary-dim": "#5c4c74",
+                        "tertiary-container": "#e4ceff",
+                        "outline-variant": "#acb3b7",
+                        "primary-container": "#3784f7",
+                        "on-tertiary": "#fef7ff",
+                        "on-surface": "#2c3437",
+                        "secondary-fixed-dim": "#ccd4ea",
+                        "on-secondary": "#f9f8ff",
+                        "on-tertiary-fixed": "#403157",
+                        "inverse-surface": "#0b0f10",
+                        "tertiary": "#685781",
+                        "primary-fixed-dim": "#2376e9",
+                        "on-tertiary-container": "#53436c",
+                        "surface-tint": "#005cc0",
+                        "on-surface-variant": "#596064",
+                        "inverse-primary": "#498eff",
+                        "inverse-on-surface": "#9a9d9f",
+                        "surface-bright": "#f8f9fb",
+                        "tertiary-fixed": "#e4ceff",
+                        "on-primary-fixed": "#000000",
+                        "on-tertiary-fixed-variant": "#5d4d76",
+                        "tertiary-fixed-dim": "#d5c1f1",
+                        "on-secondary-fixed-variant": "#535b6e",
+                        "primary": "#005cc0",
+                        "surface-container-high": "#e3e9ed",
+                        "surface-container": "#eaeff2",
+                        "surface-container-low": "#f0f4f7",
+                        "secondary": "#575f72",
+                        "on-secondary-container": "#4a5264",
+                        "on-primary-container": "#000000",
+                        "secondary-fixed": "#dae2f9",
+                        "outline": "#747c80",
+                        "primary-dim": "#0050a9",
+                        "secondary-dim": "#4b5365",
+                        "error-container": "#fa746f",
+                        "secondary-container": "#dae2f9",
+                        "background": "#f8f9fb"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem", 
+                        "lg": "0.5rem", 
+                        "xl": "0.75rem", 
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .bg-gradient-signature {
+            background: linear-gradient(135deg, #005cc0 0%, #3784f7 100%);
+        }
+        .activity-button-shadow {
+            box-shadow: 0px 12px 32px rgba(44, 52, 55, 0.06);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+        }
+        .ai-content p { margin-bottom: 0.75rem; }
+        .ai-content ul { list-style-type: disc; margin-left: 1.5rem; margin-bottom: 1rem; }
+        .ai-content li { margin-bottom: 0.5rem; }
+    </style>
+</head>
+<body class="bg-surface text-on-background font-body selection:bg-primary-container selection:text-on-primary-container">
+
+    <!-- SideNavBar -->
+    <aside class="fixed left-0 top-0 h-full w-20 flex flex-col items-center py-6 bg-[#e3e9ed] dark:bg-slate-800 z-40 border-r border-outline-variant/10">
+        <nav class="flex flex-col gap-2 w-full mt-4">
+            <a class="group relative flex flex-col items-center py-3 text-[#006adc] dark:text-blue-400 bg-[#f0f4f7] dark:bg-slate-700 transition-all mx-2 rounded-lg relative overflow-hidden" href="#" onclick="showDashboard(event)">
+                <div class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full"></div>
+                <span class="material-symbols-outlined group-hover:scale-110 transition-transform duration-200" style="font-variation-settings: 'FILL' 1;">psychology</span>
+                <span class="font-body text-[10px] font-medium mt-1 text-center leading-tight">br<strong class="text-purple-600">AI</strong>ny<br>bot</span>
+            </a>
+            
+            <!-- Disabled Side Nav Items -->
+            <div class="group relative flex flex-col items-center py-3 text-slate-400 dark:text-slate-600 mx-2 rounded-lg opacity-40 cursor-not-allowed">
+                <span class="material-symbols-outlined">hub</span>
+                <span class="font-body text-[10px] font-medium mt-1">Intranet</span>
+            </div>
+            <div class="group relative flex flex-col items-center py-3 text-slate-400 dark:text-slate-600 mx-2 rounded-lg opacity-40 cursor-not-allowed">
+                <span class="material-symbols-outlined">notifications</span>
+                <span class="font-body text-[10px] font-medium mt-1">Activity</span>
+            </div>
+            <div class="group relative flex flex-col items-center py-3 text-slate-400 dark:text-slate-600 mx-2 rounded-lg opacity-40 cursor-not-allowed">
+                <span class="material-symbols-outlined">chat</span>
+                <span class="font-body text-[10px] font-medium mt-1">Chat</span>
+            </div>
+            <div class="group relative flex flex-col items-center py-3 text-slate-400 dark:text-slate-600 mx-2 rounded-lg opacity-40 cursor-not-allowed">
+                <span class="material-symbols-outlined">assignment</span>
+                <span class="font-body text-[10px] font-medium mt-1">Tasks</span>
+            </div>
+            <div class="group relative flex flex-col items-center py-3 text-slate-400 dark:text-slate-600 mx-2 rounded-lg opacity-40 cursor-not-allowed">
+                <span class="material-symbols-outlined">groups</span>
+                <span class="font-body text-[10px] font-medium mt-1">Teams</span>
+            </div>
+            <div class="group relative flex flex-col items-center py-3 text-slate-400 dark:text-slate-600 mx-2 rounded-lg opacity-40 cursor-not-allowed">
+                <span class="material-symbols-outlined">calendar_today</span>
+                <span class="font-body text-[10px] font-medium mt-1">Calendar</span>
+            </div>
+        </nav>
+        <div class="mt-auto flex flex-col gap-4 w-full">
+            <button onclick="showFeedbackModal()" class="group flex flex-col items-center py-2 text-[#747c80] hover:text-[#006adc] transition-colors focus:outline-none">
+                <span class="material-symbols-outlined text-xl">help</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Canvas -->
+    <main class="ml-20 pt-10 min-h-screen flex flex-col">
+        <div class="flex-grow flex flex-col px-8 md:px-20 max-w-7xl mx-auto w-full relative">
+            
+            <!-- Dashboard View -->
+            <div id="dashboard-view" class="flex-grow flex flex-col w-full transition-opacity duration-300">
+                <!-- Hero Identity -->
+                <div class="flex flex-col md:flex-row items-center md:items-start gap-6 mb-12 mt-4 justify-center md:justify-start text-center md:text-left">
+                    <div class="flex-shrink-0 p-3 rounded-[1.5rem] bg-surface-container-low border border-outline-variant/10 shadow-sm">
+                        <div class="w-16 h-16 flex items-center justify-center relative">
+                            <!-- Logo Inspired by brAIny bot -->
+                            <div class="absolute inset-0 bg-gradient-signature rounded-full opacity-20 animate-pulse"></div>
+                            <svg class="w-12 h-12 relative z-10 drop-shadow-md" viewBox="0 0 100 100">
+                                <defs>
+                                    <linearGradient id="logoGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#005cc0"></stop>
+                                        <stop offset="100%" style="stop-color:#3784f7"></stop>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M50 15C30.67 15 15 30.67 15 50C15 69.33 30.67 85 50 85C69.33 85 85 69.33 85 50C85 30.67 69.33 15 50 15ZM50 75C36.19 75 25 63.81 25 50C25 36.19 36.19 25 50 25C63.81 25 75 36.19 75 50C75 63.81 63.81 75 50 75Z" fill="url(#logoGrad)"></path>
+                                <circle cx="50" cy="50" fill="url(#logoGrad)" r="10"></circle>
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h1 class="font-headline text-3xl md:text-4xl font-extrabold text-on-background tracking-tight mb-2 mt-2">br<strong class="text-purple-600">AI</strong>ny bot</h1>
+                        <p class="font-body text-on-surface-variant text-base max-w-2xl leading-relaxed">
+                            Unlock the future of workplace skills with adaptive learning paths and AI-driven creative modules. Select a module below to begin.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Bento Activity Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full mb-12">
+                    <!-- Activity Button 1 -->
+                    <button onclick="showTransparencyModal('Understanding prompts', 'You need to write an email to a client, Acme Corp, apologizing for a delayed shipment of 500 widgets and offering a 10% discount on their next order. Ask \'br<strong class=\'text-purple-600\'>AI</strong>ny bot\' to write this for you just like you would type a quick Google search.')" class="group relative bg-surface-container-lowest py-6 px-6 md:py-7 md:px-8 rounded-2xl activity-button-shadow border border-outline-variant/10 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col items-center text-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                        <div class="w-12 h-12 bg-blue-50 text-primary rounded-full flex items-center justify-center mb-3 transition-colors group-hover:bg-primary group-hover:text-white">
+                            <span class="material-symbols-outlined text-2xl">terminal</span>
+                        </div>
+                        <span class="font-headline text-lg font-bold text-on-surface mb-2 flex items-center gap-1">Prompt Engineering</span>
+                        <span class="text-xs font-bold text-secondary tracking-widest uppercase bg-secondary-container px-3 py-1 rounded-full text-center">Interactive Activity</span>
+                    </button>
+                    
+                    <!-- Activity Button 2 (Disabled) -->
+                    <button disabled class="group relative bg-surface-container-lowest py-6 px-6 md:py-7 md:px-8 rounded-2xl border border-outline-variant/10 flex flex-col items-center text-center opacity-50 cursor-not-allowed grayscale transition-all">
+                        <div class="w-12 h-12 bg-surface-variant text-on-surface-variant rounded-full flex items-center justify-center mb-3">
+                            <span class="material-symbols-outlined text-2xl">palette</span>
+                        </div>
+                        <span class="font-headline text-lg font-bold text-on-surface mb-2 flex items-center gap-1">Generative Design</span>
+                        <span class="text-xs font-bold text-secondary tracking-widest uppercase bg-surface-container-high px-3 py-1 rounded-full text-center">Interactive Activity</span>
+                    </button>
+                    
+                    <!-- Activity Button 3 (Disabled) -->
+                    <button disabled class="group relative bg-surface-container-lowest py-6 px-6 md:py-7 md:px-8 rounded-2xl border border-outline-variant/10 flex flex-col items-center text-center opacity-50 cursor-not-allowed grayscale transition-all">
+                        <div class="w-12 h-12 bg-surface-variant text-on-surface-variant rounded-full flex items-center justify-center mb-3">
+                            <span class="material-symbols-outlined text-2xl">insights</span>
+                        </div>
+                        <span class="font-headline text-lg font-bold text-on-surface mb-2 flex items-center gap-1">Data Storytelling</span>
+                        <span class="text-xs font-bold text-secondary tracking-widest uppercase bg-surface-container-high px-3 py-1 rounded-full text-center">Interactive Activity</span>
+                    </button>
+                    
+                    <!-- Activity Button 4 (Disabled) -->
+                    <button disabled class="group relative bg-surface-container-lowest py-6 px-6 md:py-7 md:px-8 rounded-2xl border border-outline-variant/10 flex flex-col items-center text-center opacity-50 cursor-not-allowed grayscale transition-all">
+                        <div class="w-12 h-12 bg-surface-variant text-on-surface-variant rounded-full flex items-center justify-center mb-3">
+                            <span class="material-symbols-outlined text-2xl">auto_fix_high</span>
+                        </div>
+                        <span class="font-headline text-lg font-bold text-on-surface mb-2 flex items-center gap-1">AI Automation</span>
+                        <span class="text-xs font-bold text-secondary tracking-widest uppercase bg-surface-container-high px-3 py-1 rounded-full text-center">Interactive Activity</span>
+                    </button>
+                    
+                    <!-- Activity Button 5 (Disabled) -->
+                    <button disabled class="group relative bg-surface-container-lowest py-6 px-6 md:py-7 md:px-8 rounded-2xl border border-outline-variant/10 flex flex-col items-center text-center opacity-50 cursor-not-allowed grayscale transition-all">
+                        <div class="w-12 h-12 bg-surface-variant text-on-surface-variant rounded-full flex items-center justify-center mb-3">
+                            <span class="material-symbols-outlined text-2xl">gavel</span>
+                        </div>
+                        <span class="font-headline text-lg font-bold text-on-surface mb-2 flex items-center gap-1">Ethics & Governance</span>
+                        <span class="text-xs font-bold text-secondary tracking-widest uppercase bg-surface-container-high px-3 py-1 rounded-full text-center">Interactive Activity</span>
+                    </button>
+                    
+                    <!-- Activity Button 6 (Disabled) -->
+                    <button disabled class="group relative bg-surface-container-lowest py-6 px-6 md:py-7 md:px-8 rounded-2xl border border-outline-variant/10 flex flex-col items-center text-center opacity-50 cursor-not-allowed grayscale transition-all">
+                        <div class="w-12 h-12 bg-surface-variant text-on-surface-variant rounded-full flex items-center justify-center mb-3">
+                            <span class="material-symbols-outlined text-2xl">school</span>
+                        </div>
+                        <span class="font-headline text-lg font-bold text-on-surface mb-2 flex items-center gap-1">Strategic Leadership</span>
+                        <span class="text-xs font-bold text-secondary tracking-widest uppercase bg-secondary-container px-3 py-1 rounded-full text-center">Interactive Activity</span>
+                    </button>
+                </div>
+                
+                <!-- Spacer to push command line down if needed -->
+                <div class="flex-grow"></div>
+
+                <!-- AI Command Line (Input) -->
+                <div class="w-full max-w-3xl sticky bottom-10 pb-6 z-30 mx-auto">
+                    <div class="relative group">
+                        
+                        <!-- Dashboard Amber Warning Pop-up -->
+                        <div id="dashboard-input-warning" class="hidden absolute bottom-[110%] left-0 w-full mb-2 bg-amber-50 border border-amber-300 text-amber-900 rounded-xl p-4 shadow-lg z-50 flex items-start justify-between transition-all">
+                            <div class="flex items-start gap-3">
+                                <span class="material-symbols-outlined text-amber-500 mt-0.5">lightbulb</span>
+                                <p class="font-body text-sm leading-relaxed">I like your curiosity. You'll be able to type and submit answers within the activities. Select one above to get started.</p>
+                            </div>
+                            <button onclick="document.getElementById('dashboard-input-warning').classList.add('hidden')" class="text-amber-700 hover:text-amber-900 transition-colors focus:outline-none">
+                                <span class="material-symbols-outlined text-lg">close</span>
+                            </button>
+                        </div>
+
+                        <!-- Plus Menu (Hidden by default) -->
+                        <div id="add-submenu" class="hidden absolute bottom-full left-0 mb-4 bg-surface-container-lowest border border-outline-variant/20 shadow-2xl rounded-xl p-2 w-64 flex flex-col gap-1 z-40 transform transition-all origin-bottom-left">
+                            <button class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-on-surface hover:bg-surface-container-low rounded-lg transition-colors text-left">
+                                <span class="material-symbols-outlined text-[20px] text-primary">description</span>
+                                Add work content
+                            </button>
+                            <button class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-on-surface hover:bg-surface-container-low rounded-lg transition-colors text-left">
+                                <span class="material-symbols-outlined text-[20px] text-tertiary">image</span>
+                                Upload Images and Files
+                            </button>
+                            <button class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-on-surface hover:bg-surface-container-low rounded-lg transition-colors text-left">
+                                <span class="material-symbols-outlined text-[20px] text-emerald-600">cloud</span>
+                                Attach Cloud Files
+                            </button>
+                        </div>
+
+                        <!-- Emoji Menu (Hidden by default) -->
+                        <div id="emoji-menu" class="hidden absolute bottom-full right-16 mb-4 bg-surface-container-lowest border border-outline-variant/20 shadow-2xl rounded-xl p-3 w-64 z-40 transform transition-all origin-bottom-right">
+                            <div class="text-xs font-semibold text-on-surface-variant mb-2 px-1">Smileys & Emotion</div>
+                            <div class="grid grid-cols-6 gap-1">
+                                <button onclick="insertEmoji('😀', 'main-input')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">😀</button>
+                                <button onclick="insertEmoji('😂', 'main-input')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">😂</button>
+                                <button onclick="insertEmoji('😊', 'main-input')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">😊</button>
+                                <button onclick="insertEmoji('😍', 'main-input')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">😍</button>
+                                <button onclick="insertEmoji('🤔', 'main-input')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">🤔</button>
+                                <button onclick="insertEmoji('😎', 'main-input')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">😎</button>
+                                <button onclick="insertEmoji('👍', 'main-input')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">👍</button>
+                                <button onclick="insertEmoji('🙌', 'main-input')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">🙌</button>
+                                <button onclick="insertEmoji('🔥', 'main-input')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">🔥</button>
+                                <button onclick="insertEmoji('✨', 'main-input')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">✨</button>
+                                <button onclick="insertEmoji('💡', 'main-input')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">💡</button>
+                                <button onclick="insertEmoji('🚀', 'main-input')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">🚀</button>
+                            </div>
+                        </div>
+
+                        <div class="absolute -inset-1 bg-gradient-to-r from-primary to-tertiary rounded-full opacity-20 blur group-focus-within:opacity-40 transition-opacity duration-300"></div>
+                        <div class="relative flex items-center bg-surface-container-lowest rounded-full border border-outline-variant/20 shadow-xl overflow-hidden p-2 transition-all group-focus-within:border-primary">
+                            <button onclick="toggleSubmenu('add-submenu')" class="p-3 text-on-surface-variant hover:text-primary transition-colors focus:outline-none rounded-full hover:bg-surface-container">
+                                <span class="material-symbols-outlined">add_circle</span>
+                            </button>
+                            <input id="main-input" onkeypress="if(event.key === 'Enter') handleChatSubmit()" class="flex-grow bg-transparent border-none focus:ring-0 text-on-surface py-3 px-4 font-body text-base placeholder:text-outline/60 outline-none" placeholder="Use / to insert people, files and more..." type="text"/>
+                            <div class="flex items-center gap-1 pr-1">
+                                <button onclick="toggleEmojiMenu('emoji-menu')" class="p-2 text-on-surface-variant hover:text-primary transition-colors focus:outline-none rounded-full hover:bg-surface-container hidden sm:block">
+                                    <span class="material-symbols-outlined">mood</span>
+                                </button>
+                                <button onclick="handleChatSubmit()" class="ml-1 w-12 h-12 bg-gradient-signature rounded-full text-white flex items-center justify-center shadow-md hover:shadow-primary/30 hover:scale-105 transition-all active:scale-95 focus:outline-none">
+                                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- End Dashboard View -->
+
+            <!-- Activity View (Hidden by Default) -->
+            <div id="activity-view" class="hidden flex-grow flex-col justify-center items-center w-full max-w-5xl mx-auto opacity-100 transition-opacity duration-300 py-10">
+                <h1 id="activity-title" class="font-headline text-4xl md:text-5xl font-normal text-on-background tracking-tight mb-4 text-center hidden">Activity Title</h1>
+                <div id="activity-body" class="font-body text-2xl text-on-surface-variant text-center max-w-3xl mb-16 leading-tight transition-all duration-300 hidden">
+                    Body Text to explain the activity
+                </div>
+                
+                <!-- Feedback Box for Node.js Server Assessment (Hidden by default, unstyled wrapper) -->
+                <div id="feedbackBox" class="hidden w-full max-w-4xl mb-8 transition-all"></div>
+
+                <!-- Large Interactive Input Area -->
+                <div id="activity-input-container" class="w-full max-w-4xl relative group mt-4 transition-all duration-300">
+                    <!-- Glow effect -->
+                    <div class="absolute -inset-2 bg-gradient-to-r from-primary/30 to-tertiary/30 rounded-[2.5rem] blur-xl opacity-60 transition-opacity duration-500"></div>
+                    
+                    <!-- Plus Menu (Activity View) -->
+                    <div id="add-submenu-activity" class="hidden absolute bottom-[80px] left-4 mb-4 bg-surface-container-lowest border border-outline-variant/20 shadow-2xl rounded-xl p-2 w-64 flex flex-col gap-1 z-40 transform transition-all origin-bottom-left">
+                        <button class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-on-surface hover:bg-surface-container-low rounded-lg transition-colors text-left">
+                            <span class="material-symbols-outlined text-[20px] text-primary">description</span>
+                            Add work content
+                        </button>
+                        <button class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-on-surface hover:bg-surface-container-low rounded-lg transition-colors text-left">
+                            <span class="material-symbols-outlined text-[20px] text-tertiary">image</span>
+                            Upload Images and Files
+                        </button>
+                        <button class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-on-surface hover:bg-surface-container-low rounded-lg transition-colors text-left">
+                            <span class="material-symbols-outlined text-[20px] text-emerald-600">cloud</span>
+                            Attach Cloud Files
+                        </button>
+                    </div>
+
+                    <!-- Emoji Menu (Activity View) -->
+                    <div id="emoji-menu-activity" class="hidden absolute bottom-[80px] right-20 mb-4 bg-surface-container-lowest border border-outline-variant/20 shadow-2xl rounded-xl p-3 w-64 z-40 transform transition-all origin-bottom-right">
+                        <div class="text-xs font-semibold text-on-surface-variant mb-2 px-1">Smileys & Emotion</div>
+                        <div class="grid grid-cols-6 gap-1">
+                            <button onclick="insertEmoji('😀', 'learnerInput')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">😀</button>
+                            <button onclick="insertEmoji('😂', 'learnerInput')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">😂</button>
+                            <button onclick="insertEmoji('😊', 'learnerInput')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">😊</button>
+                            <button onclick="insertEmoji('😍', 'learnerInput')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">😍</button>
+                            <button onclick="insertEmoji('🤔', 'learnerInput')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">🤔</button>
+                            <button onclick="insertEmoji('😎', 'learnerInput')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">😎</button>
+                            <button onclick="insertEmoji('👍', 'learnerInput')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">👍</button>
+                            <button onclick="insertEmoji('🙌', 'learnerInput')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">🙌</button>
+                            <button onclick="insertEmoji('🔥', 'learnerInput')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">🔥</button>
+                            <button onclick="insertEmoji('✨', 'learnerInput')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">✨</button>
+                            <button onclick="insertEmoji('💡', 'learnerInput')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">💡</button>
+                            <button onclick="insertEmoji('🚀', 'learnerInput')" class="hover:bg-surface-container rounded p-1 text-lg transition-colors">🚀</button>
+                        </div>
+                    </div>
+
+                    <!-- Reduced Height Input Container (h-48 md:h-60) -->
+                    <div class="relative bg-surface-container-lowest rounded-[2rem] border-2 border-primary/20 shadow-[0_8px_32px_rgba(55,132,247,0.15)] flex flex-col overflow-hidden transition-all h-48 md:h-60">
+                        <textarea id="learnerInput" oninput="document.getElementById('fake-placeholder').style.display = this.value ? 'none' : 'block'" class="flex-grow bg-transparent border-none focus:ring-0 p-6 pb-20 text-on-surface font-body text-lg resize-none outline-none z-10" placeholder=""></textarea>
+                        
+                        <!-- Internal Loading Overlay for Activity Box -->
+                        <div id="input-loading-overlay" class="hidden absolute inset-0 bg-surface-container-lowest/80 backdrop-blur-sm z-30 flex flex-col items-center justify-center">
+                            <span class="material-symbols-outlined animate-spin text-5xl text-primary mb-3">progress_activity</span>
+                            <span class="font-headline font-bold text-lg text-primary tracking-wide">Evaluating Response...</span>
+                        </div>
+
+                        <!-- Toolbar & Fake Placeholder -->
+                        <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between z-20 pointer-events-none">
+                            <div class="flex items-center gap-4 pointer-events-auto pl-2">
+                                <button onclick="toggleSubmenu('add-submenu-activity')" class="text-on-surface-variant hover:text-primary transition-colors focus:outline-none rounded-full flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-[28px]">add_circle</span>
+                                </button>
+                                <span id="fake-placeholder" class="text-outline/40 font-body text-lg tracking-wide">Use / to insert people, files and more...</span>
+                            </div>
+                            <div class="flex items-center gap-3 pointer-events-auto pr-2">
+                                <button id="like-this-btn" onclick="insertLikeThis('learnerInput')" class="text-primary hover:bg-primary/10 transition-colors focus:outline-none rounded-lg flex items-center justify-center px-3 py-1.5 font-bold text-sm border border-primary/20 bg-surface-container-lowest shadow-sm mr-1">
+                                    [like this] <span class="text-xs opacity-70 ml-1">(4)</span>
+                                </button>
+                                <button onclick="toggleEmojiMenu('emoji-menu-activity')" class="text-on-surface-variant hover:text-primary transition-colors focus:outline-none rounded-full flex items-center justify-center hidden sm:block">
+                                    <span class="material-symbols-outlined text-[26px]">mood</span>
+                                </button>
+                                <button id="submitBtn" onclick="handleActivitySubmit()" class="ml-2 w-14 h-14 bg-[#006adc] rounded-full text-white flex items-center justify-center shadow-lg hover:bg-primary-dim hover:scale-105 transition-all active:scale-95 focus:outline-none">
+                                    <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">send</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transparency Modal (Hidden by Default) -->
+            <div id="transparency-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-on-background/40 backdrop-blur-sm p-4 transition-opacity">
+                <div class="bg-surface-container-lowest rounded-2xl shadow-2xl max-w-xl w-full overflow-hidden flex flex-col border border-outline-variant/20">
+                    <div class="p-6 border-b border-outline-variant/10 bg-gradient-to-r from-blue-50/50 to-purple-50/50">
+                        <h2 class="font-headline text-xl font-bold text-primary flex items-center gap-2">
+                            <span class="material-symbols-outlined">policy</span> Use of AI Transparency and Collection of Data
+                        </h2>
+                    </div>
+                    <div class="p-8 text-on-surface-variant leading-relaxed font-body">
+                        <p class="mb-4">Your submissions in this activity will be evaluated using Google's Gemini AI. The text you submit is sent to Google's servers to generate your feedback.</p>
+                        <p class="mb-4">Please note that Google may log this data for safety monitoring and may use it to train and improve future AI models. <strong class="text-error">Do not include any personally identifiable or sensitive information</strong> - such as your name, contact details, ID numbers, or personal stories - in your submission.</p>
+                        <p>I (Graham Betts) do not capture any of your inputs and have no access to this data.</p>
+                    </div>
+                    <div class="p-6 border-t border-outline-variant/10 flex flex-col sm:flex-row gap-4 justify-end bg-surface">
+                        <button onclick="declineTransparency()" class="px-6 py-3 bg-surface-container text-on-surface font-headline font-bold rounded-full shadow-sm hover:bg-surface-dim transition-all">Decline and close</button>
+                        <button onclick="acceptTransparency()" class="px-6 py-3 bg-[#006adc] text-white font-headline font-bold rounded-full shadow-md hover:bg-primary-dim transition-all">Accept and continue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feedback Modal (Hidden by Default) -->
+            <div id="feedback-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-on-background/40 backdrop-blur-sm p-4 transition-opacity">
+                <div class="bg-surface-container-lowest rounded-2xl shadow-2xl max-w-md w-full overflow-hidden flex flex-col border border-outline-variant/20 p-8 text-center">
+                    <span class="material-symbols-outlined text-5xl text-primary mb-4">forum</span>
+                    <h2 class="font-headline text-2xl font-bold text-on-surface mb-3">Activity Feedback</h2>
+                    <p class="text-on-surface-variant font-body mb-8">If you have any feedback on this activity, please use the Contact Form on my portfolio.</p>
+                    <div class="flex gap-4 justify-center">
+                        <button onclick="closeFeedbackModal()" class="px-6 py-3 bg-surface-container text-on-surface font-headline font-bold rounded-full shadow-sm hover:bg-surface-dim transition-all">Close</button>
+                        <a href="https://whoopthisismyusername.github.io/portfolio/" target="_blank" class="px-6 py-3 bg-[#006adc] text-white font-headline font-bold rounded-full shadow-md hover:bg-primary-dim transition-all">Contact Me</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example Submission Modal (Hidden by Default) -->
+            <div id="example-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-on-background/40 backdrop-blur-sm p-4 transition-opacity">
+                <div class="bg-surface-container-lowest rounded-2xl shadow-2xl max-w-2xl w-full overflow-hidden flex flex-col max-h-[85vh] border border-outline-variant/20">
+                    <div class="p-5 border-b border-outline-variant/10 flex justify-between items-center bg-gradient-to-r from-blue-50/50 to-purple-50/50">
+                        <h2 class="font-headline text-xl font-bold text-primary flex items-center gap-2">
+                            <span class="material-symbols-outlined">model_training</span> Example Submission
+                        </h2>
+                        <button onclick="closeExampleModal()" class="text-on-surface-variant hover:text-error transition-colors rounded-full p-1.5 hover:bg-surface-container focus:outline-none">
+                            <span class="material-symbols-outlined text-lg">close</span>
+                        </button>
+                    </div>
+                    <div class="p-6 overflow-y-auto flex-grow font-body text-base text-on-surface-variant leading-relaxed">
+                        <h3 class="font-bold text-on-surface mb-2">Your Submission:</h3>
+                        <div id="example-modal-user-text" class="p-4 bg-surface-container rounded-xl mb-6 italic text-on-surface-variant border border-outline-variant/20 whitespace-pre-wrap"></div>
+                        
+                        <h3 class="font-bold text-emerald-700 mb-2 flex items-center gap-2"><span class="material-symbols-outlined text-[20px]">check_circle</span> Good Example (RISEN Framework):</h3>
+                        <div id="example-modal-good-text" class="p-4 bg-emerald-50 rounded-xl text-emerald-900 border border-emerald-200 whitespace-pre-wrap"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skill Achieved View (Hidden by Default) -->
+            <div id="skill-achieved-view" class="hidden flex-grow flex-col justify-center items-center w-full max-w-4xl mx-auto text-center py-10 opacity-100 transition-opacity duration-300">
+                <div class="w-28 h-28 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-6 shadow-lg transform transition-transform hover:scale-110">
+                    <span class="material-symbols-outlined text-6xl">workspace_premium</span>
+                </div>
+                <h1 class="font-headline text-5xl font-extrabold text-on-background mb-4 tracking-tight">Module Completed!</h1>
+                <p id="skill-achieved-feedback" class="text-xl text-on-surface-variant max-w-2xl mb-10 leading-relaxed bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/10 shadow-sm"></p>
+                <button onclick="showDashboard(event)" class="px-8 py-3.5 bg-[#006adc] text-white font-headline font-bold rounded-full shadow-lg hover:bg-primary-dim hover:-translate-y-1 transition-all">Return to Dashboard</button>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="w-full flex flex-col md:flex-row justify-between items-center gap-4 border-t border-outline-variant/20 py-8 px-8 mt-auto bg-[#f8f9fb] dark:bg-slate-950">
+            <div class="flex flex-col gap-1 items-center md:items-start text-center md:text-left">
+                <span class="font-headline font-bold text-[#2c3437] dark:text-slate-200">br<strong class="text-purple-600">AI</strong>ny bot</span>
+                <span class="font-body text-xs text-[#747c80] dark:text-slate-500">© 2026 'brAIny bot' AI Learning. All rights reserved.</span>
+            </div>
+            <div class="flex flex-wrap justify-center gap-6 font-body text-xs text-[#747c80] dark:text-slate-500">
+                <!-- Links removed per request -->
+            </div>
+        </footer>
+    </main>
+
+    <!-- Scripts and Internal Logic -->
+    <script>
+        // No client-side API key needed. Render handles it securely.
+
+        // Application State
+        let currentActivityStage = 'stage1';
+        let currentScenarioIdx = 0;
+        let likeThisCount = 0;
+        let lastUserSubmission = "";
+        let pendingActivityConfig = null;
+        const MAX_LIKE_THIS = 4;
+
+        // Array of Scenarios for Stage 3 looping mechanic
+        const stage3Scenarios = [
+            {
+                id: 'stage3_1',
+                title: 'Scenario 1: Project Proposal',
+                text: "You are pitching a new 'Wellness at Work' initiative to your HR Director. Using the text box below, write a prompt to generate an executive summary."
+            },
+            {
+                id: 'stage3_2',
+                title: 'Scenario 2: The Project Post-Mortem',
+                text: "Your team recently completed a major software migration that was successful but went two weeks over schedule. You need to write a project retrospective for the IT leadership team."
+            },
+            {
+                id: 'stage3_3',
+                title: 'Scenario 3: The Outage Communication',
+                text: "Your company's primary customer portal is currently down due to an unexpected server failure. You need to draft an urgent update to send to all affected colleagues."
+            },
+            {
+                id: 'stage3_4',
+                title: 'Scenario 4: The Job Requisition',
+                text: "Your marketing department is expanding, and you need to hire a Mid-Level SEO Specialist. You need to create an engaging job posting for LinkedIn."
+            },
+            {
+                id: 'stage3_5',
+                title: 'Scenario 5: The Sales Outreach',
+                text: "You are launching a new software tool to the business. You need to draft a launch comms pack to share with the senior leadership for approval."
+            },
+            {
+                id: 'stage3_6',
+                title: 'Scenario 6: The Difficult Performance Review',
+                text: "You are preparing for an annual review with a team member who delivers excellent technical work but consistently misses deadlines and communicates poorly. You need talking points to guide the conversation."
+            },
+            {
+                id: 'stage3_7',
+                title: 'Scenario 7: The Strategic Offsite Agenda',
+                text: "You are organising a team day strategic planning session for your team. You need to build a comprehensive agenda that balances deep-work sessions with team building."
+            },
+            {
+                id: 'stage3_8',
+                title: 'Scenario 8: The Mandatory Training Rollout',
+                text: "The compliance team has introduced a mandatory, 2-hour data privacy module that all employees must complete within 30 days. You need to draft the internal announcement."
+            },
+            {
+                id: 'stage3_9',
+                title: 'Scenario 9: Data Analyst',
+                text: "You have to analyse some marketing data and come up with insights. The data includes information about social media channels being accessed by different demographics and the advertising spend. You need a simple, visual guide to discuss the data with your boss."
+            },
+            {
+                id: 'stage3_10',
+                title: 'Scenario 10: The Change Management Policy',
+                text: "After two years of fully remote work, the executive board has decided to implement a mandatory 3-day-a-week hybrid office schedule. You need to draft the policy to support this."
+            },
+            {
+                id: 'stage3_11',
+                title: 'Scenario 11: The Executive Summary',
+                text: "You have just finished a 40-page market research report on competitors in your business sector. You need a summary to present to the CEO, who only has 5 minutes to read it."
+            }
+        ];
+
+        // Library of good static examples to display
+        const goodExamples = {
+            'stage1': "Act as an Account Manager [R]. Write an email to Acme Corp apologizing for a delayed shipment of 500 widgets and offering a 10% discount on their next order [I]. First, sincerely apologize for the delay. Second, explain the shipment is delayed but on its way. Third, offer the discount [S]. I need a complete, ready-to-send email [E]. Keep the tone professional, empathetic, and under 150 words [N].",
+            'stage3_1': "Act as a Wellbeing Consultant [R]. Write an executive summary pitching a 'Wellness at Work' initiative to the HR Director [I]. 1. Summarize the core pitch. 2. Breakdown the initiative into key phases. 3. Provide a high-level overview [S]. Output a 1-2 page document with bullet points [E]. Make it professional, persuasive, and action-oriented [N].",
+            'stage3_2': "Act as a Lead IT Project Manager [R]. Write a project retrospective for the IT leadership team regarding the recent software migration [I]. 1. Highlight that the migration was successful. 2. Address the two-week schedule overrun. 3. List lessons learned [S]. Format as a formal brief with clear headings [E]. Keep the tone objective and analytical, under 2 pages [N].",
+            'stage3_3': "Act as an IT Incident Manager [R]. Draft an urgent update to all colleagues about the current customer portal outage [I]. 1. State clearly that the portal is down due to a server failure. 2. Reassure them that the team is working on it. 3. Provide an estimated time for the next update [S]. Format it as an internal email [E]. Keep it concise, urgent but calm, under 100 words [N].",
+            'stage3_4': "Act as an HR Recruiter [R]. Create a LinkedIn job posting for a Mid-Level SEO Specialist [I]. 1. Write a catchy hook. 2. List key responsibilities. 3. List required skills. 4. Add a call to action [S]. Provide a ready-to-post LinkedIn text [E]. The tone should be enthusiastic and modern, using appropriate emojis [N].",
+            'stage3_5': "Act as a Product Marketing Manager [R]. Draft a launch communications pack for a new software tool to share with senior leadership [I]. 1. Outline the key features. 2. Explain the business benefits. 3. Detail the rollout timeline [S]. Provide this as a structured summary document [E]. Keep it persuasive, business-focused, and under 500 words [N].",
+            'stage3_6': "Act as an HR Business Partner [R]. Write talking points for an annual review [I]. 1. Praise their excellent technical work. 2. Address their consistent missed deadlines. 3. Address their poor communication [S]. Provide actionable bullet points for the manager [E]. Keep the tone constructive, empathetic, but firm [N].",
+            'stage3_7': "Act as a Team Lead [R]. Build an agenda for a team day strategic planning session [I]. 1. Include a morning session for strategy. 2. Include a team-building activity. 3. Include breaks and lunch [S]. Format as a timed agenda list [E]. Make it engaging, balanced, and fit a 9-to-5 schedule [N].",
+            'stage3_8': "Act as a Compliance Officer [R]. Draft an internal announcement for a mandatory data privacy module [I]. 1. Explain the 2-hour training. 2. State the 30-day deadline. 3. Provide access instructions [S]. Format as an official company email [E]. Keep it clear, authoritative, and highly visible [N].",
+            'stage3_9': "Act as a Senior Data Analyst [R]. Create a discussion guide based on marketing data [I]. 1. Summarize demographic trends. 2. Highlight ad spend efficiency. 3. Propose strategic recommendations [S]. Format as a brief outline with suggested chart types [E]. Keep it simple and accessible for a non-technical executive [N].",
+            'stage3_10': "Act as the Chief Operating Officer [R]. Draft a change management policy introducing a 3-day-a-week hybrid office schedule [I]. 1. Acknowledge past remote work. 2. Explain the rationale for the new policy. 3. Outline the timeline [S]. Format as a formal memo [E]. Keep the tone respectful, clear, and definitive [N].",
+            'stage3_11': "Act as a Senior Market Researcher [R]. Write an executive summary of a competitor analysis report [I]. 1. Identify top 3 competitor threats. 2. Summarize our market position. 3. Recommend immediate strategic actions [S]. Format as a highly scannable 1-page document with bold takeaways [E]. Designed for a CEO with only 5 minutes to read [N]."
+        };
+
+        // Helper to reset inputs and buttons across transitions
+        function resetInputArea() {
+            const input = document.getElementById('learnerInput');
+            const submitBtn = document.getElementById('submitBtn');
+            const likeThisBtn = document.getElementById('like-this-btn');
+            
+            // Re-enable text area
+            input.value = '';
+            input.disabled = false;
+            input.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-surface-dim');
+            
+            // Re-enable submit button
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+
+            // Reset and handle the [like this] button logic
+            likeThisCount = 0;
+            if (likeThisBtn) {
+                if (currentActivityStage === 'stage1') {
+                    likeThisBtn.style.display = 'none'; // Disable completely in stage 1
+                } else {
+                    likeThisBtn.style.display = 'flex';
+                    likeThisBtn.disabled = false;
+                    likeThisBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    likeThisBtn.classList.add('hover:bg-primary/10');
+                    likeThisBtn.innerHTML = `[like this] <span class="text-xs opacity-70 ml-1">(4)</span>`;
+                }
+            }
+            
+            document.getElementById('fake-placeholder').style.display = 'block';
+        }
+
+        // Modal Functionality for View Example
+        function showExampleModal() {
+            const exampleText = goodExamples[currentActivityStage] || "No example found for this stage.";
+            document.getElementById('example-modal-user-text').innerText = lastUserSubmission;
+            document.getElementById('example-modal-good-text').innerText = exampleText;
+            document.getElementById('example-modal').classList.remove('hidden');
+        }
+
+        function closeExampleModal() {
+            document.getElementById('example-modal').classList.add('hidden');
+        }
+
+        // --- Modals for Feedback and Transparency ---
+        function showFeedbackModal() {
+            document.getElementById('feedback-modal').classList.remove('hidden');
+        }
+
+        function closeFeedbackModal() {
+            document.getElementById('feedback-modal').classList.add('hidden');
+        }
+
+        function showTransparencyModal(title, description) {
+            pendingActivityConfig = { title, description };
+            document.getElementById('transparency-modal').classList.remove('hidden');
+        }
+
+        function declineTransparency() {
+            document.getElementById('transparency-modal').classList.add('hidden');
+            // Simulating a close for a web app since window.close() is blocked by most browsers if not opened by script
+            document.body.innerHTML = `
+                <div class="flex items-center justify-center h-screen w-full bg-surface">
+                    <div class="text-center p-8 bg-surface-container-lowest rounded-2xl shadow-xl max-w-md border border-outline-variant/20">
+                        <span class="material-symbols-outlined text-6xl text-outline mb-4">close</span>
+                        <h1 class="text-2xl font-headline font-bold text-on-surface mb-2">Activity Closed</h1>
+                        <p class="text-on-surface-variant">You declined the data transparency agreement. You may now close this tab.</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function acceptTransparency() {
+            document.getElementById('transparency-modal').classList.add('hidden');
+            if (pendingActivityConfig) {
+                openActivity(pendingActivityConfig.title, pendingActivityConfig.description);
+            }
+        }
+
+        // --- Feature 3: Activity Navigation ---
+        function openActivity(title, description) {
+            currentActivityStage = 'stage1';
+            resetInputArea(); // Reset input state
+
+            // Hide unstyled title
+            const titleEl = document.getElementById('activity-title');
+            titleEl.classList.add('hidden');
+            
+            // Re-style body as a card for Stage 1
+            const bodyEl = document.getElementById('activity-body');
+            bodyEl.classList.remove('hidden');
+            bodyEl.className = 'font-body text-left max-w-4xl mb-8 transition-all duration-300 w-full';
+            
+            bodyEl.innerHTML = `
+                <div class="bg-surface-container-lowest p-8 rounded-[2rem] border-2 border-primary/10 shadow-[0_8px_32px_rgba(55,132,247,0.08)] text-on-surface-variant text-lg">
+                    <div class="flex items-center gap-3 mb-4 pb-4 border-b border-outline-variant/10">
+                        <span class="material-symbols-outlined text-3xl text-primary">edit_document</span>
+                        <h2 class="font-headline text-2xl font-extrabold text-on-surface tracking-tight">${title}</h2>
+                    </div>
+                    <div class="p-6 bg-blue-50/50 border border-blue-100 rounded-xl">
+                        <p class="text-on-surface leading-relaxed">${description}</p>
+                    </div>
+                </div>
+            `;
+            
+            // Reset visibility
+            document.getElementById('feedbackBox').classList.add('hidden');
+            document.getElementById('feedbackBox').innerHTML = '';
+            document.getElementById('activity-input-container').classList.remove('hidden');
+            
+            // Switch views
+            const dash = document.getElementById('dashboard-view');
+            const activity = document.getElementById('activity-view');
+            const achieved = document.getElementById('skill-achieved-view');
+            
+            dash.classList.add('hidden');
+            dash.classList.remove('flex');
+            
+            achieved.classList.add('hidden');
+            achieved.classList.remove('flex');
+            
+            activity.classList.remove('hidden');
+            activity.classList.add('flex');
+            
+            // Focus the new input
+            setTimeout(() => document.getElementById('learnerInput').focus(), 100);
+        }
+
+        function showDashboard(event) {
+            if (event) event.preventDefault();
+            
+            const dash = document.getElementById('dashboard-view');
+            const activity = document.getElementById('activity-view');
+            const achieved = document.getElementById('skill-achieved-view');
+            
+            activity.classList.add('hidden');
+            activity.classList.remove('flex');
+
+            achieved.classList.add('hidden');
+            achieved.classList.remove('flex');
+            
+            dash.classList.remove('hidden');
+            dash.classList.add('flex');
+        }
+
+        function goToSkillAchieved() {
+            const activity = document.getElementById('activity-view');
+            const achieved = document.getElementById('skill-achieved-view');
+            
+            activity.classList.add('hidden');
+            activity.classList.remove('flex');
+            achieved.classList.remove('hidden');
+            achieved.classList.add('flex');
+        }
+
+        // --- Content Moderation & Invalid Attempts ---
+        function showModerationWarning() {
+            const feedbackBox = document.getElementById('feedbackBox');
+            document.getElementById('activity-body').classList.add('hidden');
+            document.getElementById('activity-title').classList.add('hidden');
+            
+            // Hide input container completely during warning
+            document.getElementById('activity-input-container').classList.add('hidden');
+            document.getElementById('input-loading-overlay').classList.add('hidden');
+            
+            feedbackBox.classList.remove('hidden');
+            feedbackBox.innerHTML = `
+                <div class="flex flex-col items-center justify-center gap-4 text-error p-8 bg-error-container/10 border-2 border-error/20 rounded-2xl shadow-sm text-center mb-6">
+                    <span class="material-symbols-outlined text-5xl">gavel</span>
+                    <div>
+                        <p class="font-headline font-bold text-xl mb-2 text-error">Unprofessional Content Detected</p>
+                        <p class="text-base text-error/90 max-w-lg mx-auto">This input is not appropriate for a work situation and should not be entered into this learning tool. Please ensure you take this opportunity to learn and develop seriously.</p>
+                    </div>
+                    <button onclick="resetCurrentStage()" class="mt-4 px-8 py-3 bg-error text-white font-headline font-bold rounded-full shadow-lg hover:bg-error-dim hover:-translate-y-1 transition-all flex items-center justify-center gap-2 mx-auto">
+                        <span class="material-symbols-outlined text-lg">refresh</span> Acknowledge & Restart
+                    </button>
+                </div>`;
+                
+            resetInputArea();
+        }
+
+        function showPIIWarning() {
+            const feedbackBox = document.getElementById('feedbackBox');
+            document.getElementById('activity-body').classList.add('hidden');
+            document.getElementById('activity-title').classList.add('hidden');
+            
+            document.getElementById('activity-input-container').classList.add('hidden');
+            document.getElementById('input-loading-overlay').classList.add('hidden');
+            
+            feedbackBox.classList.remove('hidden');
+            feedbackBox.innerHTML = `
+                <div class="flex flex-col items-center justify-center gap-4 text-amber-900 p-8 bg-amber-50 border-2 border-amber-200 rounded-2xl shadow-sm text-center mb-6 max-w-3xl mx-auto">
+                    <span class="material-symbols-outlined text-5xl text-amber-500">privacy_tip</span>
+                    <div>
+                        <p class="font-headline font-bold text-xl mb-3 text-amber-800">Sensitive Information Detected</p>
+                        <p class="text-base text-amber-900/90 mb-3">It looks like your input contains a phone number, email address, or other personally identifiable information (PII).</p>
+                        <p class="text-sm text-amber-900/80 mb-4">For your privacy and security, please remove any sensitive personal data before submitting.</p>
+                    </div>
+                    <button onclick="retryAttempt()" class="mt-4 px-8 py-3 bg-amber-500 text-white font-headline font-bold rounded-full shadow-lg hover:bg-amber-600 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 mx-auto">
+                        <span class="material-symbols-outlined text-lg">edit</span> Edit Submission
+                    </button>
+                </div>`;
+            
+            resetInputArea();
+        }
+
+        function showInvalidAttemptWarning() {
+            const feedbackBox = document.getElementById('feedbackBox');
+            document.getElementById('activity-body').classList.add('hidden');
+            document.getElementById('activity-title').classList.add('hidden');
+            
+            // Hide input container completely during warning
+            document.getElementById('activity-input-container').classList.add('hidden');
+            document.getElementById('input-loading-overlay').classList.add('hidden');
+            
+            feedbackBox.classList.remove('hidden');
+            feedbackBox.innerHTML = `
+                <div class="flex flex-col items-center justify-center gap-4 text-amber-900 p-8 bg-amber-50 border-2 border-amber-200 rounded-2xl shadow-sm text-center mb-6 max-w-3xl mx-auto">
+                    <span class="material-symbols-outlined text-5xl text-amber-500">warning</span>
+                    <div>
+                        <p class="font-headline font-bold text-xl mb-3 text-amber-800">Invalid Attempt Detected</p>
+                        <p class="text-base text-amber-900/90 mb-3">It looks like you have not made a real attempt to answer the question using the RISEN framework.</p>
+                        <p class="text-sm text-amber-900/80 italic mb-4">This response is flagged if the prompt provided either overuses the [like this] feature, looks like a direct copy of the original scenario, or cannot be linked back to the framework provided.</p>
+                        <div class="bg-white/60 p-4 rounded-lg border border-amber-200/50 text-left text-sm text-amber-900/90">
+                            <strong>Tip:</strong> If you feel this is an unfair assessment of your prompt submission, you could write the prompt as:<br>
+                            <span class="font-mono mt-1 block text-amber-800">'Role - Act as a ..., Instructions - Create a report ...'</span> format.
+                        </div>
+                    </div>
+                    <button onclick="retryAttempt()" class="mt-4 px-8 py-3 bg-amber-500 text-white font-headline font-bold rounded-full shadow-lg hover:bg-amber-600 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 mx-auto">
+                        <span class="material-symbols-outlined text-lg">refresh</span> Try Again
+                    </button>
+                </div>`;
+        }
+
+        function retryAttempt() {
+            // Restore UI for the current scenario
+            document.getElementById('feedbackBox').classList.add('hidden');
+            
+            // Only show the large title if we are on an unstyled view (not active anymore since we use cards)
+            document.getElementById('activity-title').classList.add('hidden');
+            
+            document.getElementById('activity-body').classList.remove('hidden');
+            document.getElementById('activity-input-container').classList.remove('hidden');
+            
+            // Reset input area and buttons
+            resetInputArea();
+            
+            // Focus input
+            setTimeout(() => document.getElementById('learnerInput').focus(), 100);
+        }
+
+        function resetCurrentStage() {
+            if (currentActivityStage === 'stage1') {
+                openActivity('Understanding prompts', 'You need to write an email to a client, Acme Corp, apologizing for a delayed shipment of 500 widgets and offering a 10% discount on their next order. Ask \'br<strong class="text-purple-600">AI</strong>ny bot\' to write this for you just like you would type a quick Google search.');
+            } else if (currentActivityStage === 'stage2') {
+                goToStage2();
+            } else if (currentActivityStage === 'stage2b') {
+                goToStage2b();
+            } else if (currentActivityStage.startsWith('stage3')) {
+                loadScenario(currentScenarioIdx);
+            }
+        }
+
+        // --- Stage 2 Flow ---
+        function goToStage2() {
+            currentActivityStage = 'stage2';
+
+            // Hide feedback box & input container
+            document.getElementById('feedbackBox').classList.add('hidden');
+            document.getElementById('activity-input-container').classList.add('hidden');
+            document.getElementById('activity-title').classList.add('hidden');
+
+            const bodyEl = document.getElementById('activity-body');
+            bodyEl.classList.remove('hidden');
+            bodyEl.className = 'font-body text-left max-w-4xl mb-16 transition-all duration-300 w-full';
+
+            bodyEl.innerHTML = `
+                <div class="bg-surface-container-lowest p-8 md:p-10 rounded-[2rem] border-2 border-primary/10 shadow-[0_8px_32px_rgba(55,132,247,0.08)]">
+                    <div class="flex items-center gap-3 mb-5 pb-4 border-b border-outline-variant/10">
+                        <span class="material-symbols-outlined text-3xl text-primary">model_training</span>
+                        <h2 class="font-headline text-2xl md:text-3xl font-extrabold text-on-surface tracking-tight">Introducing the RISEN Framework</h2>
+                    </div>
+                    
+                    <p class="mb-6 font-medium text-lg text-on-surface-variant">To get high quality help from AI, we need to provide it with clear, structured and detailed instructions, so it knows exactly what to do for us, think if it was writing a brief for someone to follow. There are several methods you can follow, an easy one for most business scenarios is the <strong class="text-primary font-extrabold tracking-wide">RISEN</strong> framework:</p>
+                    
+                    <ul class="space-y-4 mb-8 text-left">
+                        <li class="flex gap-4 items-start">
+                            <div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-lg shrink-0 mt-0.5">R</div>
+                            <div>
+                                <div class="text-on-surface text-lg leading-snug"><strong class="text-primary font-bold">Role:</strong> Who should the AI act as? <span class="text-sm opacity-80 italic text-secondary ml-1">(e.g., Act as a senior customer success manager.)</span></div>
+                            </div>
+                        </li>
+                        <li class="flex gap-4 items-start">
+                            <div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-lg shrink-0 mt-0.5">I</div>
+                            <div>
+                                <div class="text-on-surface text-lg leading-snug"><strong class="text-primary font-bold">Instructions:</strong> What is the specific task? <span class="text-sm opacity-80 italic text-secondary ml-1">(e.g., Draft an apology email to Acme Corp for a late shipment of 500 widgets.)</span></div>
+                            </div>
+                        </li>
+                        <li class="flex gap-4 items-start">
+                            <div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-lg shrink-0 mt-0.5">S</div>
+                            <div>
+                                <div class="text-on-surface text-lg leading-snug"><strong class="text-primary font-bold">Steps:</strong> How should it build the response? <span class="text-sm opacity-80 italic text-secondary ml-1">(e.g., 1. Acknowledge the delay. 2. Explain it was due to a supply chain issue. 3. Offer a 10% discount.)</span></div>
+                            </div>
+                        </li>
+                        <li class="flex gap-4 items-start">
+                            <div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-lg shrink-0 mt-0.5">E</div>
+                            <div>
+                                <div class="text-on-surface text-lg leading-snug"><strong class="text-primary font-bold">End Goal:</strong> What should the final output look like? <span class="text-sm opacity-80 italic text-secondary ml-1">(e.g., A complete, ready-to-send email.)</span></div>
+                            </div>
+                        </li>
+                        <li class="flex gap-4 items-start">
+                            <div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-lg shrink-0 mt-0.5">N</div>
+                            <div>
+                                <div class="text-on-surface text-lg leading-snug"><strong class="text-primary font-bold">Narrowing:</strong> What are the constraints? <span class="text-sm opacity-80 italic text-secondary ml-1">(e.g., Keep it under 150 words. Ensure the tone is empathetic but confident.)</span></div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="text-center mt-8 border-t border-outline-variant/10 pt-8">
+                        <button onclick="goToStage2b()" class="px-8 py-3 bg-[#006adc] text-white font-headline font-bold rounded-full shadow-lg hover:bg-primary-dim hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 mx-auto text-lg">
+                            Move On <span class="material-symbols-outlined">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- Stage 2b Flow (The [like this] Placeholder Technique) ---
+        function goToStage2b() {
+            currentActivityStage = 'stage2b';
+
+            // Hide feedback box & input container
+            document.getElementById('feedbackBox').classList.add('hidden');
+            document.getElementById('activity-input-container').classList.add('hidden');
+            document.getElementById('activity-title').classList.add('hidden');
+
+            const bodyEl = document.getElementById('activity-body');
+            bodyEl.classList.remove('hidden');
+            bodyEl.className = 'font-body text-left max-w-4xl mb-16 transition-all duration-300 w-full';
+
+            bodyEl.innerHTML = `
+                <div class="bg-surface-container-lowest p-8 md:p-10 rounded-[2rem] border-2 border-primary/10 shadow-[0_8px_32px_rgba(55,132,247,0.08)] text-on-surface-variant text-lg">
+                    <div class="flex items-center gap-3 mb-4 pb-4 border-b border-outline-variant/10">
+                        <span class="material-symbols-outlined text-3xl text-primary">data_object</span>
+                        <h2 class="font-headline text-2xl font-extrabold text-on-surface tracking-tight">Activity Instructions</h2>
+                    </div>
+                    <p class="mb-4">The following scenarios require you to write a prompt using the RISEN framework. Each submission provides feedback to help you improve for the next scenario.</p>
+                    <p class="mb-4">You aren't expected to be a subject matter expert. If you don't know the specifics, use the <strong class="text-primary border border-primary/20 bg-primary/10 px-2 py-0.5 rounded-lg text-sm">[like this]</strong> button to insert a placeholder. This signals you know <em>where</em> detail belongs, without needing the actual facts.</p>
+                    
+                    <div class="p-5 bg-blue-50/50 border border-blue-100 rounded-xl mb-5 text-sm">
+                        <strong class="text-primary block mb-2 font-headline">Example:</strong>
+                        <p class="text-on-surface italic leading-relaxed">"Write a detailed mental health strategy that contains A) A summary covering <strong class="text-primary font-bold bg-white px-1.5 py-0.5 rounded border border-primary/20 not-italic">[like this]</strong>, B) a detailed breakdown including <strong class="text-primary font-bold bg-white px-1.5 py-0.5 rounded border border-primary/20 not-italic">[like this]</strong>."</p>
+                    </div>
+                    
+                    <div class="flex items-center gap-3 p-4 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-sm">
+                        <span class="material-symbols-outlined text-amber-600">warning</span>
+                        <p>To ensure you practice writing your own constraints, you can only use the <strong>[like this]</strong> button a maximum of <strong>4 times</strong> per scenario.</p>
+                    </div>
+                    
+                    <div class="text-center mt-8 border-t border-outline-variant/10 pt-8">
+                        <button onclick="goToStage3()" class="px-8 py-3 bg-[#006adc] text-white font-headline font-bold rounded-full shadow-lg hover:bg-primary-dim hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 mx-auto text-lg">
+                            Start Scenarios <span class="material-symbols-outlined">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- Stage 3 Looping Logic ---
+        function goToStage3() {
+            currentScenarioIdx = 0;
+            loadScenario(currentScenarioIdx);
+        }
+
+        function loadNextScenario() {
+            currentScenarioIdx++;
+            if(currentScenarioIdx >= stage3Scenarios.length) {
+                currentScenarioIdx = 0; // Loop back to the beginning if they run out, or could transition to an end state
+            }
+            loadScenario(currentScenarioIdx);
+        }
+
+        function loadScenario(idx) {
+            const scenario = stage3Scenarios[idx];
+            currentActivityStage = scenario.id;
+            
+            // Prepare UI state for a new scenario
+            document.getElementById('feedbackBox').classList.add('hidden');
+            document.getElementById('activity-input-container').classList.remove('hidden');
+            resetInputArea();
+
+            document.getElementById('activity-title').classList.add('hidden'); 
+
+            const bodyEl = document.getElementById('activity-body');
+            bodyEl.classList.remove('hidden');
+            bodyEl.className = 'font-body text-left max-w-4xl mb-8 transition-all duration-300 w-full';
+            
+            bodyEl.innerHTML = `
+                <div class="bg-surface-container-lowest p-8 rounded-[2rem] border-2 border-primary/10 shadow-[0_8px_32px_rgba(55,132,247,0.08)] text-on-surface-variant text-lg">
+                    <div class="flex items-center gap-3 mb-4 pb-4 border-b border-outline-variant/10">
+                        <span class="material-symbols-outlined text-3xl text-primary">edit_document</span>
+                        <h2 class="font-headline text-2xl font-extrabold text-on-surface tracking-tight">Stage 3: The RISEN Challenge</h2>
+                    </div>
+                    <div class="p-6 bg-blue-50/50 border border-blue-100 rounded-xl">
+                        <strong class="text-primary block mb-2 font-headline text-xl flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[22px]">assignment</span> ${scenario.title}
+                        </strong>
+                        <p class="text-on-surface">${scenario.text}</p>
+                    </div>
+                </div>
+            `;
+            
+            setTimeout(() => document.getElementById('learnerInput').focus(), 100);
+        }
+
+        async function handleChatSubmit() {
+            const input = document.getElementById('main-input');
+            if (input) {
+                input.value = '';
+                input.placeholder = "I like your curiosity. You'll be able to type and submit answers within the activities. Select one above to get started.";
+                
+                const popup = document.getElementById('dashboard-input-warning');
+                if (popup) {
+                    popup.classList.remove('hidden');
+                    setTimeout(() => {
+                        popup.classList.add('hidden');
+                    }, 5000);
+                }
+            }
+        }
+
+        // Reusable function to render parsed feedback output 
+        function renderFeedbackBox(rawOutput) {
+            const feedbackBox = document.getElementById('feedbackBox');
+            const isSuccess = rawOutput.includes('[Skill Achieved]');
+            let mainContent = rawOutput.replace('[Skill Achieved]', '').trim();
+            let learnerFeedback = "";
+
+            // Determine navigation action for the Move On button
+            let nextAction = "";
+            let nextLabel = "";
+            if (currentActivityStage === 'stage1') {
+                nextAction = "goToStage2()";
+                nextLabel = "Move On";
+            } else {
+                if (isSuccess) {
+                    nextAction = "goToSkillAchieved()";
+                    nextLabel = "Complete Module";
+                } else {
+                    nextAction = "loadNextScenario()";
+                    nextLabel = "Next Scenario";
+                }
+            }
+            
+            // Hide the title and instructions once feedback is generated
+            document.getElementById('activity-title').classList.add('hidden');
+            document.getElementById('activity-body').classList.add('hidden');
+            
+            feedbackBox.classList.remove('hidden');
+
+            // Render Stage 3 Output specific layout
+            if (currentActivityStage.startsWith('stage3')) {
+                if (isSuccess) {
+                    document.getElementById('skill-achieved-feedback').innerHTML = "You nailed all 5 elements of the RISEN framework in your prompt design!";
+                    feedbackBox.innerHTML = `
+                        <div class="bg-surface-container-lowest border border-outline-variant/20 rounded-2xl p-8 shadow-sm mb-2">
+                            <div class="flex items-center gap-2 text-primary font-bold mb-4 border-b border-outline-variant/10 pb-3">
+                                <span class="material-symbols-outlined">analytics</span>
+                                RISEN Framework Analysis
+                            </div>
+                            <div class="ai-content text-left text-on-surface-variant text-base mb-6">${mainContent}</div>
+                            
+                            <!-- Success State Box -->
+                            <div class="p-6 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl font-medium text-left mb-6">
+                                <div class="flex items-center gap-2 font-bold mb-2 text-emerald-900 text-xl">
+                                    <span class="material-symbols-outlined text-2xl">check_circle</span> 
+                                    Perfect Score!
+                                </div>
+                                <p class="text-emerald-800/80">You successfully mapped all components of the prompt to the RISEN framework.</p>
+                            </div>
+
+                            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                                <button onclick="showExampleModal()" class="px-6 py-3.5 bg-surface-container border border-outline-variant/30 text-on-surface font-headline font-bold rounded-full shadow-sm hover:bg-surface-dim transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
+                                    <span class="material-symbols-outlined text-[20px]">visibility</span> View Example
+                                </button>
+                                <button onclick="${nextAction}" class="px-8 py-3.5 bg-emerald-600 text-white font-headline font-bold rounded-full shadow-lg hover:bg-emerald-700 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
+                                    ${nextLabel} <span class="material-symbols-outlined text-sm">workspace_premium</span>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    feedbackBox.innerHTML = `
+                        <div class="bg-surface-container-lowest border border-outline-variant/20 rounded-2xl p-8 shadow-sm mb-2">
+                            <div class="flex items-center gap-2 text-primary font-bold mb-4 border-b border-outline-variant/10 pb-3">
+                                <span class="material-symbols-outlined">analytics</span>
+                                RISEN Framework Analysis
+                            </div>
+                            <div class="ai-content text-left text-on-surface-variant text-base mb-6">${mainContent}</div>
+                            
+                            <!-- Keep Practicing Box -->
+                            <div class="p-6 bg-amber-50 border border-amber-200 text-amber-900 rounded-xl font-medium text-left mb-6">
+                                <div class="flex items-center gap-2 font-bold mb-2 text-xl">
+                                    <span class="material-symbols-outlined text-2xl">model_training</span> 
+                                    Keep Practicing
+                                </div>
+                                <p class="text-amber-800/90">You missed some elements or lacked specificity. Review the example below, then move on to the next scenario to try again.</p>
+                            </div>
+
+                            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                                <button onclick="showExampleModal()" class="px-6 py-3.5 bg-surface-container border border-outline-variant/30 text-on-surface font-headline font-bold rounded-full shadow-sm hover:bg-surface-dim transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
+                                    <span class="material-symbols-outlined text-[20px]">visibility</span> View Example
+                                </button>
+                                <button onclick="${nextAction}" class="px-8 py-3.5 bg-[#006adc] text-white font-headline font-bold rounded-full shadow-lg hover:bg-primary-dim hover:-translate-y-1 transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
+                                    ${nextLabel} <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }
+                return;
+            }
+
+            // Render Stage 1 Output specific layout
+            if (!isSuccess && mainContent.includes('Learner Feedback:')) {
+                const splitContent = mainContent.split('Learner Feedback:');
+                mainContent = splitContent[0].trim();
+                learnerFeedback = splitContent[1].trim();
+            }
+
+            if (isSuccess) {
+                document.getElementById('skill-achieved-feedback').innerHTML = mainContent;
+
+                feedbackBox.innerHTML = `
+                    <div class="bg-surface-container-lowest border border-outline-variant/20 rounded-2xl p-8 shadow-sm mb-2">
+                        <div class="flex items-center gap-2 text-primary font-bold mb-4 border-b border-outline-variant/10 pb-3">
+                            <span class="material-symbols-outlined">temp_preferences_custom</span>
+                            Assessment Results
+                        </div>
+                        <div class="ai-content text-left text-on-surface-variant text-base mb-6">${mainContent}</div>
+                        
+                        <!-- GREEN Learner Feedback Box -->
+                        <div class="p-6 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl font-medium text-left">
+                            <div class="flex items-center gap-2 font-bold mb-2 text-emerald-900 text-xl">
+                                <span class="material-symbols-outlined text-2xl">check_circle</span> 
+                                Learner Feedback: Skill Achieved!
+                            </div>
+                            <p class="text-emerald-800/80">You successfully demonstrated the RISEN framework and generated an optimal prompt.</p>
+                        </div>
+                        
+                        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                            <button onclick="showExampleModal()" class="px-6 py-3.5 bg-surface-container border border-outline-variant/30 text-on-surface font-headline font-bold rounded-full shadow-sm hover:bg-surface-dim transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
+                                <span class="material-symbols-outlined text-[20px]">visibility</span> View Example
+                            </button>
+                            <button onclick="${nextAction}" class="px-8 py-3.5 bg-emerald-600 text-white font-headline font-bold rounded-full shadow-lg hover:bg-emerald-700 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
+                                ${nextLabel} <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                feedbackBox.innerHTML = `
+                    <div class="bg-surface-container-lowest border border-outline-variant/20 rounded-2xl p-8 shadow-sm mb-2">
+                        <div class="flex items-center gap-2 text-primary font-bold mb-4 border-b border-outline-variant/10 pb-3">
+                            <span class="material-symbols-outlined">temp_preferences_custom</span>
+                            AI Draft Generated
+                        </div>
+                        <div class="ai-content text-left text-on-surface-variant text-base mb-6">${mainContent}</div>
+                        
+                        <!-- RED Learner Feedback Box -->
+                        ${learnerFeedback ? `
+                        <div class="p-6 bg-error-container/10 border border-error/20 text-error rounded-xl font-medium text-left">
+                            <div class="flex items-center gap-2 font-bold mb-2 text-xl text-error">
+                                <span class="material-symbols-outlined text-2xl">lightbulb</span> 
+                                Learner Feedback
+                            </div>
+                            <p class="text-error/90">${learnerFeedback}</p>
+                        </div>
+                        ` : ''}
+                        
+                        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                            <button onclick="showExampleModal()" class="px-6 py-3.5 bg-surface-container border border-outline-variant/30 text-on-surface font-headline font-bold rounded-full shadow-sm hover:bg-surface-dim transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
+                                <span class="material-symbols-outlined text-[20px]">visibility</span> View Example
+                            </button>
+                            <button onclick="${nextAction}" class="px-8 py-3.5 bg-[#006adc] text-white font-headline font-bold rounded-full shadow-lg hover:bg-primary-dim hover:-translate-y-1 transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
+                                ${nextLabel} <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        async function handleActivitySubmit() {
+            const input = document.getElementById('learnerInput');
+            const submitBtn = document.getElementById('submitBtn');
+            const query = input.value.trim();
+            const feedbackBox = document.getElementById('feedbackBox');
+            
+            lastUserSubmission = query; // Save the submission for the Example Modal
+
+            // --- Client-Side PII & Moderation Filters ---
+            
+            // 1. Block basic PII (Email & simple Phone patterns)
+            const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
+            const phoneRegex = /(?:(?:\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4})|(?:\b0\d{9,10}\b)/;
+            
+            if (emailRegex.test(query) || phoneRegex.test(query)) {
+                showPIIWarning();
+                return;
+            }
+
+            // 2. Block profanity (immediate catch without hitting API)
+            const inappropriateRegex = /\b(fuck|shit|bitch|asshole|cunt|dick|cock|pussy|whore|slut|bastard|damn|crap)\b/i;
+            if (inappropriateRegex.test(query)) {
+                showModerationWarning();
+                return;
+            }
+
+            // Validation Logic (dynamic by stage)
+            if (query.length < 20) {
+                document.getElementById('activity-body').classList.add('hidden');
+                document.getElementById('activity-title').classList.add('hidden');
+                feedbackBox.classList.remove('hidden');
+                
+                const errorMsg = currentActivityStage.startsWith('stage3') 
+                    ? "Response too short – please attempt to enter a response that follows the RISEN Framework before submitting."
+                    : "Response too short – please enter a basic response before submitting.";
+
+                feedbackBox.innerHTML = `
+                    <div class="flex items-center justify-center gap-3 text-error font-medium p-6 bg-error-container/20 border border-error/20 rounded-xl">
+                        <span class="material-symbols-outlined text-3xl">warning</span>
+                        ${errorMsg}
+                    </div>`;
+                return;
+            }
+
+            // Disable input elements to prevent multiple submissions
+            input.disabled = true;
+            input.classList.add('opacity-50', 'cursor-not-allowed', 'bg-surface-dim');
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            
+            const likeThisBtn = document.getElementById('like-this-btn');
+            if (likeThisBtn) {
+                likeThisBtn.disabled = true;
+                likeThisBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+            
+            // Trigger visual Loading State over the input box
+            const loadingOverlay = document.getElementById('input-loading-overlay');
+            loadingOverlay.classList.remove('hidden');
+            feedbackBox.classList.add('hidden');
+
+            try {
+                // Send payload formatted for Node.js API with dynamic tag
+                const response = await fetch('https://brainy-bot-server.onrender.com/assess', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ answer: query, tag: currentActivityStage })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                // Parse and render API response using the new helper
+                const cleanHtml = (data.feedback || "").replace(/```html\n?/g, '').replace(/```\n?/g, '').trim();
+                
+                if (cleanHtml.includes('[INAPPROPRIATE_CONTENT]')) {
+                    showModerationWarning();
+                    return;
+                }
+
+                if (cleanHtml.includes('[INVALID_ATTEMPT]')) {
+                    showInvalidAttemptWarning();
+                    return;
+                }
+                
+                loadingOverlay.classList.add('hidden'); // Remove loading mask
+                renderFeedbackBox(cleanHtml);
+
+            } catch (error) {
+                console.warn("Server fetch failed.", error);
+                loadingOverlay.classList.add('hidden');
+                
+                // Render user-friendly error state
+                document.getElementById('activity-body').classList.add('hidden');
+                document.getElementById('activity-title').classList.add('hidden');
+                feedbackBox.classList.remove('hidden');
+                feedbackBox.innerHTML = `
+                    <div class="flex items-center justify-center gap-4 text-error p-6 bg-error-container/20 border border-error/20 rounded-2xl max-w-2xl mx-auto text-left shadow-sm">
+                        <span class="material-symbols-outlined text-4xl">cloud_off</span>
+                        <div>
+                            <p class="font-bold text-lg mb-1">Connection Error</p>
+                            <p class="text-sm">We couldn't reach your assessment server. Please check if your Render backend (https://brainy-bot-server.onrender.com) is running and configured correctly. Note: Free Render servers spin down after inactivity, so it may take 50 seconds to wake up on the first request.</p>
+                        </div>
+                    </div>`;
+                
+                // Re-enable inputs on hard fail so they can attempt to reconnect without reloading
+                resetInputArea();
+            }
+        }
+
+        // --- UI Logic ---
+        function toggleSubmenu(menuId) {
+            const submenu = document.getElementById(menuId);
+            const emojiMenuId = menuId.includes('activity') ? 'emoji-menu-activity' : 'emoji-menu';
+            const emojiMenu = document.getElementById(emojiMenuId);
+            if(submenu) submenu.classList.toggle('hidden');
+            if (emojiMenu && !emojiMenu.classList.contains('hidden')) emojiMenu.classList.add('hidden');
+        }
+
+        function toggleEmojiMenu(menuId) {
+            const emojiMenu = document.getElementById(menuId);
+            const submenuId = menuId.includes('activity') ? 'add-submenu-activity' : 'add-submenu';
+            const submenu = document.getElementById(submenuId);
+            if(emojiMenu) emojiMenu.classList.toggle('hidden');
+            if (submenu && !submenu.classList.contains('hidden')) submenu.classList.add('hidden');
+        }
+
+        function insertEmoji(emoji, targetId) {
+            const input = document.getElementById(targetId);
+            if(input && !input.disabled) {
+                input.value += emoji;
+                input.focus();
+            }
+            
+            // Hide fake placeholder if in activity view
+            if(targetId === 'learnerInput') {
+                const fakePlaceholder = document.getElementById('fake-placeholder');
+                if(fakePlaceholder) fakePlaceholder.style.display = 'none';
+            }
+        }
+
+        function insertLikeThis(targetId) {
+            if (currentActivityStage === 'stage1') return; // Double protection
+            if (likeThisCount >= MAX_LIKE_THIS) return;
+
+            const input = document.getElementById(targetId);
+            if(input && !input.disabled) {
+                const val = input.value;
+                if(val.length > 0 && !val.endsWith(' ')) {
+                    input.value += ' [like this] ';
+                } else {
+                    input.value += '[like this] ';
+                }
+                input.focus();
+                
+                likeThisCount++;
+                const btn = document.getElementById('like-this-btn');
+                if (btn) {
+                    const remaining = MAX_LIKE_THIS - likeThisCount;
+                    btn.innerHTML = `[like this] <span class="text-xs opacity-70 ml-1">(${remaining})</span>`;
+                    
+                    // Disable when hit 4
+                    if (remaining === 0) {
+                        btn.disabled = true;
+                        btn.classList.add('opacity-50', 'cursor-not-allowed');
+                        btn.classList.remove('hover:bg-primary/10');
+                    }
+                }
+            }
+            
+            if(targetId === 'learnerInput') {
+                const fakePlaceholder = document.getElementById('fake-placeholder');
+                if(fakePlaceholder) fakePlaceholder.style.display = 'none';
+            }
+        }
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            ['', '-activity'].forEach(suffix => {
+                const submenu = document.getElementById('add-submenu' + suffix);
+                const emojiMenu = document.getElementById('emoji-menu' + suffix);
+                
+                const addBtn = event.target.closest(`button[onclick="toggleSubmenu('add-submenu${suffix}')"]`);
+                const emojiBtn = event.target.closest(`button[onclick="toggleEmojiMenu('emoji-menu${suffix}')"]`);
+                
+                if (submenu && !addBtn && !submenu.contains(event.target) && !submenu.classList.contains('hidden')) {
+                    submenu.classList.add('hidden');
+                }
+                
+                if (emojiMenu && !emojiBtn && !emojiMenu.contains(event.target) && !emojiMenu.classList.contains('hidden')) {
+                    emojiMenu.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
