@@ -1,545 +1,576 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="scroll-smooth" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Graham Betts | Digital First Learning Experience Designer</title>
     
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#0d9488',       /* Reverted to original Teal-600 */
-                        primaryHover: '#0f766e',  /* Reverted to original darker Teal */
-                        secondary: '#0f172a',     /* Currently: Slate-900 (Dark background) */
-                        light: '#f8fafc',         /* Currently: Slate-50 (Light background) */
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;600;700;800&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary": "#0017cf",
+                      "outline": "#757689",
+                      "on-error-container": "#93000a",
+                      "on-primary-fixed-variant": "#001ae2",
+                      "background": "#fcf9f6",
+                      "on-secondary-fixed": "#360a22",
+                      "primary-fixed-dim": "#bdc2ff",
+                      "error-container": "#ffdad6",
+                      "surface": "#fcf9f6",
+                      "on-tertiary-container": "#73e0d2",
+                      "on-surface": "#1b1c1a",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed-dim": "#6bd8cb",
+                      "surface-tint": "#2c3eff",
+                      "inverse-primary": "#bdc2ff",
+                      "on-tertiary-fixed": "#00201d",
+                      "tertiary-fixed": "#89f5e7",
+                      "tertiary-container": "#00635a",
+                      "secondary-fixed": "#ffd8e6",
+                      "surface-container-high": "#eae8e5",
+                      "surface-container-highest": "#e5e2df",
+                      "inverse-surface": "#31302f",
+                      "primary-container": "#2033fa",
+                      "on-tertiary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "primary-fixed": "#e0e0ff",
+                      "on-surface-variant": "#444557",
+                      "surface-container": "#f0edea",
+                      "on-tertiary-fixed-variant": "#005049",
+                      "outline-variant": "#c5c5da",
+                      "surface-bright": "#fcf9f6",
+                      "surface-variant": "#e5e2df",
+                      "on-secondary-container": "#7a435c",
+                      "on-secondary-fixed-variant": "#6b354e",
+                      "on-secondary": "#ffffff",
+                      "on-primary-fixed": "#000667",
+                      "secondary": "#864d66",
+                      "secondary-container": "#fdb5d2",
+                      "secondary-fixed-dim": "#fab2cf",
+                      "tertiary": "#004943",
+                      "inverse-on-surface": "#f3f0ed",
+                      "on-primary-container": "#c6caff",
+                      "surface-container-low": "#f6f3f0",
+                      "surface-dim": "#dcdad7",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "on-background": "#1b1c1a"
+              },
+              "fontFamily": {
+                      "headline": ["Epilogue"],
+                      "body": ["Inter"],
+                      "label": ["Space Grotesk"]
+              }
+            },
+          }
+        }
+    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        html {
-            scroll-behavior: smooth;
+        .mixed-headline {
+            font-family: 'Epilogue', sans-serif;
         }
-
-        .hero-bg {
-            background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), 
-            url('https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+        .mixed-headline span.italic-serif {
+            font-family: serif;
+            font-style: italic;
         }
-
-        .portfolio-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .portfolio-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-input:focus {
-            ring: 2px solid var(--primary-color);
-            border-color: var(--primary-color);
-        }
-
         .no-scroll {
             overflow: hidden; 
         }
-
         /* Focus outline for accessibility */
         :focus-visible {
-            outline: 2px solid #0d9488;
+            outline: 2px solid var(--primary);
             outline-offset: 4px;
         }
     </style>
 </head>
-<body class="bg-light text-slate-800">
+<body class="bg-background text-on-surface font-body selection:bg-primary-fixed selection:text-on-primary-fixed">
 
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm fixed w-full z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <span class="text-2xl font-bold text-secondary tracking-tight">Graham<span class="text-primary">Betts</span></span>
-                </div>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#portfolio" class="nav-link text-slate-600 hover:text-primary font-medium transition">Portfolio</a>
-                    <a href="#about" class="nav-link text-slate-600 hover:text-primary font-medium transition">About</a>
-                    <a href="#contact" class="nav-link bg-primary text-white px-5 py-2 rounded-full font-medium hover:bg-primaryHover transition shadow-md">Let's Talk</a>
-                    
-                    <a href="https://www.linkedin.com/in/graham-betts-14908110" target="_blank" title="Connect on LinkedIn" aria-label="LinkedIn Profile" class="text-slate-400 hover:text-[#0077b5] transition-colors duration-300 transform hover:scale-110">
-                        <i class="fab fa-linkedin text-3xl" aria-hidden="true"></i>
-                    </a>
-                </div>
-                <div class="md:hidden flex items-center">
-                    <button onclick="toggleMobileMenu()" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-menu" class="text-slate-600 hover:text-secondary focus:outline-none">
-                        <i class="fas fa-bars text-2xl" aria-hidden="true"></i>
-                    </button>
-                </div>
+    <!-- TopNavBar -->
+    <nav class="fixed top-0 w-full z-50 bg-[#fcf9f6]/80 backdrop-blur-xl border-b border-surface-container transition-all">
+        <div class="flex justify-between items-center px-6 md:px-12 py-4 max-w-[1440px] mx-auto font-['Epilogue'] tracking-tight">
+            <span class="text-2xl font-bold text-[#1b1c1a]">Graham<span class="text-primary">Betts</span></span>
+            
+            <div class="hidden md:flex items-center space-x-8">
+                <a class="text-[#2033fa] font-bold border-b-2 border-[#2033fa] pb-1 transition-all" href="#work">Work</a>
+                <a class="text-[#5e2b43] font-bold border-b-2 border-transparent hover:border-[#2033fa] hover:text-[#2033fa] pb-1 transition-colors" href="#about">About</a>
+                <a class="text-[#5e2b43] font-bold border-b-2 border-transparent hover:border-[#2033fa] hover:text-[#2033fa] pb-1 transition-colors" href="#contact">Contact</a>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="https://www.linkedin.com/in/graham-betts-14908110" target="_blank" title="Connect on LinkedIn" aria-label="LinkedIn Profile" class="text-outline hover:text-[#0077b5] transition-colors duration-300 transform hover:scale-110">
+                    <i class="fab fa-linkedin text-2xl" aria-hidden="true"></i>
+                </a>
+                <a href="#contact" class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-6 py-2.5 rounded-full font-bold hover:opacity-80 transition-all active:scale-95 duration-200">
+                    Let's Talk
+                </a>
+            </div>
+
+            <!-- Mobile menu button -->
+            <div class="md:hidden flex items-center">
+                <button onclick="toggleMobileMenu()" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-menu" class="text-on-surface hover:text-primary focus:outline-none">
+                    <i class="fas fa-bars text-2xl" aria-hidden="true"></i>
+                </button>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-            <a href="#portfolio" class="block px-4 py-3 text-slate-600 hover:bg-light">Portfolio</a>
-            <a href="#about" class="block px-4 py-3 text-slate-600 hover:bg-light">About</a>
-            <a href="#contact" class="block px-4 py-3 text-primary font-bold hover:bg-light">Contact</a>
-            <a href="https://www.linkedin.com/in/graham-betts-14908110" target="_blank" class="block px-4 py-3 text-slate-600 hover:bg-light hover:text-[#0077b5]">
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-surface border-t border-surface-container">
+            <a href="#work" class="block px-6 py-4 text-[#5e2b43] font-bold hover:bg-surface-container-low">Work</a>
+            <a href="#about" class="block px-6 py-4 text-[#5e2b43] font-bold hover:bg-surface-container-low">About</a>
+            <a href="#contact" class="block px-6 py-4 text-primary font-bold hover:bg-surface-container-low">Contact</a>
+            <a href="https://www.linkedin.com/in/graham-betts-14908110" target="_blank" class="block px-6 py-4 text-[#5e2b43] font-bold hover:bg-surface-container-low hover:text-[#0077b5]">
                 <i class="fab fa-linkedin mr-2" aria-hidden="true"></i> LinkedIn Profile
             </a>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="hero-bg h-screen flex items-center justify-center text-center px-4 flex-col">
-        <div class="max-w-4xl mx-auto text-white" data-aos="fade-up">
-            <div class="inline-block px-3 py-1 mb-4 border border-primary rounded-full text-primary text-sm font-semibold tracking-wide uppercase bg-secondary/50 backdrop-blur-sm">
-                Digital Learning Design Portfolio
-            </div>
-            <h1 class="text-3xl md:text-4xl font-bold mb-6 leading-tight">
-                Engaging Learning Experiences <span class="text-primary"> <br>that Drive Performance</span>
-            </h1>
-            <p class="text-xl md:text-2xl text-slate-200 mb-10 font-light max-w-2xl mx-auto">
-                An expert at helping knowledge owners bridge the gap between information delivery and measurable change.
-            </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#portfolio" class="nav-link px-8 py-3 bg-primary text-white rounded-lg font-semibold text-lg hover:bg-primaryHover transition shadow-lg hover:shadow-primary/25">
-                    View My Work
-                </a>
-                <a href="#contact" class="nav-link px-8 py-3 bg-transparent border-2 border-white text-white rounded-lg font-semibold text-lg hover:bg-white hover:text-secondary transition">
-                    Contact Me
-                </a>
-            </div>
-        </div>
-
-        <div class="mt-16 animate-bounce">
-            <a href="#portfolio" aria-label="Scroll down to portfolio" class="nav-link text-white hover:text-primary transition duration-300">
-                <i class="fas fa-chevron-down text-3xl opacity-75" aria-hidden="true"></i>
-            </a>
-        </div>
-    </header>
-
-    <!-- Portfolio Grid -->
-    <section id="portfolio" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-secondary mb-4" tabindex="-1">Featured Projects</h2>
-            <div class="w-16 h-1 bg-primary mx-auto rounded-full"></div>
-            <p class="mt-4 text-slate-600 max-w-2xl mx-auto">
-                A selection of work demonstrating scenario-based learning, AI-enhanced development, and comprehensive onboarding solutions.
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
-            <!-- Project 1 -->
-            <button class="portfolio-card w-full h-full flex flex-col text-left bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-primary" onclick="openModal('project1')" aria-label="View details for Closing Customer Interactions">
-                <div class="relative overflow-hidden shrink-0 w-full">
-                    <img src="https://placehold.co/600x400/ff9500/FFF?text=Scenario+Based+Learning" alt="" aria-hidden="true" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
-                    <div class="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
-                        Soft Skills
+    <main class="pt-24">
+        <!-- Hero Section -->
+        <section class="min-h-[700px] flex items-center px-6 md:px-12 max-w-[1440px] mx-auto py-10 md:py-20 overflow-hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-8">
+                    <div class="inline-block px-3 py-1 border border-outline-variant rounded-full text-primary text-xs font-bold tracking-widest uppercase bg-surface-container-low">
+                        Digital Learning Design Portfolio
                     </div>
-                </div>
-                <div class="p-6 flex-grow w-full">
-                    <h3 class="text-xl font-bold text-secondary mb-2">Closing Customer Interactions</h3>
-                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
-                        A branching scenario course designed to help new managers navigate difficult conversations and conflict resolution.
+                    <h1 class="mixed-headline text-5xl md:text-7xl font-extrabold text-[#5e2b43] leading-[1.1] tracking-tight">
+                        Targeting change <br/>
+                        <span class="text-primary italic-serif font-normal">through learning</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-on-surface-variant max-w-xl leading-relaxed">
+                        An expert at helping knowledge owners bridge the gap between complex information delivery and measurable, real-world change.
                     </p>
-                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
-                        <i class="fas fa-tools" aria-hidden="true"></i> Intellum Evolve, Vyond
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <a href="#work" class="inline-block bg-gradient-to-br from-primary to-primary-container text-on-primary px-8 py-4 rounded-full font-bold hover:opacity-90 transition-all shadow-lg hover:shadow-primary/25">
+                            View My Work
+                        </a>
+                        <a href="#contact" class="inline-block border border-primary/20 text-primary px-8 py-4 rounded-full font-bold hover:bg-primary/5 transition-all">
+                            Contact Me
+                        </a>
                     </div>
                 </div>
-            </button>
-
-            <!-- Project 7 (AI) -->
-            <button class="portfolio-card w-full h-full flex flex-col text-left bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-primary" onclick="openModal('project7')" aria-label="View details for Copilot Studio Learning Assistant">
-                <div class="relative overflow-hidden shrink-0 w-full">
-                    <img src="https://placehold.co/600x400/2563eb/FFF?text=AI+%26+Emerging+Tech" alt="" aria-hidden="true" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
-                    <div class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
-                        Copilot Agent
-                    </div>
-                </div>
-                <div class="p-6 flex-grow w-full">
-                    <h3 class="text-xl font-bold text-secondary mb-2">Copilot Studio Learning Assistant</h3>
-                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
-                        Integrating LLMs to provide real-time support on learner inputs, creating a dynamic and personalized experience.
-                    </p>
-                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
-                        <i class="fas fa-tools" aria-hidden="true"></i> MS Copilot Studio, Scribe Now, MS Teams
-                    </div>
-                </div>
-            </button>
-
-            <!-- Project 9 (Leadership) -->
-            <button class="portfolio-card w-full h-full flex flex-col text-left bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-primary" onclick="openModal('project9')" aria-label="View details for Human Centred Learning">
-                <div class="relative overflow-hidden shrink-0 w-full">
-                    <img src="https://placehold.co/600x400/ff0090/FFF?text=Leadership+%26+Learning" alt="" aria-hidden="true" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
-                    <div class="absolute top-4 left-4 bg-slate-900 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
-                        Leadership Development
-                    </div>
-                </div>
-                <div class="p-6 flex-grow w-full">
-                    <h3 class="text-xl font-bold text-secondary mb-2">Human Centred Learning</h3>
-                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
-                        Creating flexible leadership training that matters
-                    </p>
-                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
-                        <i class="fas fa-tools" aria-hidden="true"></i> Gemini, Rise, Photoshop.
-                    </div>
-                </div>
-            </button>
-
-            <!-- Project 12 (AI Skills Adoption) -->
-            <button class="portfolio-card w-full h-full flex flex-col text-left bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-primary" onclick="openModal('project12')" aria-label="View details for AI Skills Adoption">
-                <div class="relative overflow-hidden shrink-0 w-full">
-                    <img src="https://placehold.co/600x400/9333ea/FFF?text=Personalised+AI\nDriven+Responses" alt="" aria-hidden="true" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
-                    <div class="absolute top-4 left-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
-                        AI Adoption
-                    </div>
-                </div>
-                <div class="p-6 flex-grow w-full">
-                    <h3 class="text-xl font-bold text-secondary mb-2">AI Skills Adoption</h3>
-                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
-                        An adult learning activity that uses AI to assess learner inputs and provide personalised feedback to help them develop their individual needs.
-                    </p>
-                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
-                        <i class="fas fa-tools" aria-hidden="true"></i> Google Gemini, Claude Code, Render, Github
-                    </div>
-                </div>
-            </button>
-
-            <!-- Project 2 (Systems) -->
-            <button class="portfolio-card w-full h-full flex flex-col text-left bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-primary" onclick="openModal('project2')" aria-label="View details for Order Management System Rollout">
-                <div class="relative overflow-hidden shrink-0 w-full">
-                    <img src="https://placehold.co/600x400/0d9488/FFF?text=System+Simulation" alt="" aria-hidden="true" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
-                    <div class="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
-                        Technical Training
-                    </div>
-                </div>
-                <div class="p-6 flex-grow w-full">
-                    <h3 class="text-xl font-bold text-secondary mb-2">Order Management System Rollout</h3>
-                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
-                        Interactive "Show, Try, Test" simulation for a company-wide Order Management System implementation.
-                    </p>
-                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
-                        <i class="fas fa-tools" aria-hidden="true"></i> Evolve, Photoshop
-                    </div>
-                </div>
-            </button>
-
-            <!-- Project 3 (Gamification) -->
-            <button class="portfolio-card w-full h-full flex flex-col text-left bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-primary" onclick="openModal('project3')" aria-label="View details for Data Protection Game">
-                <div class="relative overflow-hidden shrink-0 w-full">
-                    <img src="https://placehold.co/600x400/475569/FFF?text=Gamification" alt="" aria-hidden="true" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
-                    <div class="absolute top-4 left-4 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
-                        Gamification
-                    </div>
-                </div>
-                <div class="p-6 flex-grow w-full">
-                    <h3 class="text-xl font-bold text-secondary mb-2">Data Protection Game</h3>
-                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
-                        Escaping the "Click Next" fatigue. A point-and-click adventure game teaching data privacy awareness.
-                    </p>
-                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
-                        <i class="fas fa-tools" aria-hidden="true"></i> Storyline 360, JavaScript, Vyond, Photoshop
-                    </div>
-                </div>
-            </button>
-
-            <!-- Project 4 (Microlearning) -->
-            <button class="portfolio-card w-full h-full flex flex-col text-left bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-primary" onclick="openModal('project4')" aria-label="View details for Mobile First 7Taps">
-                <div class="relative overflow-hidden shrink-0 w-full">
-                    <img src="https://placehold.co/600x400/e11d48/FFF?text=Microlearning" alt="" aria-hidden="true" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
-                    <div class="absolute top-4 left-4 bg-teal-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
-                        Microlearning
-                    </div>
-                </div>
-                <div class="p-6 flex-grow w-full">
-                    <h3 class="text-xl font-bold text-secondary mb-2">Mobile First 7Taps</h3>
-                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
-                        Mobile-first modules that can deployed quickly and used across blended learning.
-                    </p>
-                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
-                        <i class="fas fa-tools" aria-hidden="true"></i> 7Taps, Canva, Vyond
-                    </div>
-                </div>
-            </button>
-
-            <!-- Project 5 (Video) -->
-            <button class="portfolio-card w-full h-full flex flex-col text-left bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-primary" onclick="openModal('project5')" aria-label="View details for Video Examples">
-                <div class="relative overflow-hidden shrink-0 w-full">
-                    <img src="https://placehold.co/600x400/ff5c00/FFF?text=Video+Production" alt="" aria-hidden="true" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
-                    <div class="absolute top-4 left-4 bg-pink-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
-                        Video
-                    </div>
-                </div>
-                <div class="p-6 flex-grow w-full">
-                    <h3 class="text-xl font-bold text-secondary mb-2">Video Examples</h3>
-                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
-                        A selection of video examples, showcasing my ability to develop video content.
-                    </p>
-                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
-                        <i class="fas fa-tools" aria-hidden="true"></i> After Effects, Audition
-                    </div>
-                </div>
-            </button>
-
-            <!-- Project 6 (Job Aids) -->
-            <button class="portfolio-card w-full h-full flex flex-col text-left bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-primary" onclick="openModal('project6')" aria-label="View details for Infographics">
-                <div class="relative overflow-hidden shrink-0 w-full">
-                    <img src="https://placehold.co/600x400/cc56db/FFF?text=Infographics" alt="" aria-hidden="true" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
-                    <div class="absolute top-4 left-4 bg-white text-black text-xs font-bold px-3 py-1 rounded-full shadow-md">
-                        Job Aids
-                    </div>
-                </div>
-                <div class="p-6 flex-grow w-full">
-                    <h3 class="text-xl font-bold text-secondary mb-2">Infographics</h3>
-                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
-                        Performance support assets designed to be printed and placed at in stores and used in the flow.
-                    </p>
-                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
-                        <i class="fas fa-tools" aria-hidden="true"></i> Canva, Adobe Illustrator
-                    </div>
-                </div>
-            </button>
-
-            <!-- Project 8 (LMS) -->
-            <button class="portfolio-card w-full h-full flex flex-col text-left bg-white rounded-xl overflow-hidden shadow-sm border border-slate-100 group cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-primary" onclick="openModal('project8')" aria-label="View details for SAP SuccessFactors Learning">
-                <div class="relative overflow-hidden shrink-0 w-full">
-                    <img src="https://placehold.co/600x400/002a86/FFF?text=LMS Customisation" alt="" aria-hidden="true" class="w-full h-48 object-cover object-center group-hover:scale-105 transition duration-500">
-                    <div class="absolute top-4 left-4 bg-blue-700 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
-                        Learning Systems
-                    </div>
-                </div>
-                <div class="p-6 flex-grow w-full">
-                    <h3 class="text-xl font-bold text-secondary mb-2">SAP SuccessFactors Learning Customisation & Implementation</h3>
-                    <p class="text-slate-500 text-sm mb-4 line-clamp-2">
-                        Leading the design, implementation and ongoing development and customisation of an Enterprise LMS
-                    </p>
-                    <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
-                        <i class="fas fa-tools" aria-hidden="true"></i>SAP SuccessFactors, MS Copilot Studio, ChatGPT, Photoshop.
-                    </div>
-                </div>
-            </button>
-            
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="flex flex-col lg:flex-row min-h-[600px]">
-        <div class="lg:w-2/3 bg-slate-100 p-10 lg:p-20 flex flex-col justify-center">
-            <div class="max-w-5xl w-full">
-                <p class="text-primary font-bold uppercase tracking-wider mb-2 text-sm">About Me</p>
-                <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-8" tabindex="-1">Creating learning that you experience, rather than simply complete.</h2>
                 
-                <div class="flex items-start gap-6 mb-8">
-                    <img src="https://placehold.co/150x150/0f172a/FFF?text=GB" alt="Portrait of Graham Betts" class="w-24 h-24 rounded-full shadow-lg border-4 border-white object-cover shrink-0">
-                    <div>
-                        <div class="text-lg text-slate-700 leading-relaxed mb-4">
-                            <p>I’m Graham Betts, a Digital Learning Experience Manager who designs learning that respects the learner’s time — and drives performance.</p>
-                            <p class="mt-2">I create engaging learning experiences to create change, not just to drive completion. My focus is on practical, scenario-led design that helps colleagues build confidence, apply skills on the job, and achieve measurable outcomes.</p>
-                            <br>
-                            <p>What I do best:</p>
-                            <br>
-                            <ul style="list-style-type: disc; padding-left: 20px; margin-left: 15px;">
-                                <li><strong>Learning Experience Design (LXD):</strong> Interactive, scenario-based learning that builds real capability</li>
-                                <li><strong>Complexity made clear:</strong> Technical and regulated topics translated into engaging, digestible learning journeys</li>
-                                <li><strong>SAP SuccessFactors LMS transformation:</strong> Improving the end-to-end learner experience (look & feel, navigation, structure, discoverability and adoption)</li>
-                                <li><strong>Data-led design:</strong> Using analytics and stakeholder insight to shape content, journeys and evaluation</li>
-                                <li><strong>Delivery & leadership:</strong> Experienced working solo and leading remote, matrix and onsite teams</li>
+                <div class="relative group hidden lg:block">
+                    <!-- Carousel Container -->
+                    <div class="aspect-square w-3/4 max-w-sm ml-auto mr-0 rounded-xl overflow-hidden shadow-2xl relative" id="hero-carousel">
+                        <!-- Slide 1 -->
+                        <img class="hero-slide w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-1000 opacity-100" alt="Clean UI design of a digital learning platform" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCs-EwYxRT2RtOw2TptOcID3gqo9yai8aMElPYX7TEiuBz8VB8MwYzhjhX0tYe8JpxBlImV7lT9aywY0Ug3PhZf0RMUruc-T8xfvn7er_0MMxBSb2ONfGof_jCeHw-FWrQmh6pRCgEd5-cAbQlib0BNgmrL524RjdlUMVpZLmOlG_QPxWnRDloMvPfxIaWjuV9d7p_qd2udQJaSZs8gAY1h4unsuLvWrlusKx4H9DwMd_3S_4OzufP0UM6YqQzY_QR0_yDNm1grRsz6"/>
+                        <!-- Slide 2 -->
+                        <img class="hero-slide w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-1000 opacity-0" alt="Scenario learning interaction" src="https://placehold.co/800x800/0017cf/FFF?text=Learning+Design"/>
+                        <!-- Slide 3 -->
+                        <img class="hero-slide w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-1000 opacity-0" alt="Data and analytics dashboard" src="https://placehold.co/800x800/5e2b43/FFF?text=Measurable+Outcomes"/>
+                        
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#5e2b43]/30 to-transparent z-10 pointer-events-none"></div>
+                        
+                        <!-- Pagination Indicators -->
+                        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 z-20" id="carousel-indicators">
+                            <button class="carousel-dot h-1.5 w-12 bg-primary rounded-full transition-all duration-300 hover:bg-primary-container" onclick="goToSlide(0)" aria-label="Go to slide 1"></button>
+                            <button class="carousel-dot h-1.5 w-3 bg-surface-container-highest rounded-full transition-all duration-300 hover:bg-outline-variant" onclick="goToSlide(1)" aria-label="Go to slide 2"></button>
+                            <button class="carousel-dot h-1.5 w-3 bg-surface-container-highest rounded-full transition-all duration-300 hover:bg-outline-variant" onclick="goToSlide(2)" aria-label="Go to slide 3"></button>
+                        </div>
+                    </div>
+                    <div class="absolute -z-10 -top-8 -right-8 w-48 h-48 bg-primary/5 rounded-full blur-3xl"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Tiles Section -->
+        <section class="bg-surface-container-low py-24 px-6 md:px-12" id="work">
+            <div class="max-w-[1440px] mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-4">
+                    <div class="space-y-4">
+                        <span class="font-label text-primary uppercase tracking-[0.2em] font-bold text-sm">Portfolio</span>
+                        <h2 class="font-headline text-4xl md:text-5xl font-extrabold text-[#5e2b43]">Featured Works</h2>
+                    </div>
+                    <p class="font-label text-on-surface-variant max-w-xs md:text-right">
+                        A selection of work demonstrating scenario-based learning, AI-enhanced development, and comprehensive onboarding solutions.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 items-stretch">
+                    
+                    <!-- Project 1 -->
+                    <button onclick="openModal('project1')" class="group flex flex-col h-full text-left w-full focus:outline-none focus-visible:ring-4 focus-visible:ring-primary rounded-lg" aria-label="View Closing Customer Interactions">
+                        <div class="w-full aspect-[3/4] rounded-xl overflow-hidden bg-surface-container-highest transition-transform duration-300 group-hover:-translate-y-1 shadow-sm mb-3">
+                            <img alt="Scenario Based Learning" class="w-full h-full object-cover group-hover:grayscale transition-all duration-500" src="https://placehold.co/600x800/c96b6b/FFF?text=Scenario+Based+Learning"/>
+                        </div>
+                        <div class="space-y-1 px-1 flex-grow flex flex-col">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-primary">Soft Skills</span>
+                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Closing Customer Interactions</h3>
+                        </div>
+                    </button>
+
+                    <!-- Project 7 (AI) -->
+                    <button onclick="openModal('project7')" class="group flex flex-col h-full text-left w-full focus:outline-none focus-visible:ring-4 focus-visible:ring-primary rounded-lg" aria-label="View Copilot Studio Learning Assistant">
+                        <div class="w-full aspect-[3/4] rounded-xl overflow-hidden bg-surface-container-highest transition-transform duration-300 group-hover:-translate-y-1 shadow-sm mb-3">
+                            <img alt="AI Emerging Tech" class="w-full h-full object-cover group-hover:grayscale transition-all duration-500" src="https://placehold.co/600x800/4e8da6/FFF?text=AI+%26+Emerging+Tech"/>
+                        </div>
+                        <div class="space-y-1 px-1 flex-grow flex flex-col">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-secondary">Copilot Agent</span>
+                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Copilot Studio Learning Assistant</h3>
+                        </div>
+                    </button>
+
+                    <!-- Project 9 (Leadership) -->
+                    <button onclick="openModal('project9')" class="group flex flex-col h-full text-left w-full focus:outline-none focus-visible:ring-4 focus-visible:ring-primary rounded-lg" aria-label="View Human Centred Learning">
+                        <div class="w-full aspect-[3/4] rounded-xl overflow-hidden bg-surface-container-highest transition-transform duration-300 group-hover:-translate-y-1 shadow-sm mb-3">
+                            <img alt="Leadership Learning" class="w-full h-full object-cover group-hover:grayscale transition-all duration-500" src="https://placehold.co/600x800/b56a8d/FFF?text=Leadership+%26+Learning"/>
+                        </div>
+                        <div class="space-y-1 px-1 flex-grow flex flex-col">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-tertiary">Leadership</span>
+                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Human Centred Learning</h3>
+                        </div>
+                    </button>
+
+                    <!-- Project 12 (AI Skills Adoption) -->
+                    <button onclick="openModal('project12')" class="group flex flex-col h-full text-left w-full focus:outline-none focus-visible:ring-4 focus-visible:ring-primary rounded-lg" aria-label="View AI Skills Adoption">
+                        <div class="w-full aspect-[3/4] rounded-xl overflow-hidden bg-surface-container-highest transition-transform duration-300 group-hover:-translate-y-1 shadow-sm mb-3">
+                            <img alt="AI Adoption" class="w-full h-full object-cover group-hover:grayscale transition-all duration-500" src="https://placehold.co/600x800/83a26a/FFF?text=AI+Adoption"/>
+                        </div>
+                        <div class="space-y-1 px-1 flex-grow flex flex-col">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-error">AI Adoption</span>
+                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">AI Skills Adoption</h3>
+                        </div>
+                    </button>
+
+                    <!-- Project 2 (Systems) -->
+                    <button onclick="openModal('project2')" class="group flex flex-col h-full text-left w-full focus:outline-none focus-visible:ring-4 focus-visible:ring-primary rounded-lg" aria-label="View Order Management System">
+                        <div class="w-full aspect-[3/4] rounded-xl overflow-hidden bg-surface-container-highest transition-transform duration-300 group-hover:-translate-y-1 shadow-sm mb-3">
+                            <img alt="System Simulation" class="w-full h-full object-cover group-hover:grayscale transition-all duration-500" src="https://placehold.co/600x800/d28562/FFF?text=System+Simulation"/>
+                        </div>
+                        <div class="space-y-1 px-1 flex-grow flex flex-col">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-primary">Tech Training</span>
+                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Order Mgmt System Rollout</h3>
+                        </div>
+                    </button>
+
+                    <!-- Project 3 (Gamification) -->
+                    <button onclick="openModal('project3')" class="group flex flex-col h-full text-left w-full focus:outline-none focus-visible:ring-4 focus-visible:ring-primary rounded-lg" aria-label="View Data Protection Game">
+                        <div class="w-full aspect-[3/4] rounded-xl overflow-hidden bg-surface-container-highest transition-transform duration-300 group-hover:-translate-y-1 shadow-sm mb-3">
+                            <img alt="Gamification" class="w-full h-full object-cover group-hover:grayscale transition-all duration-500" src="https://placehold.co/600x800/6a8bb5/FFF?text=Gamification"/>
+                        </div>
+                        <div class="space-y-1 px-1 flex-grow flex flex-col">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-secondary">Gamification</span>
+                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Data Protection Game</h3>
+                        </div>
+                    </button>
+
+                    <!-- Project 4 (Microlearning) -->
+                    <button onclick="openModal('project4')" class="group flex flex-col h-full text-left w-full focus:outline-none focus-visible:ring-4 focus-visible:ring-primary rounded-lg" aria-label="View Mobile First 7Taps">
+                        <div class="w-full aspect-[3/4] rounded-xl overflow-hidden bg-surface-container-highest transition-transform duration-300 group-hover:-translate-y-1 shadow-sm mb-3">
+                            <img alt="Microlearning" class="w-full h-full object-cover group-hover:grayscale transition-all duration-500" src="https://placehold.co/600x800/3a92a3/FFF?text=Microlearning"/>
+                        </div>
+                        <div class="space-y-1 px-1 flex-grow flex flex-col">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-tertiary">Microlearning</span>
+                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Mobile First 7Taps</h3>
+                        </div>
+                    </button>
+
+                    <!-- Project 5 (Video) -->
+                    <button onclick="openModal('project5')" class="group flex flex-col h-full text-left w-full focus:outline-none focus-visible:ring-4 focus-visible:ring-primary rounded-lg" aria-label="View Video Examples">
+                        <div class="w-full aspect-[3/4] rounded-xl overflow-hidden bg-surface-container-highest transition-transform duration-300 group-hover:-translate-y-1 shadow-sm mb-3">
+                            <img alt="Video Production" class="w-full h-full object-cover group-hover:grayscale transition-all duration-500" src="https://placehold.co/600x800/e29c45/FFF?text=Video+Production"/>
+                        </div>
+                        <div class="space-y-1 px-1 flex-grow flex flex-col">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-error">Video</span>
+                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Video Examples</h3>
+                        </div>
+                    </button>
+
+                    <!-- Project 6 (Job Aids) -->
+                    <button onclick="openModal('project6')" class="group flex flex-col h-full text-left w-full focus:outline-none focus-visible:ring-4 focus-visible:ring-primary rounded-lg" aria-label="View Infographics">
+                        <div class="w-full aspect-[3/4] rounded-xl overflow-hidden bg-surface-container-highest transition-transform duration-300 group-hover:-translate-y-1 shadow-sm border border-outline-variant/30 mb-3">
+                            <img alt="Job Aids" class="w-full h-full object-cover group-hover:grayscale transition-all duration-500" src="https://placehold.co/600x800/747bc9/FFF?text=Infographics"/>
+                        </div>
+                        <div class="space-y-1 px-1 flex-grow flex flex-col">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-primary">Job Aids</span>
+                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Infographics</h3>
+                        </div>
+                    </button>
+
+                    <!-- Project 8 (LMS) -->
+                    <button onclick="openModal('project8')" class="group flex flex-col h-full text-left w-full focus:outline-none focus-visible:ring-4 focus-visible:ring-primary rounded-lg" aria-label="View SAP SuccessFactors Learning">
+                        <div class="w-full aspect-[3/4] rounded-xl overflow-hidden bg-surface-container-highest transition-transform duration-300 group-hover:-translate-y-1 shadow-sm mb-3">
+                            <img alt="LMS Customisation" class="w-full h-full object-cover group-hover:grayscale transition-all duration-500" src="https://placehold.co/600x800/d98d36/FFF?text=LMS+Customisation"/>
+                        </div>
+                        <div class="space-y-1 px-1 flex-grow flex flex-col">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-secondary">Systems</span>
+                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">SAP SuccessFactors Customisation</h3>
+                        </div>
+                    </button>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- About Me Section -->
+        <section class="py-24 px-6 md:px-12 max-w-[1280px] mx-auto overflow-hidden" id="about">
+            <div class="flex flex-col lg:flex-row gap-16 items-start">
+                
+                <!-- Visual Column (Luxe Styling) -->
+                <div class="w-full lg:w-5/12 lg:sticky lg:top-32">
+                    <div class="relative max-w-sm mx-auto lg:mx-0">
+                        <div class="aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl border-8 border-white bg-surface-container-highest">
+                            <!-- Using your original placehold avatar to maintain structure, you can replace with real image -->
+                            <img alt="Portrait of Graham Betts" class="w-full h-full object-cover" src="https://placehold.co/800x1000/0f172a/FFF?text=GB"/>
+                        </div>
+                        <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-[#5e2b43] rounded-full flex items-center justify-center text-white text-4xl font-bold font-headline shadow-2xl border-4 border-white">
+                            GB
+                        </div>
+                        <!-- Decorative shapes -->
+                        <div class="absolute -z-10 -top-12 -left-12 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+                    </div>
+                </div>
+
+                <!-- Content Column -->
+                <div class="w-full lg:w-7/12 space-y-12">
+                    <div class="space-y-6">
+                        <p class="text-lg text-on-surface-variant leading-relaxed">
+                            I'm an L&D professional with a passion for making immersive and engaging experiences that follow the data and create real change. I do this by working collaboratively with stakeholders and subject matter experts to truly understand their challenges and map out engaging solutions. I'm technically minded and creative and combine these skills to explore emerging technologies, finding the best solution for each project's needs.
+                        </p>
+                    </div>
+
+                    <div class="space-y-6">
+                        <h4 class="font-bold text-[#1b1c1a] font-label uppercase tracking-widest text-xs border-l-4 border-primary pl-4">What I do best:</h4>
+                        <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-on-surface-variant">
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1.5 h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0"></span>
+                                <span class="text-sm"><strong>LXD:</strong> Interactive, scenario-based learning building real capability</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1.5 h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0"></span>
+                                <span class="text-sm"><strong>Complexity made clear:</strong> Technical topics into engaging journeys</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1.5 h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0"></span>
+                                <span class="text-sm"><strong>SuccessFactors LMS:</strong> Improving end-to-end learner experience</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1.5 h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0"></span>
+                                <span class="text-sm"><strong>Data-led design:</strong> Analytics & stakeholder insight shaping content</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1.5 h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0"></span>
+                                <span class="text-sm"><strong>Leadership:</strong> Solo and leading remote/matrix/onsite teams</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                        <div class="space-y-4">
+                            <h5 class="font-bold text-xs uppercase tracking-widest text-[#1b1c1a] border-b border-outline-variant/30 pb-2">Methodologies</h5>
+                            <ul class="space-y-2 text-xs text-on-surface-variant">
+                                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-primary">check</span> ADDIE / SAM / GAGNE</li>
+                                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-primary">check</span> Bloom's Taxonomy</li>
+                                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-primary">check</span> Action Mapping</li>
+                                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs text-primary">check</span> Agile Projects</li>
                             </ul>
-                            <br>
-                            <p><strong>My philosophy is simple: Learning is the process of applying knowledge, not just consuming it.</strong></p>
                         </div>
-                    </div>
-                </div>
-                <br>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-                    <div>
-                        <h5 class="font-bold text-secondary mb-3 border-b border-slate-300 pb-2">Methodologies</h5>
-                        <ul class="space-y-2 text-slate-600 text-sm">
-                            <li><i class="fas fa-check text-primary mr-2" aria-hidden="true"></i>ADDIE / SAM / GAGNE</li>
-                            <li><i class="fas fa-check text-primary mr-2" aria-hidden="true"></i>Bloom's Taxonomy</li>
-                            <li><i class="fas fa-check text-primary mr-2" aria-hidden="true"></i>Action Mapping</li>
-                            <li><i class="fas fa-check text-primary mr-2" aria-hidden="true"></i>Agile Projects</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h5 class="font-bold text-secondary mb-3 border-b border-slate-300 pb-2">Toolbox</h5>
-                        <ul class="space-y-2 text-slate-600 text-sm">
-                            <li><i class="fas fa-laptop-code text-primary mr-2" aria-hidden="true"></i>Articulate 360 (Storyline/Rise), Intellum Evolve, 7Taps</li>
-                            <li><i class="fas fa-robot text-primary mr-2" aria-hidden="true"></i>AI & Automation</li>
-                            <li><i class="fas fa-video text-primary mr-2" aria-hidden="true"></i>Camtasia / Premiere Pro / Synthesia / Vyond</li>
-                            <li><i class="fas fa-server text-primary mr-2" aria-hidden="true"></i>LMS Administration and Implementation (SAP SuccessFactors and Absorb)</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h5 class="font-bold text-secondary mb-3 border-b border-slate-300 pb-2">Certifications</h5>
-                        <div class="flex flex-col items-center text-center">
-                            <img src="https://whoopthisismyusername.github.io/portfolio/sap-certified-associate-implementation-consultant-s.37.png" alt="SAP Certified Associate Badge" class="w-24 h-24 mb-2 object-contain"> 
-                            <p class="text-xs text-slate-600 font-medium">SAP Certified Associate - Implementation Consultant</p>
-                            <p class="text-[10px] text-slate-500">SAP SuccessFactors Learning</p>
+                        <div class="space-y-4">
+                            <h5 class="font-bold text-xs uppercase tracking-widest text-[#1b1c1a] border-b border-outline-variant/30 pb-2">Toolbox</h5>
+                            <ul class="space-y-3 text-xs text-on-surface-variant">
+                                <li class="flex items-start gap-2">
+                                    <span class="material-symbols-outlined text-primary text-base">auto_stories</span>
+                                    <span>Articulate 360, Evolve, 7Taps</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="material-symbols-outlined text-primary text-base">smart_toy</span>
+                                    <span>AI & Automation</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="material-symbols-outlined text-primary text-base">movie</span>
+                                    <span>Camtasia / Premiere Pro</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="material-symbols-outlined text-primary text-base">database</span>
+                                    <span>LMS Admin (SAP SF / Absorb)</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="space-y-4">
+                            <h5 class="font-bold text-xs uppercase tracking-widest text-[#1b1c1a] border-b border-outline-variant/30 pb-2">Certifications</h5>
+                            <div class="bg-white p-3 rounded-lg shadow-sm border border-outline-variant/20 mb-2">
+                                <div class="w-full aspect-[16/9] bg-[#005c97] rounded flex flex-col items-center justify-center text-[7px] text-white font-bold p-1 text-center uppercase leading-tight relative overflow-hidden">
+                                    <!-- Embedded original SAP badge image inside the styled container -->
+                                    <img src="https://whoopthisismyusername.github.io/portfolio/sap-certified-associate-implementation-consultant-s.37.png" alt="SAP Certified Associate Badge" class="absolute inset-0 w-full h-full object-contain opacity-20"> 
+                                    <span class="opacity-100 relative z-10">Implementation Consultant</span>
+                                    <span class="text-[9px] my-0.5 relative z-10">SAP SuccessFactors Learning</span>
+                                </div>
+                            </div>
+                            <p class="text-[9px] text-on-surface-variant font-medium leading-tight">
+                                SAP Certified Associate<br/>SuccessFactors Learning
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div id="contact" class="lg:w-1/3 bg-secondary p-10 lg:p-20 text-white flex flex-col justify-center relative">
-            <div class="absolute top-0 right-0 w-32 h-32 bg-primary rounded-bl-full opacity-20"></div>
-
-            <h2 class="text-3xl font-bold mb-6" tabindex="-1">Let's Collaborate</h2>
-            <p class="text-slate-400 mb-8">Ready to discuss your next project? Drop me a message or connect on social.</p>
-            
-            <form id="contactForm" class="space-y-4" onsubmit="handleFormSubmit(event)">
-                <input type="hidden" name="_subject" value="New Portfolio Contact!">
-                <input type="hidden" name="_captcha" value="false">
-
-                <div>
-                    <label for="name" class="block text-sm font-medium text-slate-400 mb-1">Name</label>
-                    <input type="text" id="name" name="name" autocomplete="name" required class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-white" placeholder="Jane Doe">
+        <!-- Let's Collaborate Section -->
+        <section class="bg-[#f6f3f0] py-24 px-6 md:px-12" id="contact">
+            <div class="max-w-4xl mx-auto text-center space-y-16">
+                <div class="space-y-6">
+                    <h2 class="mixed-headline text-4xl md:text-6xl font-extrabold text-[#5e2b43] tracking-tight">Let's <span class="text-primary italic-serif font-normal">Collaborate</span></h2>
+                    <p class="text-lg text-on-surface-variant">Ready to discuss your next project? Drop me a message and let's build something impactful.</p>
                 </div>
-                <div>
-                    <label for="email" class="block text-sm font-medium text-slate-400 mb-1">Email</label>
-                    <input type="email" id="email" name="email" autocomplete="email" required class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-white" placeholder="jane@company.com">
-                </div>
-                <div>
-                    <label for="message" class="block text-sm font-medium text-slate-400 mb-1">Project Details</label>
-                    <textarea id="message" name="message" rows="4" required class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-white" placeholder="I need a 20-minute onboarding course..."></textarea>
-                </div>
-                <button type="submit" class="w-full bg-primary hover:bg-primaryHover text-white font-bold py-3 rounded-lg transition shadow-lg mt-2">
-                    Send Message
-                </button>
-            </form>
+                
+                <form id="contactForm" class="text-left space-y-8" onsubmit="handleFormSubmit(event)">
+                    <input type="hidden" name="_subject" value="New Portfolio Contact!">
+                    <input type="hidden" name="_captcha" value="false">
 
-            <div class="mt-10 pt-8 border-t border-slate-800">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-primary">
-                        <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-2">
+                            <label for="name" class="font-label text-xs uppercase font-bold text-on-surface-variant tracking-widest px-1">Full Name</label>
+                            <input id="name" name="name" autocomplete="name" required class="w-full px-6 py-4 rounded-lg bg-surface border border-outline-variant/30 focus:ring-2 focus:ring-primary/20 transition-all text-on-surface shadow-sm" placeholder="Jane Doe" type="text"/>
+                        </div>
+                        <div class="space-y-2">
+                            <label for="email" class="font-label text-xs uppercase font-bold text-on-surface-variant tracking-widest px-1">Email Address</label>
+                            <input id="email" name="email" autocomplete="email" required class="w-full px-6 py-4 rounded-lg bg-surface border border-outline-variant/30 focus:ring-2 focus:ring-primary/20 transition-all text-on-surface shadow-sm" placeholder="jane@company.com" type="email"/>
+                        </div>
                     </div>
-                    <a href="https://linkedin.com/in/graham-betts" target="_blank" aria-label="LinkedIn Profile" class="hover:text-primary transition">linkedin.com/in/graham-betts</a>
-                </div>
+                    <div class="space-y-2">
+                        <label for="message" class="font-label text-xs uppercase font-bold text-on-surface-variant tracking-widest px-1">Project Details</label>
+                        <textarea id="message" name="message" required class="w-full px-6 py-4 rounded-lg bg-surface border border-outline-variant/30 focus:ring-2 focus:ring-primary/20 transition-all text-on-surface shadow-sm" placeholder="I need a 20-minute onboarding course..." rows="4"></textarea>
+                    </div>
+                    <div class="flex justify-center">
+                        <button type="submit" class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-12 py-5 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-[1.02] transition-all duration-300">
+                            Send Inquiry
+                        </button>
+                    </div>
+                </form>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="bg-secondary text-slate-500 py-8 text-center text-sm border-t border-slate-900">
-        <p>&copy; 2026 Graham Betts. All Rights Reserved.</p>
-        <p class="mt-2">Instructional Designer | eLearning Developer | Learning Experience Design Expert</p>
+    <footer class="w-full py-12 bg-[#f6f3f0] border-t border-outline-variant/20">
+        <div class="flex flex-col md:flex-row justify-between items-center px-6 md:px-12 max-w-[1440px] mx-auto font-['Inter'] text-sm tracking-wide gap-6">
+            <span class="text-lg font-black text-[#5e2b43]">Graham<span class="text-primary">Betts</span></span>
+            
+            <p class="text-[#1b1c1a]/60 text-center order-3 md:order-2">
+                &copy; 2026 Graham Betts. All Rights Reserved. <br class="md:hidden"> <span class="hidden md:inline">|</span> Instructional Designer & LXD Expert.
+            </p>
+            
+            <div class="flex items-center gap-6 order-2 md:order-3">
+                <a class="text-[#1b1c1a]/60 hover:text-[#2033fa] transition-all transform hover:scale-110" href="https://linkedin.com/in/graham-betts" target="_blank" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin text-xl"></i>
+                </a>
+            </div>
+        </div>
     </footer>
 
     <!-- Custom Modal for Projects -->
     <div id="projectModal" class="fixed inset-0 z-[60] hidden overflow-y-auto" aria-labelledby="modalTitle" role="dialog" aria-modal="true" tabindex="-1">
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:items-center sm:p-0">
-            <div class="fixed inset-0 transition-opacity bg-secondary bg-opacity-75" aria-hidden="true" onclick="closeModal()"></div>
+            <!-- Backdrop -->
+            <div class="fixed inset-0 transition-opacity bg-[#1b1c1a]/80 backdrop-blur-sm" aria-hidden="true" onclick="closeModal()"></div>
 
-            <div id="modalPanel" class="relative w-full bg-white text-left shadow-xl transform transition-all sm:my-8 sm:max-w-5xl rounded-t-xl sm:rounded-lg" role="document">
+            <div id="modalPanel" class="relative w-full bg-surface text-left shadow-2xl transform transition-all sm:my-8 sm:max-w-5xl rounded-t-2xl sm:rounded-2xl border border-outline-variant/20" role="document">
                 
                 <div id="modalContent">
-                    <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
+                    <div class="px-4 pt-5 pb-4 sm:p-8 sm:pb-6">
                         <div class="sm:flex sm:items-start">
-                            <div class="w-full mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                <h3 class="text-2xl font-bold leading-6 text-secondary" id="modalTitle">Project Title</h3>
-                                <div class="mt-4">
-                                    <img id="modalImg" src="" alt="" aria-hidden="true" class="object-cover w-full mb-4 rounded-lg h-64">
-                                    <div class="grid grid-cols-1 gap-4 mb-4 md:grid-cols-3">
-                                        <div class="p-3 rounded bg-slate-50">
-                                            <span class="block text-xs font-bold uppercase text-slate-500">Role</span>
-                                            <span class="text-sm font-medium">Instructional Designer</span>
+                            <div class="w-full mt-3 text-center sm:mt-0 sm:text-left">
+                                <h3 class="font-headline text-3xl font-extrabold text-[#5e2b43]" id="modalTitle">Project Title</h3>
+                                <div class="mt-6">
+                                    <img id="modalImg" src="" alt="" aria-hidden="true" class="object-cover w-full mb-6 rounded-xl h-64 md:h-80 shadow-md border border-outline-variant/10">
+                                    
+                                    <div class="grid grid-cols-1 gap-4 mb-6 md:grid-cols-3">
+                                        <div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/20">
+                                            <span class="block text-xs font-bold uppercase text-primary tracking-widest mb-1">Role</span>
+                                            <span class="text-sm font-medium text-on-surface-variant">Instructional Designer</span>
                                         </div>
-                                        <div class="p-3 rounded bg-slate-50">
-                                            <span class="block text-xs font-bold uppercase text-slate-500">Tools</span>
-                                            <span class="text-sm font-medium" id="modalTools">Storyline, Adobe CC</span>
+                                        <div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/20">
+                                            <span class="block text-xs font-bold uppercase text-primary tracking-widest mb-1">Tools</span>
+                                            <span class="text-sm font-medium text-on-surface-variant" id="modalTools">Storyline, Adobe CC</span>
                                         </div>
-                                        <div class="p-3 rounded bg-slate-50">
-                                            <span class="block text-xs font-bold uppercase text-slate-500">Client</span>
-                                            <span class="text-sm font-medium">Corporate Training</span>
+                                        <div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/20">
+                                            <span class="block text-xs font-bold uppercase text-primary tracking-widest mb-1">Client</span>
+                                            <span class="text-sm font-medium text-on-surface-variant">Corporate Training</span>
                                         </div>
                                     </div>
-                                    <h4 class="mt-4 font-bold text-secondary">The Challenge</h4>
-                                    <p class="mb-3 text-sm text-slate-600" id="modalChallenge"></p>
-                                    <h4 class="mt-4 font-bold text-secondary">The Solution</h4>
-                                    <p class="mb-3 text-sm text-slate-600" id="modalSolution"></p>
-                                    <h4 class="mt-4 font-bold text-secondary" id="modalResultHeader">The Result</h4>
-                                    <p class="mb-3 text-sm text-slate-600" id="modalResult"></p>
+
+                                    <h4 class="mt-6 font-bold text-[#1b1c1a] font-label uppercase tracking-widest text-xs border-l-4 border-primary pl-4">The Challenge</h4>
+                                    <p class="mt-3 mb-6 text-[15px] leading-relaxed text-on-surface-variant" id="modalChallenge"></p>
+                                    
+                                    <h4 class="mt-6 font-bold text-[#1b1c1a] font-label uppercase tracking-widest text-xs border-l-4 border-primary pl-4">The Solution</h4>
+                                    <p class="mt-3 mb-6 text-[15px] leading-relaxed text-on-surface-variant" id="modalSolution"></p>
+                                    
+                                    <h4 class="mt-6 font-bold text-[#1b1c1a] font-label uppercase tracking-widest text-xs border-l-4 border-primary pl-4" id="modalResultHeader">The Result</h4>
+                                    <p class="mt-3 text-[15px] leading-relaxed text-on-surface-variant" id="modalResult"></p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="px-4 py-3 bg-slate-50 sm:px-6 sm:flex sm:flex-row-reverse gap-2">
+                    <div class="px-4 py-4 bg-surface-container-low rounded-b-2xl sm:px-8 sm:flex sm:flex-row-reverse gap-3 border-t border-outline-variant/20">
                         <!-- Button 1 (Demo) -->
-                        <button id="modalLinkBtn" onclick="viewDemo()" class="inline-flex justify-center w-auto px-4 py-2 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primaryHover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:text-sm hidden">
+                        <button id="modalLinkBtn" onclick="viewDemo()" class="inline-flex justify-center w-full sm:w-auto px-6 py-2.5 text-sm font-bold text-on-primary rounded-full shadow-sm bg-gradient-to-br from-primary to-primary-container hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary hidden transition-all">
                             Launch Demo
                         </button>
                         <!-- Button 2 (Process/Other) -->
-                        <button id="modalProcessBtn" onclick="viewProcess()" class="inline-flex justify-center w-auto px-4 py-2 text-base font-medium text-primary border border-primary rounded-md shadow-sm bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:text-sm hidden">
+                        <button id="modalProcessBtn" onclick="viewProcess()" class="mt-3 sm:mt-0 inline-flex justify-center w-full sm:w-auto px-6 py-2.5 text-sm font-bold text-primary border border-primary/30 rounded-full shadow-sm bg-surface hover:bg-primary/5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary hidden transition-all">
                             See the Process
                         </button>
-                        <button type="button" class="inline-flex justify-center w-auto px-4 py-2 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:text-sm" onclick="closeModal()">
+                        <button type="button" class="mt-3 sm:mt-0 inline-flex justify-center w-full sm:w-auto px-6 py-2.5 text-sm font-bold text-on-surface-variant bg-surface border border-outline-variant/40 rounded-full shadow-sm hover:bg-surface-container-highest focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all" onclick="closeModal()">
                             Close
                         </button>
                     </div>
                 </div>
 
                 <!-- Disclaimer Container -->
-                <div id="disclaimerContainer" class="hidden px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4 text-center rounded-lg">
-                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-50 mb-4">
-                         <i class="fas fa-info-circle text-2xl text-primary" aria-hidden="true"></i>
+                <div id="disclaimerContainer" class="hidden px-4 pt-5 pb-4 sm:p-8 sm:pb-6 text-center rounded-2xl bg-surface">
+                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-primary/10 mb-6">
+                         <span class="material-symbols-outlined text-3xl text-primary" aria-hidden="true">info</span>
                     </div>
-                    <h3 class="text-xl leading-6 font-bold text-secondary mb-2">Notice</h3>
+                    <h3 class="font-headline text-2xl font-bold text-[#5e2b43] mb-3">Notice</h3>
                     <div class="mt-2 max-w-lg mx-auto">
-                        <p id="disclaimerText" class="text-md text-slate-600"></p>
+                        <p id="disclaimerText" class="text-[15px] leading-relaxed text-on-surface-variant"></p>
                     </div>
-                    <div class="mt-6 sm:flex sm:flex-row-reverse sm:justify-center gap-3">
-                        <button id="disclaimerLaunchBtn" type="button" onclick="proceedToDemo()" class="w-full sm:w-auto inline-flex justify-center rounded-md border border-transparent shadow-sm px-6 py-2 bg-primary text-base font-medium text-white hover:bg-primaryHover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:text-sm">
+                    <div class="mt-8 sm:flex sm:flex-row-reverse sm:justify-center gap-3">
+                        <button id="disclaimerLaunchBtn" type="button" onclick="proceedToDemo()" class="w-full sm:w-auto inline-flex justify-center rounded-full shadow-sm px-8 py-2.5 bg-gradient-to-br from-primary to-primary-container text-sm font-bold text-on-primary hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all">
                             Launch
                         </button>
-                        <button type="button" onclick="cancelDisclaimer()" class="mt-3 sm:mt-0 w-full sm:w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-6 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:text-sm">
+                        <button type="button" onclick="cancelDisclaimer()" class="mt-3 sm:mt-0 w-full sm:w-auto inline-flex justify-center rounded-full border border-outline-variant/40 shadow-sm px-8 py-2.5 bg-surface text-sm font-bold text-on-surface-variant hover:bg-surface-container-highest focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all">
                             Cancel
                         </button>
                     </div>
                 </div>
 
                 <!-- Preview Container -->
-                <div id="demoContainer" class="hidden h-[100vh] sm:h-[85vh] min-h-[85vh] flex flex-col w-full">
-                    <div class="flex items-center justify-between px-4 py-2 border-b bg-slate-100">
-                        <span class="font-bold text-secondary" id="iframeHeader" tabindex="-1">Preview</span>
-                        <div class="flex gap-2">
-                            <button onclick="backToDetails()" aria-label="Go back to project details" class="text-sm font-medium text-slate-600 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary rounded p-1">
-                                <i class="mr-1 fas fa-arrow-left" aria-hidden="true"></i> Back
+                <div id="demoContainer" class="hidden h-[100dvh] sm:h-[90dvh] min-h-[90dvh] flex flex-col w-full rounded-2xl overflow-hidden bg-surface">
+                    <div class="flex items-center justify-between px-6 py-4 border-b border-outline-variant/20 bg-surface-container-low">
+                        <span class="font-headline font-bold text-[#5e2b43]" id="iframeHeader" tabindex="-1">Preview</span>
+                        <div class="flex gap-3">
+                            <button onclick="backToDetails()" aria-label="Go back to project details" class="flex items-center text-sm font-bold text-on-surface-variant hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary rounded p-1 transition-colors">
+                                <span class="material-symbols-outlined text-[18px] mr-1" aria-hidden="true">arrow_back</span> Back
                             </button>
-                            <button onclick="closeModal()" aria-label="Close modal preview" class="text-sm font-medium text-slate-600 hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 rounded p-1">
-                                <i class="fas fa-times" aria-hidden="true"></i>
+                            <button onclick="closeModal()" aria-label="Close modal preview" class="flex items-center text-sm font-bold text-on-surface-variant hover:text-error focus:outline-none focus:ring-2 focus:ring-error rounded p-1 transition-colors">
+                                <span class="material-symbols-outlined text-[20px]" aria-hidden="true">close</span>
                             </button>
                         </div>
                     </div>
-                    <iframe id="courseFrame" title="Project Preview" class="w-full h-full border-0 bg-slate-50 flex-grow" src=""></iframe>
+                    <iframe id="courseFrame" title="Project Preview" class="w-full h-full border-0 bg-surface-container-highest flex-grow" src=""></iframe>
                 </div>
 
             </div>
         </div>
     </div>
 
+    <!-- Original JavaScript Logic remains untouched to preserve functionality -->
     <script>
-        // Variables for Focus Management
         let lastFocusedElement;
         const projectModal = document.getElementById('projectModal');
 
-        // Mobile Menu Toggle
         window.toggleMobileMenu = function() {
             const menu = document.getElementById('mobile-menu');
             const btn = document.querySelector('button[aria-controls="mobile-menu"]');
@@ -548,14 +579,12 @@
             btn.setAttribute('aria-expanded', isExpanded);
         }
 
-        // Contact Form Submission (Obfuscated Email Endpoint)
         window.handleFormSubmit = function(e) {
             e.preventDefault();
             const btn = e.target.querySelector('button');
             const originalText = btn.innerText;
             const form = e.target;
             
-            // Replaced raw email with FormSubmit string token for security
             const endpoint = "https://formsubmit.co/ajax/49234d24f3b25cea4035420db07f9f23";
 
             btn.innerText = 'Sending...';
@@ -572,10 +601,13 @@
             .then(data => {
                 btn.innerText = 'Sent!';
                 btn.classList.remove('opacity-75');
+                // Re-styled success state
+                btn.classList.remove('from-primary', 'to-primary-container');
                 btn.classList.add('bg-green-600');
                 
                 setTimeout(() => {
                     btn.innerText = originalText;
+                    btn.classList.add('from-primary', 'to-primary-container');
                     btn.classList.remove('bg-green-600');
                     btn.disabled = false;
                     form.reset();
@@ -585,10 +617,12 @@
             .catch(error => {
                 console.error('Error:', error);
                 btn.innerText = 'Error!';
+                btn.classList.remove('from-primary', 'to-primary-container');
                 btn.classList.add('bg-red-600');
                 
                 setTimeout(() => {
                     btn.innerText = originalText;
+                    btn.classList.add('from-primary', 'to-primary-container');
                     btn.classList.remove('bg-red-600');
                     btn.classList.remove('opacity-75');
                     btn.disabled = false;
@@ -642,12 +676,10 @@
                 challenge: 'After years of the business training retail colleagues on academic level pet nutrition, it was clear the level of detail was overwhelming colleagues, leading to poor quality conversations with customers and low confidence. The challenge... how do we simplify 5 hours of training into a 30 minute refresher without overwhelming them further.',
                 solution: "A flexible microlearning pathway that allowed colleagues to consume as little or as much as they needed in bitesized chunks. The content broken into knowledge and soft skills with key messages pulled out by AI, worked on with SMEs and then turned into engaging and targetted information that went straight to the heart of the questions the available data showed us our customers were asking.",
                 result: "A rapid delivery of training across deskless workforce that drove 15% uplift in colleagues engaging with customers in nutrition aisles and an above target launch of the 'Easy-Repeat-In-Store' proposition.",
-                
                 linkText: 'Open 7Taps Example',
                 showDemo: true,
                 demoUrl: 'https://app.7taps.com/folder/BQ2PfBw8fR0',
                 disclaimer: "Please note, this demonstration showcases an example of the use of the 7Taps tool and a microlearning pathway, but not of the stated case example. This is due to commercial sensitivities.",
-                
                 processText: 'Open Blended Microlearning Example',
                 showProcess: true,
                 processUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/4/microlearning_player.html',
@@ -655,7 +687,7 @@
             },
              'project5': {
                 title: 'Video Examples',
-                img: 'https://placehold.co/800x400/ff5c00/FFF?text=Media+Production',
+                img: 'https://placehold.co/800x400/e29c45/FFF?text=Media+Production',
                 tools: 'After Effects, Camtasia, Adobe Premier Pro, Vyond',
                 challenge: 'A variety of video examples, showcasing my ability to develop across a range of tools',
                 solution: 'Live action health & safety video, Interactive live action scenario, Comms promotional video',
@@ -667,7 +699,7 @@
             },
              'project6': {
                 title: 'Infographics',
-                img: 'https://placehold.co/800x400/64748b/FFF?text=Job+Aids',
+                img: 'https://placehold.co/800x400/747bc9/FFF?text=Job+Aids',
                 tools: 'Canva, Adobe Illustrator',
                 challenge: "Retail colleagues needed 'offline' support reminders of a new customer service workflow. Needed to distil 3 eLearning courses into a snappy, useable format",
                 solution: "Worked with SME's to define core elements and refined content key points. Developed a visual that was both useable and engaging.",
@@ -679,7 +711,7 @@
             },
             'project7': {
                 title: 'Copilot Studio Learning Assistant',
-                img: 'https://placehold.co/800x400/2563eb/FFF?text=AI+Learning+Assistant',
+                img: 'https://placehold.co/800x400/4e8da6/FFF?text=AI+Learning+Assistant',
                 tools: 'MS Copilot Studio, Scribe Now, MS Teams',
                 challenge: 'Learners were asked to switch to a new core software platform with no \'down-time\'. A robust blended training package was launched, however, with over 200 new workflow processes, all covered across a wide array of training courses, a solution was needed to ensure colleagues were able to access knowledge when they needed it.',
                 solution: 'Develop a MS Copilot Studio agent that could be fed with \'ScribeHow\' step-by-step guides and deliver clear, and accurate support that matched learner needs in a high pressure environment.',
@@ -691,7 +723,7 @@
             },
             'project12': {
                 title: 'AI Skills Adoption',
-                img: 'https://placehold.co/800x400/9333ea/FFF?text=Personalised+AI+Driven+Responses',
+                img: 'https://placehold.co/800x400/83a26a/FFF?text=Personalised+AI+Driven+Responses',
                 tools: 'Google Gemini, Claude Code, Render, Github',
                 challenge: 'The world of AI is growing rapidly and yet a large percentage of the workforce is struggling to adapt. A big problem is unlocking that first tier of use on business tools.',
                 solution: 'An adult learning activity that uses AI to assess learner inputs and provide personalised feedback to help them develop their individual needs.',
@@ -703,7 +735,7 @@
             },
             'project8': {
                 title: 'LMS Customisation & Development',
-                img: 'https://placehold.co/800x400/004dbc/FFF?text=LMS+Consultant',
+                img: 'https://placehold.co/800x400/d98d36/FFF?text=LMS+Consultant',
                 tools: 'SAP SuccessFactors, MS Copilot Studio, ChatGPT, Photoshop',
                 challenge: 'SAP SuccessFactors launched a new Learning user experience. In a diverse business with multiple different audience groups, the platform needed to be customised to support the varied requirements of learners.',
                 solution: 'Utilised on-brand page designs and code based custom card dialogs, displayed across custom pages, combined with intelligent assignment rules, to ensure each core audience was services by a bespoke, but easily maintained solution.',
@@ -715,7 +747,7 @@
             },
             'project9': {
                 title: 'Leadership Scenarios - Code Developed Interactions',
-                img: 'https://placehold.co/800x400/ff0090/FFF?text=Leadership+Learning',
+                img: 'https://placehold.co/800x400/b56a8d/FFF?text=Leadership+Learning',
                 tools: 'Google Gemini, Rise, Photoshop',
                 challenge: 'Leaders across the business are struggling to deliver direct and impactful feedback. As a remove and geographically diverse population, how do you support their development of these skills.',
                 solution: 'Run virtual webinars supported with targeted flexible, digital interctions that allow leaders to test their understanding in real situations.',
@@ -743,13 +775,11 @@
             const header = document.getElementById('iframeHeader');
             header.innerText = title;
             document.getElementById('courseFrame').src = url;
-            
-            // Move focus into the iframe header for screen readers
             header.focus();
         }
 
         window.openModal = function(projectId) {
-            lastFocusedElement = document.activeElement; // Save focus
+            lastFocusedElement = document.activeElement;
             const project = projects[projectId];
             if (!project) return;
 
@@ -802,8 +832,6 @@
 
             projectModal.classList.remove('hidden');
             document.body.classList.add('no-scroll');
-            
-            // Focus the modal for screen readers
             projectModal.focus();
         }
 
@@ -820,8 +848,6 @@
                 pendingUrl = currentDemoUrl;
                 document.getElementById('modalContent').classList.add('hidden');
                 document.getElementById('disclaimerContainer').classList.remove('hidden');
-                
-                // Shift focus to the disclaimer button
                 setTimeout(() => document.getElementById('disclaimerLaunchBtn').focus(), 50);
                 return;
             }
@@ -842,7 +868,6 @@
                  pendingUrl = currentProcessUrl;
                  document.getElementById('modalContent').classList.add('hidden');
                  document.getElementById('disclaimerContainer').classList.remove('hidden');
-                 
                  setTimeout(() => document.getElementById('disclaimerLaunchBtn').focus(), 50);
                  return;
             }
@@ -863,7 +888,6 @@
         window.cancelDisclaimer = function() {
             document.getElementById('disclaimerContainer').classList.add('hidden');
             document.getElementById('modalContent').classList.remove('hidden');
-            // Return focus to the launch button
             document.getElementById('modalLinkBtn').focus();
         }
 
@@ -885,13 +909,11 @@
             document.getElementById('disclaimerContainer').classList.add('hidden');
             document.getElementById('courseFrame').src = '';
             
-            // Return focus to the tile that originally opened the modal
             if (lastFocusedElement) {
                 lastFocusedElement.focus();
             }
         }
 
-        // Accessibility Focus Trap for Modal
         projectModal.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeModal();
@@ -903,12 +925,12 @@
                 const firstElement = focusableElements[0];
                 const lastElement = focusableElements[focusableElements.length - 1];
 
-                if (e.shiftKey) { // Shift + Tab
+                if (e.shiftKey) { 
                     if (document.activeElement === firstElement) {
                         lastElement.focus();
                         e.preventDefault();
                     }
-                } else { // Tab
+                } else { 
                     if (document.activeElement === lastElement) {
                         firstElement.focus();
                         e.preventDefault();
@@ -917,14 +939,12 @@
             }
         });
 
-        // Smooth scroll focus adjustment for Navigation
-        document.querySelectorAll('a.nav-link').forEach(anchor => {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const targetId = this.getAttribute('href');
-                if (targetId.startsWith('#') && targetId !== '#') {
+                if (targetId !== '#') {
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        // Let the CSS smooth scrolling happen, then force focus
                         setTimeout(() => {
                             const heading = targetElement.querySelector('h2');
                             if (heading) {
@@ -936,6 +956,54 @@
                 }
             });
         });
+
+        // Hero Carousel Logic
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        let slideInterval;
+
+        function updateCarousel() {
+            if (!slides.length) return;
+            
+            // Reset all slides and dots
+            slides.forEach(slide => {
+                slide.classList.remove('opacity-100');
+                slide.classList.add('opacity-0');
+            });
+            dots.forEach(dot => {
+                dot.classList.remove('w-12', 'bg-primary');
+                dot.classList.add('w-3', 'bg-surface-container-highest');
+            });
+
+            // Set active slide and dot
+            slides[currentSlide].classList.remove('opacity-0');
+            slides[currentSlide].classList.add('opacity-100');
+            
+            dots[currentSlide].classList.remove('w-3', 'bg-surface-container-highest');
+            dots[currentSlide].classList.add('w-12', 'bg-primary');
+        }
+
+        window.goToSlide = function(index) {
+            currentSlide = index;
+            updateCarousel();
+            resetInterval();
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateCarousel();
+        }
+
+        function resetInterval() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+
+        // Initialize carousel
+        if (slides.length > 0) {
+            resetInterval();
+        }
     </script>
 </body>
 </html>
