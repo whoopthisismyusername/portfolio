@@ -71,6 +71,7 @@
               }
             },
           }
+
         }
     </script>
     <style>
@@ -91,6 +92,9 @@
         :focus-visible {
             outline: 2px solid var(--primary);
             outline-offset: 4px;
+        }
+        .animated-shape {
+            will-change: transform;
         }
     </style>
 </head>
@@ -137,9 +141,17 @@
 
     <main class="pt-24">
         <!-- Hero Section -->
-        <section class="min-h-[700px] flex items-center px-6 md:px-12 max-w-[1440px] mx-auto py-10 md:py-20 overflow-hidden">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div class="space-y-8">
+        <section id="hero-section" class="relative min-h-[700px] flex items-center px-6 md:px-12 max-w-[1440px] mx-auto py-10 md:py-20 overflow-hidden">
+            
+            <!-- Animated Shapes Container -->
+            <div id="shape-container" class="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-40 mix-blend-multiply">
+                <div id="shape1" class="animated-shape absolute top-0 left-0 w-[180px] h-[180px] rounded-full bg-primary blur-[40px]"></div>
+                <div id="shape2" class="animated-shape absolute top-0 left-0 w-[250px] h-[250px] rounded-full bg-secondary blur-[50px]"></div>
+                <div id="shape3" class="animated-shape absolute top-0 left-0 w-[200px] h-[200px] rounded-full bg-tertiary blur-[45px]"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10 w-full">
+                <div class="space-y-8 bg-background/40 backdrop-blur-sm p-6 -mx-6 md:mx-0 md:p-8 rounded-3xl lg:bg-transparent lg:backdrop-blur-none lg:p-0">
                     <div class="inline-block px-3 py-1 border border-outline-variant rounded-full text-primary text-xs font-bold tracking-widest uppercase bg-surface-container-low">
                         Digital Learning Design Portfolio
                     </div>
@@ -154,7 +166,7 @@
                         <a href="#work" class="inline-block bg-gradient-to-br from-primary to-primary-container text-on-primary px-8 py-4 rounded-full font-bold hover:opacity-90 transition-all shadow-lg hover:shadow-primary/25">
                             View My Work
                         </a>
-                        <a href="#contact" class="inline-block border border-primary/20 text-primary px-8 py-4 rounded-full font-bold hover:bg-primary/5 transition-all">
+                        <a href="#contact" class="inline-block border border-primary/20 text-primary px-8 py-4 rounded-full font-bold hover:bg-primary/5 transition-all bg-white/50 backdrop-blur-sm">
                             Contact Me
                         </a>
                     </div>
@@ -568,6 +580,46 @@
 
     <!-- Original JavaScript Logic remains untouched to preserve functionality -->
     <script>
+        // Custom Bouncing Shapes Logic
+        window.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('hero-section');
+            const shape1 = document.getElementById('shape1');
+            const shape2 = document.getElementById('shape2');
+            const shape3 = document.getElementById('shape3');
+
+            if (!container || !shape1 || !shape2 || !shape3) return;
+
+            let bounds = container.getBoundingClientRect();
+            window.addEventListener('resize', () => {
+                bounds = container.getBoundingClientRect();
+            });
+
+            // Initialise shapes with starting positions, velocities, and sizes
+            const shapes = [
+                { el: shape1, x: 50, y: 50, vx: 1.2, vy: 0.8, size: 180 },
+                { el: shape2, x: bounds.width - 300, y: bounds.height - 300, vx: -0.9, vy: -1.1, size: 250 },
+                { el: shape3, x: bounds.width / 2, y: 100, vx: 0.7, vy: 1.3, size: 200 }
+            ];
+
+            function animate() {
+                shapes.forEach(shape => {
+                    shape.x += shape.vx;
+                    shape.y += shape.vy;
+
+                    // Bouncing logic - keeping them strictly within the container bounds
+                    if (shape.x <= 0) { shape.x = 0; shape.vx *= -1; }
+                    if (shape.x + shape.size >= bounds.width) { shape.x = bounds.width - shape.size; shape.vx *= -1; }
+                    if (shape.y <= 0) { shape.y = 0; shape.vy *= -1; }
+                    if (shape.y + shape.size >= bounds.height) { shape.y = bounds.height - shape.size; shape.vy *= -1; }
+
+                    shape.el.style.transform = `translate3d(${shape.x}px, ${shape.y}px, 0)`;
+                });
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+        });
+
         let lastFocusedElement;
         const projectModal = document.getElementById('projectModal');
 
