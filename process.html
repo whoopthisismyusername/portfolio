@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Graham Betts | How I Work — Learning Experience Design Process</title>
+    <meta name="description" content="A look at how Graham Betts designs learning experiences — from discovery through measurement, built around behaviour change and real data.">
+
+    <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;600;700;800&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary": "#0017cf",
+                      "outline": "#757689",
+                      "background": "#fcf9f6",
+                      "primary-fixed-dim": "#bdc2ff",
+                      "surface": "#fcf9f6",
+                      "on-surface": "#1b1c1a",
+                      "tertiary-fixed-dim": "#6bd8cb",
+                      "surface-tint": "#2c3eff",
+                      "primary-container": "#2033fa",
+                      "primary-fixed": "#e0e0ff",
+                      "on-surface-variant": "#444557",
+                      "surface-container": "#f0edea",
+                      "outline-variant": "#c5c5da",
+                      "surface-bright": "#fcf9f6",
+                      "surface-variant": "#e5e2df",
+                      "secondary": "#864d66",
+                      "secondary-container": "#fdb5d2",
+                      "tertiary": "#004943",
+                      "surface-container-low": "#f6f3f0",
+                      "surface-container-high": "#eae8e5",
+                      "surface-container-highest": "#e5e2df",
+                      "surface-dim": "#dcdad7",
+                      "on-primary": "#ffffff",
+                      "on-primary-fixed": "#000667",
+                      "on-background": "#1b1c1a"
+              },
+              "fontFamily": {
+                      "headline": ["Epilogue"],
+                      "body": ["Inter"],
+                      "label": ["Space Grotesk"]
+              }
+            },
+          }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .mixed-headline {
+            font-family: 'Epilogue', sans-serif;
+        }
+        .mixed-headline span.italic-serif {
+            font-family: serif;
+            font-style: italic;
+        }
+        :focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 4px;
+        }
+        /* Connecting rail between phase cards on desktop */
+        .phase-rail {
+            background: linear-gradient(to bottom, #bdc2ff 0%, #2033fa 100%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-fixed selection:text-on-primary-fixed">
+
+    <!-- TopNavBar -->
+    <nav class="fixed top-0 w-full z-50 bg-[#fcf9f6]/80 backdrop-blur-xl border-b border-surface-container transition-all">
+        <div class="flex justify-between items-center px-6 md:px-12 py-4 max-w-[1440px] mx-auto font-['Epilogue'] tracking-tight">
+            <a href="index.html" class="text-2xl font-bold text-[#1b1c1a]">Graham<span class="text-primary">Betts</span></a>
+
+            <div class="hidden md:flex items-center space-x-8">
+                <a class="text-[#5e2b43] font-bold border-b-2 border-transparent hover:border-[#2033fa] hover:text-[#2033fa] pb-1 transition-colors" href="index.html#work">Work</a>
+                <a class="text-[#2033fa] font-bold border-b-2 border-[#2033fa] pb-1 transition-all" href="process.html">Process</a>
+                <a class="text-[#5e2b43] font-bold border-b-2 border-transparent hover:border-[#2033fa] hover:text-[#2033fa] pb-1 transition-colors" href="systems.html">Systems</a>
+                <a class="text-[#5e2b43] font-bold border-b-2 border-transparent hover:border-[#2033fa] hover:text-[#2033fa] pb-1 transition-colors" href="index.html#about">About</a>
+                <a class="text-[#5e2b43] font-bold border-b-2 border-transparent hover:border-[#2033fa] hover:text-[#2033fa] pb-1 transition-colors" href="index.html#contact">Contact</a>
+            </div>
+
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="https://www.linkedin.com/in/graham-betts-14908110" target="_blank" title="Connect on LinkedIn" aria-label="LinkedIn Profile" class="text-outline hover:text-[#0077b5] transition-colors duration-300 transform hover:scale-110">
+                    <i class="fab fa-linkedin text-2xl" aria-hidden="true"></i>
+                </a>
+                <a href="index.html#contact" class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-6 py-2.5 rounded-full font-bold hover:opacity-80 transition-all active:scale-95 duration-200">
+                    Let's Talk
+                </a>
+            </div>
+
+            <div class="md:hidden flex items-center">
+                <button onclick="toggleMobileMenu()" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-menu" class="text-on-surface hover:text-primary focus:outline-none">
+                    <i class="fas fa-bars text-2xl" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-surface border-t border-surface-container">
+            <a href="index.html#work" class="block px-6 py-4 text-[#5e2b43] font-bold hover:bg-surface-container-low">Work</a>
+            <a href="process.html" class="block px-6 py-4 text-primary font-bold hover:bg-surface-container-low">Process</a>
+            <a href="systems.html" class="block px-6 py-4 text-[#5e2b43] font-bold hover:bg-surface-container-low">Systems</a>
+            <a href="index.html#about" class="block px-6 py-4 text-[#5e2b43] font-bold hover:bg-surface-container-low">About</a>
+            <a href="index.html#contact" class="block px-6 py-4 text-[#5e2b43] font-bold hover:bg-surface-container-low">Contact</a>
+            <a href="https://www.linkedin.com/in/graham-betts-14908110" target="_blank" class="block px-6 py-4 text-[#5e2b43] font-bold hover:bg-surface-container-low hover:text-[#0077b5]">
+                <i class="fab fa-linkedin mr-2" aria-hidden="true"></i> LinkedIn Profile
+            </a>
+        </div>
+    </nav>
+
+    <main class="pt-24">
+        <!-- Hero (full-bleed tinted, centred, with step-preview timeline) -->
+        <section class="relative bg-surface-container-low overflow-hidden border-b border-outline-variant/20">
+            <div class="absolute top-0 left-1/4 w-[28rem] h-[28rem] bg-primary/5 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+            <div class="absolute -bottom-20 right-1/4 w-[24rem] h-[24rem] bg-tertiary-fixed-dim/20 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+            <div class="relative max-w-[1280px] mx-auto px-6 md:px-12 pt-12 md:pt-20 pb-20 md:pb-24">
+                <div class="max-w-4xl mx-auto text-center space-y-7">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 border border-outline-variant rounded-full text-primary text-xs font-bold tracking-widest uppercase bg-surface">
+                        <span class="material-symbols-outlined text-[14px]" aria-hidden="true">route</span>
+                        How I Work
+                    </div>
+                    <h1 class="mixed-headline text-5xl md:text-7xl font-extrabold text-[#5e2b43] leading-[1.05] tracking-tight">
+                        A process built for change, <span class="text-primary italic-serif font-normal">not content delivery.</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-on-surface-variant leading-relaxed max-w-2xl mx-auto">
+                        Most learning initiatives fail the same way — great content, no impact. My process stays anchored to the one thing that matters: where do we need to get to, and what needs to change to make this possible.
+                    </p>
+                </div>
+
+                <!-- Phase preview timeline -->
+                <nav aria-label="Jump to phase" class="mt-14 md:mt-20">
+                    <div class="relative max-w-5xl mx-auto">
+                        <div class="hidden md:block absolute top-7 left-[8.333%] right-[8.333%] h-0.5 bg-gradient-to-r from-primary via-primary-container to-tertiary opacity-50" aria-hidden="true"></div>
+                        <ol class="relative grid grid-cols-3 md:grid-cols-6 gap-y-6 gap-x-2">
+                            <li>
+                                <a href="#phase-1" class="group flex flex-col items-center text-center gap-3">
+                                    <span class="w-14 h-14 rounded-full bg-surface border-2 border-primary text-primary font-headline font-extrabold text-base flex items-center justify-center shadow-sm transition-all group-hover:scale-110 group-hover:bg-primary group-hover:text-on-primary">01</span>
+                                    <span class="font-label text-[11px] font-bold uppercase tracking-wider text-[#5e2b43] group-hover:text-primary transition-colors">Listen</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#phase-2" class="group flex flex-col items-center text-center gap-3">
+                                    <span class="w-14 h-14 rounded-full bg-surface border-2 border-primary text-primary font-headline font-extrabold text-base flex items-center justify-center shadow-sm transition-all group-hover:scale-110 group-hover:bg-primary group-hover:text-on-primary">02</span>
+                                    <span class="font-label text-[11px] font-bold uppercase tracking-wider text-[#5e2b43] group-hover:text-primary transition-colors">Frame</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#phase-3" class="group flex flex-col items-center text-center gap-3">
+                                    <span class="w-14 h-14 rounded-full bg-surface border-2 border-primary-container text-primary-container font-headline font-extrabold text-base flex items-center justify-center shadow-sm transition-all group-hover:scale-110 group-hover:bg-primary-container group-hover:text-on-primary">03</span>
+                                    <span class="font-label text-[11px] font-bold uppercase tracking-wider text-[#5e2b43] group-hover:text-primary transition-colors">Prototype</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#phase-4" class="group flex flex-col items-center text-center gap-3">
+                                    <span class="w-14 h-14 rounded-full bg-surface border-2 border-primary-container text-primary-container font-headline font-extrabold text-base flex items-center justify-center shadow-sm transition-all group-hover:scale-110 group-hover:bg-primary-container group-hover:text-on-primary">04</span>
+                                    <span class="font-label text-[11px] font-bold uppercase tracking-wider text-[#5e2b43] group-hover:text-primary transition-colors">Build</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#phase-5" class="group flex flex-col items-center text-center gap-3">
+                                    <span class="w-14 h-14 rounded-full bg-surface border-2 border-tertiary text-tertiary font-headline font-extrabold text-base flex items-center justify-center shadow-sm transition-all group-hover:scale-110 group-hover:bg-tertiary group-hover:text-on-primary">05</span>
+                                    <span class="font-label text-[11px] font-bold uppercase tracking-wider text-[#5e2b43] group-hover:text-tertiary transition-colors">Launch</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#phase-6" class="group flex flex-col items-center text-center gap-3">
+                                    <span class="w-14 h-14 rounded-full bg-surface border-2 border-tertiary text-tertiary font-headline font-extrabold text-base flex items-center justify-center shadow-sm transition-all group-hover:scale-110 group-hover:bg-tertiary group-hover:text-on-primary">06</span>
+                                    <span class="font-label text-[11px] font-bold uppercase tracking-wider text-[#5e2b43] group-hover:text-tertiary transition-colors">Measure</span>
+                                </a>
+                            </li>
+                        </ol>
+                    </div>
+                </nav>
+            </div>
+        </section>
+
+        <!-- Principles -->
+        <section class="bg-surface-container-low py-20 px-6 md:px-12" id="principles">
+            <div class="max-w-[1280px] mx-auto">
+                <div class="mb-12 space-y-3">
+                    <span class="font-label text-primary uppercase tracking-[0.2em] font-bold text-sm">Principles</span>
+                    <h2 class="font-headline text-4xl md:text-5xl font-extrabold text-[#5e2b43]">Three things I hold on to.</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-surface rounded-2xl p-8 border border-outline-variant/20 shadow-sm">
+                        <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-primary">target</span>
+                        </div>
+                        <h3 class="font-headline font-bold text-xl text-[#5e2b43] mb-3">Performance is what matters</h3>
+                        <p class="text-sm text-on-surface-variant leading-relaxed">
+                            In any project, understand where you are and where you want to be. The bit in between is the performance gap. It is the focus of the work, understanding the cause and finding effective bridges to help people across.
+                        </p>
+                    </div>
+
+                    <div class="bg-surface rounded-2xl p-8 border border-outline-variant/20 shadow-sm">
+                        <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-primary">insights</span>
+                        </div>
+                        <h3 class="font-headline font-bold text-xl text-[#5e2b43] mb-3">Let the data lead</h3>
+                        <p class="text-sm text-on-surface-variant leading-relaxed">
+                            Analytics, CSAT, support tickets, real floor observations — the evidence usually knows where the real problem sits. Opinions only come in after the data has spoken.
+                        </p>
+                    </div>
+
+                    <div class="bg-surface rounded-2xl p-8 border border-outline-variant/20 shadow-sm">
+                        <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-primary">bolt_boost</span>
+                        </div>
+                        <h3 class="font-headline font-bold text-xl text-[#5e2b43] mb-3">Prototype early, iterate often</h3>
+                        <p class="text-sm text-on-surface-variant leading-relaxed">
+                            Showing my stakeholder a demo of an idea before full development or a learner a rough scenario teaches me more than a month of conversations without a tangible focus. I build small, test fast, and let the feedback rewrite the plan.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phases -->
+        <section class="py-24 px-6 md:px-12" id="phases">
+            <div class="max-w-[1280px] mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-4">
+                    <div class="space-y-4">
+                        <span class="font-label text-primary uppercase tracking-[0.2em] font-bold text-sm">The Process</span>
+                        <h2 class="font-headline text-4xl md:text-5xl font-extrabold text-[#5e2b43]">Six phases, from gap to evidence.</h2>
+                    </div>
+                    <p class="font-label text-on-surface-variant max-w-sm md:text-right">
+                        Rooted in ADDIE and SAM, sharpened with Action Mapping and GAGNE's 9 Events and the discipline of an Agile sprint — tuned to each project's shape.
+                    </p>
+                </div>
+
+                <div class="relative">
+                    <!-- Connecting rail (hidden on mobile) -->
+                    <div class="hidden md:block absolute left-[27px] top-4 bottom-4 w-0.5 phase-rail opacity-40" aria-hidden="true"></div>
+
+                    <div class="space-y-8">
+
+                        <!-- Phase 1 -->
+                        <article id="phase-1" class="relative flex gap-6 md:gap-10 scroll-mt-28">
+                            <div class="flex-shrink-0 w-14 h-14 rounded-full bg-gradient-to-br from-primary to-primary-container text-on-primary flex items-center justify-center font-headline font-extrabold text-xl shadow-lg z-10">01</div>
+                            <div class="flex-grow bg-surface rounded-2xl p-6 md:p-8 border border-outline-variant/20 shadow-sm">
+                                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-3">
+                                    <h3 class="font-headline font-extrabold text-2xl text-[#5e2b43]">Listen &amp; Discover</h3>
+                                    <span class="font-label text-xs uppercase tracking-widest text-primary font-bold">What problem are we actually solving?</span>
+                                </div>
+                                <p class="text-on-surface-variant leading-relaxed mb-6">
+                                    Before I write a line of content, I sit with the people closest to the problem — stakeholders, SMEs, and the learners themselves. I pull the hard numbers too: NPS, CSAT, compliance rates, support tickets. The goal is to separate the <em>stated</em> problem from the <em>real</em> one. Whilst many stakeholders come with this data, getting a performance and learning lens on it helps to identify otherwise unseen opportunities.
+                                </p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 mb-6">
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">Stakeholder &amp; SME interviews</span></div>
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">Performance &amp; analytics review</span></div>
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">Learner observation &amp; shadowing</span></div>
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">Audit of existing content &amp; support</span></div>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="font-label text-[11px] uppercase tracking-wider font-bold text-primary px-3 py-1 rounded-full bg-primary-fixed">Output: Problem statement + success metrics</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Phase 2 -->
+                        <article id="phase-2" class="relative flex gap-6 md:gap-10 scroll-mt-28">
+                            <div class="flex-shrink-0 w-14 h-14 rounded-full bg-gradient-to-br from-primary to-primary-container text-on-primary flex items-center justify-center font-headline font-extrabold text-xl shadow-lg z-10">02</div>
+                            <div class="flex-grow bg-surface rounded-2xl p-6 md:p-8 border border-outline-variant/20 shadow-sm">
+                                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-3">
+                                    <h3 class="font-headline font-extrabold text-2xl text-[#5e2b43]">Frame the Change</h3>
+                                    <span class="font-label text-xs uppercase tracking-widest text-primary font-bold">What do we need people to do differently?</span>
+                                </div>
+                                <p class="text-on-surface-variant leading-relaxed mb-6">
+                                    This is where Action Mapping lays the foundations. I translate the problem into the specific, observable skills, behaviours or knowledge that would fix it — then write learning objectives, audience personas and measurable outcomes against each one. It's where a course brief stops being a content list and starts being a plan for change. <strong>THIS</strong> learner, <strong>THIS</strong> problem and needs to do <strong>THIS</strong> to fix it.
+                                </p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 mb-6">
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">Action Mapping workshop</span></div>
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">Bloom-aligned learning objectives</span></div>
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">Audience personas &amp; context mapping</span></div>
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">Success metrics agreed with stakeholders</span></div>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="font-label text-[11px] uppercase tracking-wider font-bold text-primary px-3 py-1 rounded-full bg-primary-fixed">Output: Design brief + measurement plan</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Phase 3 -->
+                        <article id="phase-3" class="relative flex gap-6 md:gap-10 scroll-mt-28">
+                            <div class="flex-shrink-0 w-14 h-14 rounded-full bg-gradient-to-br from-primary to-primary-container text-on-primary flex items-center justify-center font-headline font-extrabold text-xl shadow-lg z-10">03</div>
+                            <div class="flex-grow bg-surface rounded-2xl p-6 md:p-8 border border-outline-variant/20 shadow-sm">
+                                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-3">
+                                    <h3 class="font-headline font-extrabold text-2xl text-[#5e2b43]">Prototype &amp; Storyboard</h3>
+                                    <span class="font-label text-xs uppercase tracking-widest text-primary font-bold">Does it land before we commit?</span>
+                                </div>
+                                <p class="text-on-surface-variant leading-relaxed mb-6">
+                                    I'd rather fail in a basic wireframe than in a launched course. Simple storyboards, scenario scripts and a single playable slice go in front of SMEs and sample learners early. Cheap to change, brutal at exposing weak ideas, and excellent at rapid enhancement — exactly as it should be.
+                                </p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 mb-6">
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">Scenario &amp; branching scripts</span></div>
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">Low-fi storyboards &amp; wireframes</span></div>
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">Playable prototype slice</span></div>
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">SME &amp; learner review loops</span></div>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="font-label text-[11px] uppercase tracking-wider font-bold text-primary px-3 py-1 rounded-full bg-primary-fixed">Output: Validated storyboard + prototype</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Phase 4 -->
+                        <article id="phase-4" class="relative flex gap-6 md:gap-10 scroll-mt-28">
+                            <div class="flex-shrink-0 w-14 h-14 rounded-full bg-gradient-to-br from-primary to-primary-container text-on-primary flex items-center justify-center font-headline font-extrabold text-xl shadow-lg z-10">04</div>
+                            <div class="flex-grow bg-surface rounded-2xl p-6 md:p-8 border border-outline-variant/20 shadow-sm">
+                                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-3">
+                                    <h3 class="font-headline font-extrabold text-2xl text-[#5e2b43]">Build with Intent</h3>
+                                    <span class="font-label text-xs uppercase tracking-widest text-primary font-bold">Production with a point of view.</span>
+                                </div>
+                                <p class="text-on-surface-variant leading-relaxed mb-6">
+                                    Build phase is where the tool choice finally matters. What were the requirements, were there any technical limitations, how does it need to be accessed, how rich does the interactivity need to be, and how quickly is it required. Articulate 360 for rich interactivity, Evolve for responsive scale, 7Taps for deskless microlearning, Copilot Studio when a chat-based agent is the right shape. AI speeds drafts, scripts and asset generation; my job is to keep it honest against the objectives.
+                                </p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 mb-6">
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">Articulate 360 / Evolve / 7Taps builds</span></div>
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">Video, animation &amp; asset production</span></div>
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">AI-accelerated drafting &amp; iteration</span></div>
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">Accessibility &amp; Testing &amp; QA</span></div>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="font-label text-[11px] uppercase tracking-wider font-bold text-primary px-3 py-1 rounded-full bg-primary-fixed">Output: Production-ready experience</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Phase 5 -->
+                        <article id="phase-5" class="relative flex gap-6 md:gap-10 scroll-mt-28">
+                            <div class="flex-shrink-0 w-14 h-14 rounded-full bg-gradient-to-br from-primary to-primary-container text-on-primary flex items-center justify-center font-headline font-extrabold text-xl shadow-lg z-10">05</div>
+                            <div class="flex-grow bg-surface rounded-2xl p-6 md:p-8 border border-outline-variant/20 shadow-sm">
+                                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-3">
+                                    <h3 class="font-headline font-extrabold text-2xl text-[#5e2b43]">Launch &amp; Enable</h3>
+                                    <span class="font-label text-xs uppercase tracking-widest text-primary font-bold">Make the rollout part of the design.</span>
+                                </div>
+                                <p class="text-on-surface-variant leading-relaxed mb-6">
+                                    Great content gets buried without a launch plan and the right wrap-around. I set up the LMS, write the comms, build the manager toolkits and make sure there's somewhere to turn when a learner is stuck on the floor at 2pm on a Tuesday. Enablement is design, not an afterthought.
+                                </p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 mb-6">
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">LMS/LXP configuration</span></div>
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">Comms plan &amp; launch campaign</span></div>
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">Manager toolkits &amp; job aids</span></div>
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">In-flow support &amp; AI assistants</span></div>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="font-label text-[11px] uppercase tracking-wider font-bold text-primary px-3 py-1 rounded-full bg-primary-fixed">Output: Deployed solution + enablement pack</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Phase 6 -->
+                        <article id="phase-6" class="relative flex gap-6 md:gap-10 scroll-mt-28">
+                            <div class="flex-shrink-0 w-14 h-14 rounded-full bg-gradient-to-br from-primary to-primary-container text-on-primary flex items-center justify-center font-headline font-extrabold text-xl shadow-lg z-10">06</div>
+                            <div class="flex-grow bg-surface rounded-2xl p-6 md:p-8 border border-outline-variant/20 shadow-sm">
+                                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-3">
+                                    <h3 class="font-headline font-extrabold text-2xl text-[#5e2b43]">Measure &amp; Evolve</h3>
+                                    <span class="font-label text-xs uppercase tracking-widest text-primary font-bold">Prove it — or fix it.</span>
+                                </div>
+                                <p class="text-on-surface-variant leading-relaxed mb-6">
+                                    Launch is the halfway point. I track the metrics agreed back in Phase 2, watch the behaviour data come in, and feed the findings into a v2. Some changes are tweaks, some rewrite the brief entirely. That's the job — learning the thing you built, alongside the people using it.
+                                </p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 mb-6">
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">Completion, NPS &amp; satisfaction tracking</span></div>
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">Behaviour &amp; business KPI review</span></div>
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">Qualitative learner &amp; manager feedback</span></div>
+                                    <div class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span><span class="text-sm text-on-surface-variant">Iteration backlog + v2 roadmap</span></div>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="font-label text-[11px] uppercase tracking-wider font-bold text-primary px-3 py-1 rounded-full bg-primary-fixed">Output: Evidence of impact + next-cycle plan</span>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Collaboration note -->
+        <section class="bg-surface-container-low py-20 px-6 md:px-12">
+            <div class="max-w-[1100px] mx-auto grid grid-cols-1 lg:grid-cols-5 gap-10 items-start">
+                <div class="lg:col-span-2 space-y-4">
+                    <span class="font-label text-primary uppercase tracking-[0.2em] font-bold text-sm">How I Collaborate</span>
+                    <h2 class="font-headline text-3xl md:text-4xl font-extrabold text-[#5e2b43] leading-tight">A steady hand through the messy middle.</h2>
+                </div>
+                <div class="lg:col-span-3 space-y-6 text-on-surface-variant leading-relaxed">
+                    <p>
+                        I've delivered solo on tight rollouts and led distributed teams across remote, matrix and onsite setups. Whichever shape the project takes, I work in short, visible cycles — share work early, ask for feedback often, and keep a running record of what's been decided and why.
+                    </p>
+                    <p>
+                        Stakeholders get the clarity they need, SMEs feel heard, and learners end up with something that respects their time.
+                    </p>
+                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 pt-2">
+                        <li class="flex items-start gap-3">
+                            <span class="text-primary mt-1.5 h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0"></span>
+                            <span class="text-sm">Weekly or bi-weekly stakeholder check-ins</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-primary mt-1.5 h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0"></span>
+                            <span class="text-sm">Shared roadmap &amp; decision log</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-primary mt-1.5 h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0"></span>
+                            <span class="text-sm">Clear working drafts, no surprise reveals</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-primary mt-1.5 h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0"></span>
+                            <span class="text-sm">Post-launch review baked into the timeline</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="py-24 px-6 md:px-12">
+            <div class="max-w-4xl mx-auto text-center space-y-8">
+                <h2 class="mixed-headline text-4xl md:text-6xl font-extrabold text-[#5e2b43] tracking-tight leading-[1.1]">Got a performance gap?<br/><span class="text-primary italic-serif font-normal">Need a bridge builder?</span></h2>
+                <p class="text-lg text-on-surface-variant max-w-2xl mx-auto">
+                    If any of this sounds like how you want to work, I'd love to hear about the problem you're sitting with.
+                </p>
+                <div class="flex flex-wrap gap-4 justify-center pt-2">
+                    <a href="index.html#contact" class="inline-block bg-gradient-to-br from-primary to-primary-container text-on-primary px-8 py-4 rounded-full font-bold hover:opacity-90 transition-all shadow-lg hover:shadow-primary/25">
+                        Start a conversation
+                    </a>
+                    <a href="index.html#work" class="inline-block border border-primary/20 text-primary px-8 py-4 rounded-full font-bold hover:bg-primary/5 transition-all bg-white/50 backdrop-blur-sm">
+                        See the work
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full py-12 bg-[#f6f3f0] border-t border-outline-variant/20">
+        <div class="flex flex-col md:flex-row justify-between items-center px-6 md:px-12 max-w-[1440px] mx-auto font-['Inter'] text-sm tracking-wide gap-6">
+            <a href="index.html" class="text-lg font-black text-[#5e2b43]">Graham<span class="text-primary">Betts</span></a>
+
+            <p class="text-[#1b1c1a]/60 text-center order-3 md:order-2">
+                &copy; 2026 Graham Betts. All Rights Reserved. <br class="md:hidden"> <span class="hidden md:inline">|</span> Instructional Designer &amp; LXD Expert.
+            </p>
+
+            <div class="flex items-center gap-6 order-2 md:order-3">
+                <a class="text-[#1b1c1a]/60 hover:text-[#2033fa] transition-all transform hover:scale-110" href="https://linkedin.com/in/graham-betts" target="_blank" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin text-xl"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        window.toggleMobileMenu = function() {
+            const menu = document.getElementById('mobile-menu');
+            const btn = document.querySelector('button[aria-controls="mobile-menu"]');
+            menu.classList.toggle('hidden');
+            const isExpanded = !menu.classList.contains('hidden');
+            btn.setAttribute('aria-expanded', isExpanded);
+        }
+    </script>
+</body>
+</html>

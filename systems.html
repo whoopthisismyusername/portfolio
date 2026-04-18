@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Graham Betts | Learning Systems — Implementation, Governance &amp; Learner Experience</title>
+    <meta name="description" content="How Graham Betts runs learning platforms — from implementation through long-term ownership to learner experience. SAP SuccessFactors, Absorb, Litmos.">
+
+    <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;600;700;800&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary": "#0017cf",
+                      "outline": "#757689",
+                      "background": "#fcf9f6",
+                      "primary-fixed-dim": "#bdc2ff",
+                      "surface": "#fcf9f6",
+                      "on-surface": "#1b1c1a",
+                      "tertiary-fixed-dim": "#6bd8cb",
+                      "surface-tint": "#2c3eff",
+                      "primary-container": "#2033fa",
+                      "primary-fixed": "#e0e0ff",
+                      "on-surface-variant": "#444557",
+                      "surface-container": "#f0edea",
+                      "outline-variant": "#c5c5da",
+                      "surface-bright": "#fcf9f6",
+                      "surface-variant": "#e5e2df",
+                      "secondary": "#864d66",
+                      "secondary-container": "#fdb5d2",
+                      "tertiary": "#004943",
+                      "tertiary-container": "#00635a",
+                      "tertiary-fixed": "#89f5e7",
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-fixed": "#00201d",
+                      "on-tertiary-fixed-variant": "#005049",
+                      "surface-container-low": "#f6f3f0",
+                      "surface-container-high": "#eae8e5",
+                      "surface-container-highest": "#e5e2df",
+                      "surface-dim": "#dcdad7",
+                      "on-primary": "#ffffff",
+                      "on-primary-fixed": "#000667",
+                      "on-background": "#1b1c1a"
+              },
+              "fontFamily": {
+                      "headline": ["Epilogue"],
+                      "body": ["Inter"],
+                      "label": ["Space Grotesk"]
+              }
+            },
+          }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .mixed-headline {
+            font-family: 'Epilogue', sans-serif;
+        }
+        .mixed-headline span.italic-serif {
+            font-family: serif;
+            font-style: italic;
+        }
+        :focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 4px;
+        }
+        .pillar-rail {
+            background: linear-gradient(to bottom, #0017cf 0%, #2033fa 50%, #004943 100%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-fixed selection:text-on-primary-fixed">
+
+    <!-- TopNavBar -->
+    <nav class="fixed top-0 w-full z-50 bg-[#fcf9f6]/80 backdrop-blur-xl border-b border-surface-container transition-all">
+        <div class="flex justify-between items-center px-6 md:px-12 py-4 max-w-[1440px] mx-auto font-['Epilogue'] tracking-tight">
+            <a href="index.html" class="text-2xl font-bold text-[#1b1c1a]">Graham<span class="text-primary">Betts</span></a>
+
+            <div class="hidden md:flex items-center space-x-8">
+                <a class="text-[#5e2b43] font-bold border-b-2 border-transparent hover:border-[#2033fa] hover:text-[#2033fa] pb-1 transition-colors" href="index.html#work">Work</a>
+                <a class="text-[#5e2b43] font-bold border-b-2 border-transparent hover:border-[#2033fa] hover:text-[#2033fa] pb-1 transition-colors" href="process.html">Process</a>
+                <a class="text-[#2033fa] font-bold border-b-2 border-[#2033fa] pb-1 transition-all" href="systems.html">Systems</a>
+                <a class="text-[#5e2b43] font-bold border-b-2 border-transparent hover:border-[#2033fa] hover:text-[#2033fa] pb-1 transition-colors" href="index.html#about">About</a>
+                <a class="text-[#5e2b43] font-bold border-b-2 border-transparent hover:border-[#2033fa] hover:text-[#2033fa] pb-1 transition-colors" href="index.html#contact">Contact</a>
+            </div>
+
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="https://www.linkedin.com/in/graham-betts-14908110" target="_blank" title="Connect on LinkedIn" aria-label="LinkedIn Profile" class="text-outline hover:text-[#0077b5] transition-colors duration-300 transform hover:scale-110">
+                    <i class="fab fa-linkedin text-2xl" aria-hidden="true"></i>
+                </a>
+                <a href="index.html#contact" class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-6 py-2.5 rounded-full font-bold hover:opacity-80 transition-all active:scale-95 duration-200">
+                    Let's Talk
+                </a>
+            </div>
+
+            <div class="md:hidden flex items-center">
+                <button onclick="toggleMobileMenu()" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-menu" class="text-on-surface hover:text-primary focus:outline-none">
+                    <i class="fas fa-bars text-2xl" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-surface border-t border-surface-container">
+            <a href="index.html#work" class="block px-6 py-4 text-[#5e2b43] font-bold hover:bg-surface-container-low">Work</a>
+            <a href="process.html" class="block px-6 py-4 text-[#5e2b43] font-bold hover:bg-surface-container-low">Process</a>
+            <a href="systems.html" class="block px-6 py-4 text-primary font-bold hover:bg-surface-container-low">Systems</a>
+            <a href="index.html#about" class="block px-6 py-4 text-[#5e2b43] font-bold hover:bg-surface-container-low">About</a>
+            <a href="index.html#contact" class="block px-6 py-4 text-[#5e2b43] font-bold hover:bg-surface-container-low">Contact</a>
+            <a href="https://www.linkedin.com/in/graham-betts-14908110" target="_blank" class="block px-6 py-4 text-[#5e2b43] font-bold hover:bg-surface-container-low hover:text-[#0077b5]">
+                <i class="fab fa-linkedin mr-2" aria-hidden="true"></i> LinkedIn Profile
+            </a>
+        </div>
+    </nav>
+
+    <main class="pt-24">
+
+        <!-- Hero (full-bleed tinted, centred, with 3-pillar preview) -->
+        <section class="relative bg-surface-container-low overflow-hidden border-b border-outline-variant/20">
+            <div class="absolute top-0 right-1/4 w-[28rem] h-[28rem] bg-tertiary/5 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+            <div class="absolute -bottom-20 left-1/4 w-[24rem] h-[24rem] bg-primary/10 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+            <div class="relative max-w-[1280px] mx-auto px-6 md:px-12 pt-12 md:pt-20 pb-20 md:pb-24">
+                <div class="max-w-4xl mx-auto text-center space-y-7">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 border border-outline-variant rounded-full text-primary text-xs font-bold tracking-widest uppercase bg-surface">
+                        <span class="material-symbols-outlined text-[14px]" aria-hidden="true">hub</span>
+                        Learning Systems
+                    </div>
+                    <h1 class="mixed-headline text-5xl md:text-7xl font-extrabold text-[#5e2b43] leading-[1.05] tracking-tight">
+                        Bring learning together,<br/><span class="text-primary italic-serif font-normal">wherever you are.</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-on-surface-variant leading-relaxed max-w-2xl mx-auto">
+                        Learning platforms work best when they form part of an ecosystem. This doesn't mean they have to be highly integrated into everything else, but they should be accessible where learners are, come with compelling reasons to access them, and offer intuitive experiences when they get there. Whatever stage your systems are at, I have experience that can help move you forward.
+                    </p>
+                </div>
+
+                <!-- 4-pillar preview -->
+                <nav aria-label="Jump to pillar" class="mt-14 md:mt-20">
+                    <div class="relative max-w-5xl mx-auto">
+                        <div class="hidden md:block absolute top-10 left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-primary via-secondary via-tertiary to-[#5e2b43] opacity-50" aria-hidden="true"></div>
+                        <ol class="relative grid grid-cols-2 md:grid-cols-4 gap-y-8 gap-x-6">
+                            <li>
+                                <a href="#pillar-1" class="group flex flex-col items-center text-center gap-3">
+                                    <span class="w-20 h-20 rounded-2xl bg-surface border-2 border-primary flex items-center justify-center shadow-sm transition-all group-hover:scale-105 group-hover:bg-primary">
+                                        <span class="material-symbols-outlined text-primary text-[32px] group-hover:text-white transition-colors" aria-hidden="true">rocket_launch</span>
+                                    </span>
+                                    <div class="space-y-1">
+                                        <span class="block font-label text-[10px] font-bold uppercase tracking-wider text-primary">Pillar 01</span>
+                                        <span class="block font-headline font-bold text-sm text-[#5e2b43] group-hover:text-primary transition-colors">Implementation &amp; Strategy</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#pillar-2" class="group flex flex-col items-center text-center gap-3">
+                                    <span class="w-20 h-20 rounded-2xl bg-surface border-2 border-secondary flex items-center justify-center shadow-sm transition-all group-hover:scale-105 group-hover:bg-secondary">
+                                        <span class="material-symbols-outlined text-secondary text-[32px] group-hover:text-white transition-colors" aria-hidden="true">verified_user</span>
+                                    </span>
+                                    <div class="space-y-1">
+                                        <span class="block font-label text-[10px] font-bold uppercase tracking-wider text-secondary">Pillar 02</span>
+                                        <span class="block font-headline font-bold text-sm text-[#5e2b43] group-hover:text-secondary transition-colors">Ownership &amp; Governance</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#pillar-3" class="group flex flex-col items-center text-center gap-3">
+                                    <span class="w-20 h-20 rounded-2xl bg-surface border-2 border-tertiary flex items-center justify-center shadow-sm transition-all group-hover:scale-105 group-hover:bg-tertiary">
+                                        <span class="material-symbols-outlined text-tertiary text-[32px] group-hover:text-white transition-colors" aria-hidden="true">favorite</span>
+                                    </span>
+                                    <div class="space-y-1">
+                                        <span class="block font-label text-[10px] font-bold uppercase tracking-wider text-tertiary">Pillar 03</span>
+                                        <span class="block font-headline font-bold text-sm text-[#5e2b43] group-hover:text-tertiary transition-colors">Learner Experience Optimisation</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#pillar-4" class="group flex flex-col items-center text-center gap-3">
+                                    <span class="w-20 h-20 rounded-2xl bg-surface border-2 border-[#5e2b43] flex items-center justify-center shadow-sm transition-all group-hover:scale-105 group-hover:bg-[#5e2b43]">
+                                        <span class="material-symbols-outlined text-[#5e2b43] text-[32px] group-hover:text-white transition-colors" aria-hidden="true">account_tree</span>
+                                    </span>
+                                    <div class="space-y-1">
+                                        <span class="block font-label text-[10px] font-bold uppercase tracking-wider text-[#5e2b43]">Pillar 04</span>
+                                        <span class="block font-headline font-bold text-sm text-[#5e2b43] group-hover:text-[#5e2b43] transition-colors">Skills-Based Thinking</span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ol>
+                    </div>
+                </nav>
+            </div>
+        </section>
+
+        <!-- The Pillars (3-column card grid, distinct from process timeline) -->
+        <section class="py-24 px-6 md:px-12 bg-surface-container-low" id="pillars">
+            <div class="max-w-[1280px] mx-auto">
+                <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                    <span class="font-label text-primary uppercase tracking-[0.2em] font-bold text-sm">The Three Pillars</span>
+                    <h2 class="font-headline text-4xl md:text-5xl font-extrabold text-[#5e2b43]">In the flow, <br/><span class="italic" style="font-family:serif;font-weight:400;">not in the way!</span></h2>
+                    <p class="font-label text-on-surface-variant">
+                        From scoping requirements, to optimising processes, to delivering memorable experiences.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-stretch">
+
+                    <!-- Pillar 1 — Implementation & Strategy -->
+                    <article id="pillar-1" class="scroll-mt-28 group relative flex flex-col rounded-3xl bg-surface border border-outline-variant/20 shadow-sm hover:shadow-lg transition-all overflow-hidden">
+                        <div class="relative h-32 bg-gradient-to-br from-primary to-primary-container overflow-hidden">
+                            <div class="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-2xl" aria-hidden="true"></div>
+                            <div class="absolute inset-0 p-6 flex items-end justify-between">
+                                <span class="font-label text-[11px] uppercase tracking-[0.2em] font-bold text-primary-fixed/90">Pillar 01</span>
+                                <span class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm">
+                                    <span class="material-symbols-outlined text-[28px] text-white" aria-hidden="true">rocket_launch</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col flex-grow p-6 md:p-7 gap-5">
+                            <div class="space-y-2">
+                                <h3 class="font-headline font-extrabold text-2xl text-[#5e2b43] leading-tight">Implementation &amp; Strategy</h3>
+                                <p class="font-label text-xs uppercase tracking-widest text-primary font-bold">Getting it right before go-live.</p>
+                            </div>
+
+                            <p class="text-on-surface-variant text-sm leading-relaxed">
+                                Learners make decisions on systems quickly. A good first impression counts, and the work to achieve this starts way ahead of any rollout. Scoping against capability, understanding business requirements, preparing the people, translating technical spec into plain language, and treating QA as rigorous validation — not a tickbox.
+                            </p>
+
+                            <ul class="space-y-3.5 border-t border-outline-variant/20 pt-5">
+                                <li class="flex items-start gap-3">
+                                    <span class="material-symbols-outlined text-primary text-[18px] mt-0.5 flex-shrink-0" aria-hidden="true">check_circle</span>
+                                    <div>
+                                        <span class="block text-sm font-bold text-[#5e2b43]">Needs Analysis &amp; Scoping</span>
+                                        <span class="block text-xs text-on-surface-variant leading-snug">Aligning business requirements to platform capability before the build begins.</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="material-symbols-outlined text-primary text-[18px] mt-0.5 flex-shrink-0" aria-hidden="true">check_circle</span>
+                                    <div>
+                                        <span class="block text-sm font-bold text-[#5e2b43]">Change Management</span>
+                                        <span class="block text-xs text-on-surface-variant leading-snug">Preparing the business, administrators, managers and learners so adoption lands from day one.</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="material-symbols-outlined text-primary text-[18px] mt-0.5 flex-shrink-0" aria-hidden="true">check_circle</span>
+                                    <div>
+                                        <span class="block text-sm font-bold text-[#5e2b43]">Technical Translation</span>
+                                        <span class="block text-xs text-on-surface-variant leading-snug">Turning technical specs into language stakeholders actually understand.</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="material-symbols-outlined text-primary text-[18px] mt-0.5 flex-shrink-0" aria-hidden="true">check_circle</span>
+                                    <div>
+                                        <span class="block text-sm font-bold text-[#5e2b43]">Quality Assurance</span>
+                                        <span class="block text-xs text-on-surface-variant leading-snug">Rigorous validation that the system behaves exactly as intended before go-live.</span>
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <div class="mt-auto pt-4">
+                                <span class="block font-label text-[11px] uppercase tracking-wider font-bold text-primary px-3 py-2 rounded-lg bg-primary-fixed">Outcome: A system that actually fits the business and achieves their goals</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Pillar 2 — Platform Ownership & Governance -->
+                    <article id="pillar-2" class="scroll-mt-28 group relative flex flex-col rounded-3xl bg-surface border border-outline-variant/20 shadow-sm hover:shadow-lg transition-all overflow-hidden">
+                        <div class="relative h-32 bg-gradient-to-br from-secondary to-[#6b354e] overflow-hidden">
+                            <div class="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-2xl" aria-hidden="true"></div>
+                            <div class="absolute inset-0 p-6 flex items-end justify-between">
+                                <span class="font-label text-[11px] uppercase tracking-[0.2em] font-bold text-white/90">Pillar 02</span>
+                                <span class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm">
+                                    <span class="material-symbols-outlined text-[28px] text-white" aria-hidden="true">verified_user</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col flex-grow p-6 md:p-7 gap-5">
+                            <div class="space-y-2">
+                                <h3 class="font-headline font-extrabold text-2xl text-[#5e2b43] leading-tight">Platform Ownership &amp; Governance</h3>
+                                <p class="font-label text-xs uppercase tracking-widest text-secondary font-bold">The long-term product owner mindset.</p>
+                            </div>
+
+                            <p class="text-on-surface-variant text-sm leading-relaxed">
+                                A well-run LMS or LXP doesn't happen by accident, with poorly defined governance and processes creating a conflicted mess quickly. Clean taxonomy, processes defined, data that gets interpreted, updates tested properly, and relationships that track evolving goals.
+                            </p>
+
+                            <ul class="space-y-3.5 border-t border-outline-variant/20 pt-5">
+                                <li class="flex items-start gap-3">
+                                    <span class="material-symbols-outlined text-secondary text-[18px] mt-0.5 flex-shrink-0" aria-hidden="true">check_circle</span>
+                                    <div>
+                                        <span class="block text-sm font-bold text-[#5e2b43]">Strategic Governance</span>
+                                        <span class="block text-xs text-on-surface-variant leading-snug">Standardised processes and taxonomy rules that keep the platform clean and searchable.</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="material-symbols-outlined text-secondary text-[18px] mt-0.5 flex-shrink-0" aria-hidden="true">check_circle</span>
+                                    <div>
+                                        <span class="block text-sm font-bold text-[#5e2b43]">Data-Driven Optimisation</span>
+                                        <span class="block text-xs text-on-surface-variant leading-snug">Reading learner data to continuously tweak and improve the platform.</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="material-symbols-outlined text-secondary text-[18px] mt-0.5 flex-shrink-0" aria-hidden="true">check_circle</span>
+                                    <div>
+                                        <span class="block text-sm font-bold text-[#5e2b43]">Release Management</span>
+                                        <span class="block text-xs text-on-surface-variant leading-snug">Testing vendor updates in a staging environment before rolling them out.</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="material-symbols-outlined text-secondary text-[18px] mt-0.5 flex-shrink-0" aria-hidden="true">check_circle</span>
+                                    <div>
+                                        <span class="block text-sm font-bold text-[#5e2b43]">Stakeholder Alignment</span>
+                                        <span class="block text-xs text-on-surface-variant leading-snug">Managing ongoing business relationships as company goals evolve.</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="material-symbols-outlined text-secondary text-[18px] mt-0.5 flex-shrink-0" aria-hidden="true">check_circle</span>
+                                    <div>
+                                        <span class="block text-sm font-bold text-[#5e2b43]">Content Management</span>
+                                        <span class="block text-xs text-on-surface-variant leading-snug">Ensuring that content is clearly defined and well structured.</span>
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <div class="mt-auto pt-4">
+                                <span class="block font-label text-[11px] uppercase tracking-wider font-bold text-[#6b354e] px-3 py-2 rounded-lg bg-[#ffd8e6]">Outcome: A platform that stays relevant as the business evolves</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Pillar 3 — Learner-Centric Experience Design -->
+                    <article id="pillar-3" class="scroll-mt-28 group relative flex flex-col rounded-3xl bg-surface border border-outline-variant/20 shadow-sm hover:shadow-lg transition-all overflow-hidden">
+                        <div class="relative h-32 bg-gradient-to-br from-tertiary to-[#007068] overflow-hidden">
+                            <div class="absolute -top-10 -right-10 w-40 h-40 bg-tertiary-fixed/30 rounded-full blur-2xl" aria-hidden="true"></div>
+                            <div class="absolute inset-0 p-6 flex items-end justify-between">
+                                <span class="font-label text-[11px] uppercase tracking-[0.2em] font-bold text-tertiary-fixed/90">Pillar 03</span>
+                                <span class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm">
+                                    <span class="material-symbols-outlined text-[28px] text-white" aria-hidden="true">favorite</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col flex-grow p-6 md:p-7 gap-5">
+                            <div class="space-y-2">
+                                <h3 class="font-headline font-extrabold text-2xl text-[#5e2b43] leading-tight">Learner-Centric Experience Design</h3>
+                                <p class="font-label text-xs uppercase tracking-widest text-tertiary font-bold">How it feels, not just how it functions.</p>
+                            </div>
+
+                            <p class="text-on-surface-variant text-sm leading-relaxed">
+                                This is where an LXD background shows up in systems work. WCAG-aligned hubs, strong mobile uptake, frictionless HR-stack connections, and user-listening loops that drive UI iteration — not launch-and-forget.
+                            </p>
+
+                            <ul class="space-y-3.5 border-t border-outline-variant/20 pt-5">
+                                <li class="flex items-start gap-3">
+                                    <span class="material-symbols-outlined text-tertiary text-[18px] mt-0.5 flex-shrink-0" aria-hidden="true">check_circle</span>
+                                    <div>
+                                        <span class="block text-sm font-bold text-[#5e2b43]">Accessible and Multi-modal</span>
+                                        <span class="block text-xs text-on-surface-variant leading-snug">Designing a platform that meets WCAG standards and works just as well in a learner's hands as at their desk, through increased app uptake.</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="material-symbols-outlined text-tertiary text-[18px] mt-0.5 flex-shrink-0" aria-hidden="true">check_circle</span>
+                                    <div>
+                                        <span class="block text-sm font-bold text-[#5e2b43]">Hyper-personalisation</span>
+                                        <span class="block text-xs text-on-surface-variant leading-snug">Learners don't want to hunt for development. They've been taught that algorithms will provide what they need. Making an LMS/LXP meet this expectation turns it into a destination of choice.</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="material-symbols-outlined text-tertiary text-[18px] mt-0.5 flex-shrink-0" aria-hidden="true">check_circle</span>
+                                    <div>
+                                        <span class="block text-sm font-bold text-[#5e2b43]">Frictionless Integrations</span>
+                                        <span class="block text-xs text-on-surface-variant leading-snug">Experience mapping that connects the platform smoothly with the wider HR stack, external content libraries and core systems where users are.</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="material-symbols-outlined text-tertiary text-[18px] mt-0.5 flex-shrink-0" aria-hidden="true">check_circle</span>
+                                    <div>
+                                        <span class="block text-sm font-bold text-[#5e2b43]">Curated Journeys</span>
+                                        <span class="block text-xs text-on-surface-variant leading-snug">Moving from overwhelming catalogues to targeted, branded, relevant pathways. Make discovery simpler and easier.</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="material-symbols-outlined text-tertiary text-[18px] mt-0.5 flex-shrink-0" aria-hidden="true">check_circle</span>
+                                    <div>
+                                        <span class="block text-sm font-bold text-[#5e2b43]">Continuous Listening</span>
+                                        <span class="block text-xs text-on-surface-variant leading-snug">Learner feedback loops set up to guide the needs and evolution of the system to ensure it continues to serve.</span>
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <div class="mt-auto pt-4">
+                                <span class="block font-label text-[11px] uppercase tracking-wider font-bold text-tertiary px-3 py-2 rounded-lg bg-tertiary-fixed">Outcome: Learners who use it because they want to</span>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Pillar 04 — Skills-Based Organisation Thinking (standout strip) -->
+        <section class="py-16 px-6 md:px-12" id="pillar-4">
+            <div class="max-w-[1280px] mx-auto scroll-mt-28">
+                <div class="relative rounded-3xl bg-gradient-to-br from-[#5e2b43] via-secondary to-primary-container text-on-primary p-8 md:p-12 shadow-xl overflow-hidden">
+                    <div class="absolute -top-24 -right-16 w-96 h-96 bg-secondary-fixed/25 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+                    <div class="absolute -bottom-24 -left-10 w-80 h-80 bg-primary-fixed/20 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+                    <div class="relative grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                        <div class="lg:col-span-5 space-y-5">
+                            <div class="flex items-center gap-3">
+                                <span class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-sm">
+                                    <span class="material-symbols-outlined text-[24px] text-secondary-fixed" aria-hidden="true">account_tree</span>
+                                </span>
+                                <span class="font-label uppercase tracking-[0.2em] font-bold text-xs text-secondary-fixed">Pillar 04 — Beyond the LMS</span>
+                            </div>
+
+                            <h2 class="mixed-headline text-3xl md:text-4xl font-extrabold leading-tight">
+                                Skills-Based Organisation <span class="italic-serif font-normal text-secondary-fixed">thinking.</span>
+                            </h2>
+
+                            <p class="text-primary-fixed/90 text-sm md:text-base leading-relaxed">
+                                If you're thinking of making the strategic change towards being a Skills-Based Organisation, and want your platform to be an enabler rather than a blocker — let's talk.
+                            </p>
+                        </div>
+
+                        <div class="lg:col-span-7">
+                            <span class="block font-label uppercase tracking-widest font-bold text-xs text-secondary-fixed mb-4">Where I can help</span>
+                            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <li class="flex items-start gap-3 p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/10">
+                                    <span class="material-symbols-outlined text-secondary-fixed text-[20px] flex-shrink-0" aria-hidden="true">insights</span>
+                                    <span class="text-sm font-medium leading-snug">Understanding the platform and its capabilities</span>
+                                </li>
+                                <li class="flex items-start gap-3 p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/10">
+                                    <span class="material-symbols-outlined text-secondary-fixed text-[20px] flex-shrink-0" aria-hidden="true">library_books</span>
+                                    <span class="text-sm font-medium leading-snug">Content curation aligned to skills</span>
+                                </li>
+                                <li class="flex items-start gap-3 p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/10">
+                                    <span class="material-symbols-outlined text-secondary-fixed text-[20px] flex-shrink-0" aria-hidden="true">schema</span>
+                                    <span class="text-sm font-medium leading-snug">Competency framework building</span>
+                                </li>
+                                <li class="flex items-start gap-3 p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/10">
+                                    <span class="material-symbols-outlined text-secondary-fixed text-[20px] flex-shrink-0" aria-hidden="true">hub</span>
+                                    <span class="text-sm font-medium leading-snug">Skills ontology mapping and tagging</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Platform Fluency -->
+        <section class="bg-surface-container-low py-20 px-6 md:px-12" id="fluency">
+            <div class="max-w-[1280px] mx-auto">
+                <div class="mb-12 space-y-3 max-w-3xl">
+                    <span class="font-label text-primary uppercase tracking-[0.2em] font-bold text-sm">Platform Fluency</span>
+                    <h2 class="font-headline text-4xl md:text-5xl font-extrabold text-[#5e2b43]">Platform agnostic, <span class="italic" style="font-family:serif;font-weight:400;">with specialist experience.</span></h2>
+                    <p class="text-on-surface-variant leading-relaxed">
+                        An official implementation accreditation sits alongside hands-on management experience across multiple vendors — so I can run a complex enterprise rollout and still speak fluently about the day-to-day of a live platform.
+                    </p>
+                </div>
+
+                <div class="bg-surface rounded-2xl border border-outline-variant/20 shadow-sm overflow-hidden">
+                    <!-- Table header -->
+                    <div class="hidden md:grid grid-cols-12 gap-4 px-6 py-4 bg-surface-container border-b border-outline-variant/20">
+                        <div class="col-span-3 font-label text-[11px] font-bold uppercase tracking-widest text-on-surface-variant">Platform</div>
+                        <div class="col-span-3 font-label text-[11px] font-bold uppercase tracking-widest text-on-surface-variant">Level of Expertise</div>
+                        <div class="col-span-6 font-label text-[11px] font-bold uppercase tracking-widest text-on-surface-variant">Primary Value Delivered</div>
+                    </div>
+
+                    <!-- Row 1: SAP SuccessFactors -->
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-y-2 gap-x-4 px-6 py-5 border-b border-outline-variant/20 hover:bg-surface-container-low transition-colors">
+                        <div class="col-span-3 flex items-center gap-3">
+                            <span class="material-symbols-outlined text-primary" aria-hidden="true">workspace_premium</span>
+                            <span class="font-headline font-bold text-[#5e2b43]">SAP SuccessFactors — HCM Platform</span>
+                        </div>
+                        <div class="col-span-3">
+                            <span class="md:hidden block font-label text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Level</span>
+                            <span class="inline-block px-2.5 py-1 rounded-full bg-primary text-on-primary text-[11px] font-label font-bold uppercase tracking-wider">Certified Implementation Associate</span>
+                        </div>
+                        <div class="col-span-6">
+                            <span class="md:hidden block font-label text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Primary Value</span>
+                            <span class="text-sm text-on-surface-variant leading-relaxed">Complex enterprise rollouts, technical specification, system integration</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Absorb LMS -->
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-y-2 gap-x-4 px-6 py-5 border-b border-outline-variant/20 hover:bg-surface-container-low transition-colors">
+                        <div class="col-span-3 flex items-center gap-3">
+                            <span class="material-symbols-outlined text-primary-container" aria-hidden="true">auto_awesome_motion</span>
+                            <span class="font-headline font-bold text-[#5e2b43]">Absorb LMS</span>
+                        </div>
+                        <div class="col-span-3">
+                            <span class="md:hidden block font-label text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Level</span>
+                            <span class="inline-block px-2.5 py-1 rounded-full bg-primary-fixed text-on-primary-fixed text-[11px] font-label font-bold uppercase tracking-wider">Advanced Management</span>
+                        </div>
+                        <div class="col-span-6">
+                            <span class="md:hidden block font-label text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Primary Value</span>
+                            <span class="text-sm text-on-surface-variant leading-relaxed">Learner experience design, workflow optimisation, advanced reporting</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Litmos -->
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-y-2 gap-x-4 px-6 py-5 hover:bg-surface-container-low transition-colors">
+                        <div class="col-span-3 flex items-center gap-3">
+                            <span class="material-symbols-outlined text-tertiary" aria-hidden="true">rocket</span>
+                            <span class="font-headline font-bold text-[#5e2b43]">Litmos LMS</span>
+                        </div>
+                        <div class="col-span-3">
+                            <span class="md:hidden block font-label text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Level</span>
+                            <span class="inline-block px-2.5 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed text-[11px] font-label font-bold uppercase tracking-wider">Advanced Management</span>
+                        </div>
+                        <div class="col-span-6">
+                            <span class="md:hidden block font-label text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Primary Value</span>
+                            <span class="text-sm text-on-surface-variant leading-relaxed">Rapid deployment, content curation, driving high user adoption</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Closing CTA -->
+        <section class="py-24 px-6 md:px-12">
+            <div class="max-w-4xl mx-auto text-center space-y-8">
+                <h2 class="mixed-headline text-4xl md:text-6xl font-extrabold text-[#5e2b43] tracking-tight leading-[1.1]">
+                    Inheriting a neglected LMS?<br/>
+                    <span class="text-primary italic-serif font-normal">Planning one from scratch?</span>
+                </h2>
+                <p class="text-lg text-on-surface-variant max-w-2xl mx-auto">
+                    Either way, I'd be happy to talk — whether that's a one-off implementation, long-term product ownership, or a health check on a platform that isn't pulling its weight.
+                </p>
+                <div class="flex flex-wrap gap-4 justify-center pt-2">
+                    <a href="index.html#contact" class="inline-block bg-gradient-to-br from-primary to-primary-container text-on-primary px-8 py-4 rounded-full font-bold hover:opacity-90 transition-all shadow-lg hover:shadow-primary/25">
+                        Start a conversation
+                    </a>
+                    <a href="process.html" class="inline-block border border-primary/20 text-primary px-8 py-4 rounded-full font-bold hover:bg-primary/5 transition-all bg-white/50 backdrop-blur-sm">
+                        See the design process
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full py-12 bg-[#f6f3f0] border-t border-outline-variant/20">
+        <div class="flex flex-col md:flex-row justify-between items-center px-6 md:px-12 max-w-[1440px] mx-auto font-['Inter'] text-sm tracking-wide gap-6">
+            <a href="index.html" class="text-lg font-black text-[#5e2b43]">Graham<span class="text-primary">Betts</span></a>
+
+            <p class="text-[#1b1c1a]/60 text-center order-3 md:order-2">
+                &copy; 2026 Graham Betts. All Rights Reserved. <br class="md:hidden"> <span class="hidden md:inline">|</span> Instructional Designer &amp; LXD Expert.
+            </p>
+
+            <div class="flex items-center gap-6 order-2 md:order-3">
+                <a class="text-[#1b1c1a]/60 hover:text-[#2033fa] transition-all transform hover:scale-110" href="https://linkedin.com/in/graham-betts" target="_blank" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin text-xl"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        window.toggleMobileMenu = function() {
+            const menu = document.getElementById('mobile-menu');
+            const btn = document.querySelector('button[aria-controls="mobile-menu"]');
+            menu.classList.toggle('hidden');
+            const isExpanded = !menu.classList.contains('hidden');
+            btn.setAttribute('aria-expanded', isExpanded);
+        }
+    </script>
+</body>
+</html>

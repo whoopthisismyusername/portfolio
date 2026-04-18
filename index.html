@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Graham Betts | Digital First Learning Experience Designer</title>
+    <title>Graham Betts | Digital Learning Experience Expert</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;600;700;800&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -96,6 +96,24 @@
         .animated-shape {
             will-change: transform;
         }
+        /* Role rotator: left-to-right wipe transition */
+        .role-rotator {
+            transition: clip-path 0.6s ease-in-out;
+            clip-path: inset(0 0 0 0);
+        }
+        .role-rotator.is-out {
+            clip-path: inset(0 0 0 100%);
+        }
+        .role-rotator.is-pre-in {
+            transition: none;
+            clip-path: inset(0 100% 0 0);
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .role-rotator, .role-rotator.is-out, .role-rotator.is-pre-in {
+                transition: none;
+                clip-path: inset(0 0 0 0);
+            }
+        }
     </style>
 </head>
 <body class="bg-background text-on-surface font-body selection:bg-primary-fixed selection:text-on-primary-fixed">
@@ -107,6 +125,8 @@
             
             <div class="hidden md:flex items-center space-x-8">
                 <a class="text-[#2033fa] font-bold border-b-2 border-[#2033fa] pb-1 transition-all" href="#work">Work</a>
+                <a class="text-[#5e2b43] font-bold border-b-2 border-transparent hover:border-[#2033fa] hover:text-[#2033fa] pb-1 transition-colors" href="process.html">Process</a>
+                <a class="text-[#5e2b43] font-bold border-b-2 border-transparent hover:border-[#2033fa] hover:text-[#2033fa] pb-1 transition-colors" href="systems.html">Systems</a>
                 <a class="text-[#5e2b43] font-bold border-b-2 border-transparent hover:border-[#2033fa] hover:text-[#2033fa] pb-1 transition-colors" href="#about">About</a>
                 <a class="text-[#5e2b43] font-bold border-b-2 border-transparent hover:border-[#2033fa] hover:text-[#2033fa] pb-1 transition-colors" href="#contact">Contact</a>
             </div>
@@ -131,6 +151,8 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-surface border-t border-surface-container">
             <a href="#work" class="block px-6 py-4 text-[#5e2b43] font-bold hover:bg-surface-container-low">Work</a>
+            <a href="process.html" class="block px-6 py-4 text-[#5e2b43] font-bold hover:bg-surface-container-low">Process</a>
+            <a href="systems.html" class="block px-6 py-4 text-[#5e2b43] font-bold hover:bg-surface-container-low">Systems</a>
             <a href="#about" class="block px-6 py-4 text-[#5e2b43] font-bold hover:bg-surface-container-low">About</a>
             <a href="#contact" class="block px-6 py-4 text-primary font-bold hover:bg-surface-container-low">Contact</a>
             <a href="https://www.linkedin.com/in/graham-betts-14908110" target="_blank" class="block px-6 py-4 text-[#5e2b43] font-bold hover:bg-surface-container-low hover:text-[#0077b5]">
@@ -152,15 +174,20 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10 w-full">
                 <div class="space-y-8 bg-background/40 backdrop-blur-sm p-6 -mx-6 md:mx-0 md:p-8 rounded-3xl lg:bg-transparent lg:backdrop-blur-none lg:p-0">
-                    <div class="inline-block px-3 py-1 border border-outline-variant rounded-full text-primary text-xs font-bold tracking-widest uppercase bg-surface-container-low">
-                        Digital Learning Design Portfolio
+                    <div class="inline-block px-3 py-1 border border-outline-variant rounded-full text-primary text-xs font-bold tracking-widest uppercase bg-surface-container-low overflow-hidden" aria-label="Role">
+                        <span class="inline-grid" aria-hidden="true">
+                            <span class="col-start-1 row-start-1 invisible whitespace-nowrap">Learning Experience Designer</span>
+                            <span class="col-start-1 row-start-1 invisible whitespace-nowrap">Performance Consultant</span>
+                            <span class="col-start-1 row-start-1 invisible whitespace-nowrap">Learning Systems Expert</span>
+                            <span class="col-start-1 row-start-1 whitespace-nowrap role-rotator" id="role-rotator">Learning Experience Designer</span>
+                        </span>
                     </div>
                     <h1 class="mixed-headline text-5xl md:text-7xl font-extrabold text-[#5e2b43] leading-[1.1] tracking-tight">
                         Targeting change <br/>
                         <span class="text-primary italic-serif font-normal">through learning</span>
                     </h1>
                     <p class="text-lg md:text-xl text-on-surface-variant max-w-xl leading-relaxed">
-                        An expert at helping knowledge owners bridge the gap between complex information delivery and measurable, real-world change.
+                        An expert at helping knowledge owners bridge gaps in performance, using innovative solutions to generate real-world change.
                     </p>
                     <div class="flex flex-wrap gap-4 pt-4">
                         <a href="#work" class="inline-block bg-gradient-to-br from-primary to-primary-container text-on-primary px-8 py-4 rounded-full font-bold hover:opacity-90 transition-all shadow-lg hover:shadow-primary/25">
@@ -218,7 +245,7 @@
                         </div>
                         <div class="space-y-1 px-1 flex-grow flex flex-col">
                             <span class="text-[10px] font-bold uppercase tracking-wider text-primary">Soft Skills</span>
-                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Closing Customer Interactions</h3>
+                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Branching Interactive Scenarios</h3>
                         </div>
                     </button>
 
@@ -229,7 +256,7 @@
                         </div>
                         <div class="space-y-1 px-1 flex-grow flex flex-col">
                             <span class="text-[10px] font-bold uppercase tracking-wider text-secondary">Copilot Agent</span>
-                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Copilot Studio Learning Assistant</h3>
+                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Systems Adoption Support Tool</h3>
                         </div>
                     </button>
 
@@ -240,7 +267,7 @@
                         </div>
                         <div class="space-y-1 px-1 flex-grow flex flex-col">
                             <span class="text-[10px] font-bold uppercase tracking-wider text-tertiary">Leadership</span>
-                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Human Centred Learning</h3>
+                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Human Centred Learning Challenges</h3>
                         </div>
                     </button>
 
@@ -250,8 +277,8 @@
                             <img alt="AI Adoption" class="w-full h-full object-cover group-hover:grayscale transition-all duration-500" src="https://placehold.co/600x800/83a26a/FFF?text=AI+Adoption"/>
                         </div>
                         <div class="space-y-1 px-1 flex-grow flex flex-col">
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-error">AI Adoption</span>
-                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">AI Skills Adoption</h3>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-error">AI Skills Adoption</span>
+                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">AI Generated Personalised Feedback</h3>
                         </div>
                     </button>
 
@@ -262,7 +289,7 @@
                         </div>
                         <div class="space-y-1 px-1 flex-grow flex flex-col">
                             <span class="text-[10px] font-bold uppercase tracking-wider text-primary">Tech Training</span>
-                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Order Mgmt System Rollout</h3>
+                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Practice System Simulation</h3>
                         </div>
                     </button>
 
@@ -273,7 +300,7 @@
                         </div>
                         <div class="space-y-1 px-1 flex-grow flex flex-col">
                             <span class="text-[10px] font-bold uppercase tracking-wider text-secondary">Gamification</span>
-                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Data Protection Game</h3>
+                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Engaging Compliance Training</h3>
                         </div>
                     </button>
 
@@ -284,7 +311,7 @@
                         </div>
                         <div class="space-y-1 px-1 flex-grow flex flex-col">
                             <span class="text-[10px] font-bold uppercase tracking-wider text-tertiary">Microlearning</span>
-                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Mobile First 7Taps</h3>
+                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Mobile First Micro Pathways</h3>
                         </div>
                     </button>
 
@@ -295,7 +322,7 @@
                         </div>
                         <div class="space-y-1 px-1 flex-grow flex flex-col">
                             <span class="text-[10px] font-bold uppercase tracking-wider text-error">Video</span>
-                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Video Examples</h3>
+                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Comms/Learning/Scenarios</h3>
                         </div>
                     </button>
 
@@ -306,7 +333,7 @@
                         </div>
                         <div class="space-y-1 px-1 flex-grow flex flex-col">
                             <span class="text-[10px] font-bold uppercase tracking-wider text-primary">Job Aids</span>
-                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Infographics</h3>
+                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Infographics to Reinforce Learning</h3>
                         </div>
                     </button>
 
@@ -316,11 +343,110 @@
                             <img alt="LMS Customisation" class="w-full h-full object-cover group-hover:grayscale transition-all duration-500" src="https://placehold.co/600x800/d98d36/FFF?text=LMS+Customisation"/>
                         </div>
                         <div class="space-y-1 px-1 flex-grow flex flex-col">
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-secondary">Systems</span>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-secondary">Learning Systems</span>
                             <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">SAP SuccessFactors Customisation</h3>
                         </div>
                     </button>
 
+                </div>
+            </div>
+        </section>
+
+        <!-- Capability Strips (link to /process and /systems) -->
+        <section class="py-16 px-6 md:px-12" id="capability-strips">
+            <div class="max-w-[1280px] mx-auto space-y-6">
+                <div class="flex items-end justify-between gap-6 flex-wrap">
+                    <div class="space-y-2">
+                        <span class="font-label uppercase tracking-[0.2em] font-bold text-xs text-primary">Two sides of the craft</span>
+                        <h2 class="mixed-headline text-3xl md:text-4xl font-extrabold leading-tight text-[#5e2b43]">
+                            How I work, <span class="italic-serif font-normal text-primary">and what I work on.</span>
+                        </h2>
+                    </div>
+                    <p class="text-on-surface-variant text-sm md:text-base max-w-sm">
+                        The design process that builds behaviour change, and the systems thinking that makes it scale.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Card: Learning Experience Design -->
+                    <a href="process.html" class="group relative block rounded-3xl bg-gradient-to-br from-primary via-primary-container to-tertiary text-on-primary p-8 md:p-10 shadow-xl hover:shadow-2xl transition-all overflow-hidden">
+                        <div class="absolute -top-20 -right-16 w-72 h-72 bg-tertiary-fixed-dim/35 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+                        <div class="absolute -bottom-24 -left-10 w-72 h-72 bg-primary-fixed/20 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+                        <div class="relative flex flex-col h-full gap-6">
+                            <div class="flex items-center gap-3">
+                                <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm">
+                                    <span class="material-symbols-outlined text-[22px] text-tertiary-fixed-dim" aria-hidden="true">route</span>
+                                </span>
+                                <span class="font-label uppercase tracking-[0.2em] font-bold text-xs text-tertiary-fixed-dim">How I Work</span>
+                            </div>
+
+                            <h3 class="mixed-headline text-2xl md:text-3xl font-extrabold leading-tight">
+                                Learning Experience <br/>
+                                <span class="italic-serif font-normal text-tertiary-fixed-dim">design process.</span>
+                            </h3>
+
+                            <p class="text-primary-fixed/85 text-sm md:text-base leading-relaxed">
+                                Six phases, rooted in behaviour change and shaped by real data on the ground.
+                            </p>
+
+                            <ol class="flex flex-wrap gap-2">
+                                <li class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm text-[11px] font-label font-bold"><span class="text-tertiary-fixed-dim">01</span> Listen</li>
+                                <li class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm text-[11px] font-label font-bold"><span class="text-tertiary-fixed-dim">02</span> Frame</li>
+                                <li class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm text-[11px] font-label font-bold"><span class="text-tertiary-fixed-dim">03</span> Prototype</li>
+                                <li class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm text-[11px] font-label font-bold"><span class="text-tertiary-fixed-dim">04</span> Build</li>
+                                <li class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm text-[11px] font-label font-bold"><span class="text-tertiary-fixed-dim">05</span> Launch</li>
+                                <li class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm text-[11px] font-label font-bold"><span class="text-tertiary-fixed-dim">06</span> Measure</li>
+                            </ol>
+
+                            <div class="mt-auto pt-2">
+                                <span class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary-fixed text-on-primary-fixed font-bold text-sm group-hover:gap-3 transition-all whitespace-nowrap shadow-sm">
+                                    See the process
+                                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_forward</span>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Card: Learning Systems -->
+                    <a href="systems.html" class="group relative block rounded-3xl bg-gradient-to-br from-tertiary via-[#006b62] to-primary-container text-on-primary p-8 md:p-10 shadow-xl hover:shadow-2xl transition-all overflow-hidden">
+                        <div class="absolute -top-20 -right-16 w-72 h-72 bg-tertiary-fixed/40 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+                        <div class="absolute -bottom-24 -left-10 w-72 h-72 bg-primary-fixed/25 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+                        <div class="relative flex flex-col h-full gap-6">
+                            <div class="flex items-center gap-3">
+                                <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/20 backdrop-blur-sm">
+                                    <span class="material-symbols-outlined text-[22px] text-tertiary-fixed" aria-hidden="true">hub</span>
+                                </span>
+                                <span class="font-label uppercase tracking-[0.2em] font-bold text-xs text-tertiary-fixed">What I work on</span>
+                            </div>
+
+                            <h3 class="mixed-headline text-2xl md:text-3xl font-extrabold leading-tight">
+                                Learning systems <br/>
+                                <span class="italic-serif font-normal text-tertiary-fixed">built for skills and for scale</span>
+                            </h3>
+
+                            <p class="text-primary-fixed/90 text-sm md:text-base leading-relaxed">
+                                LMS implementation, governance and learner experience — turning platforms into ecosystems people actually use.
+                            </p>
+
+                            <ul class="flex flex-wrap gap-2">
+                                <li class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm text-[11px] font-label font-bold"><span class="material-symbols-outlined text-[14px] text-tertiary-fixed" aria-hidden="true">rocket_launch</span> Implementation</li>
+                                <li class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm text-[11px] font-label font-bold"><span class="material-symbols-outlined text-[14px] text-tertiary-fixed" aria-hidden="true">verified_user</span> Governance</li>
+                                <li class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm text-[11px] font-label font-bold"><span class="material-symbols-outlined text-[14px] text-tertiary-fixed" aria-hidden="true">favorite</span> Learner experience</li>
+                                <li class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm text-[11px] font-label font-bold">SuccessFactors</li>
+                                <li class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm text-[11px] font-label font-bold">Absorb</li>
+                                <li class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm text-[11px] font-label font-bold">Litmos</li>
+                            </ul>
+
+                            <div class="mt-auto pt-2">
+                                <span class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-bold text-sm group-hover:gap-3 transition-all whitespace-nowrap shadow-sm">
+                                    Explore systems
+                                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_forward</span>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -333,11 +459,7 @@
                 <div class="w-full lg:w-5/12 lg:sticky lg:top-32">
                     <div class="relative max-w-sm mx-auto lg:mx-0">
                         <div class="aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl border-8 border-white bg-surface-container-highest">
-                            <!-- Using your original placehold avatar to maintain structure, you can replace with real image -->
                             <img alt="Portrait of Graham Betts" class="w-full h-full object-cover" src="https://whoopthisismyusername.github.io/portfolio/Headshot.jpg"/>
-                        </div>
-                        <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-[#5e2b43] rounded-full flex items-center justify-center text-white text-4xl font-bold font-headline shadow-2xl border-4 border-white">
-                            GB
                         </div>
                         <!-- Decorative shapes -->
                         <div class="absolute -z-10 -top-12 -left-12 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
@@ -346,9 +468,18 @@
 
                 <!-- Content Column -->
                 <div class="w-full lg:w-7/12 space-y-12">
+                    <div class="space-y-4">
+                        <span class="font-label uppercase tracking-[0.2em] font-bold text-xs text-primary">About Me</span>
+                        <h2 class="mixed-headline text-3xl md:text-4xl font-extrabold leading-tight text-[#5e2b43]">
+                            The person <span class="italic-serif font-normal text-primary">behind the work.</span>
+                        </h2>
+                    </div>
                     <div class="space-y-6">
                         <p class="text-lg text-on-surface-variant leading-relaxed">
-                            I'm an L&D professional with a passion for making immersive and engaging experiences that follow the data and create real change. I do this by working collaboratively with stakeholders and subject matter experts to truly understand their challenges and map out engaging solutions. I'm technically minded and creative and combine these skills to explore emerging technologies, finding the best solution for each project's needs.
+                            I love L&amp;D. I also love problem solving with creative solutions. The current shift in the learning space towards performance enablement is an incredible space to be in. I believe that technology, data and creativity work hand in hand to solve the challenges modern workforces are having. By following clear processes and working closely with learners and business experts, it is possible to unlock the true potential of a workforce in the pace that is required to stay ahead.
+                        </p>
+                        <p class="text-lg text-on-surface-variant leading-relaxed">
+                            In my personal life, these same themes carry through. A lover of speciality coffee, I thrive in finding that perfect grind size and recipe through trial and error and educated problem solving, leading to moments of tasty magic. I'm also a massive geek who loves lego and doing this stuff for fun!
                         </p>
                     </div>
 
@@ -688,8 +819,8 @@
                 title: 'Closing Customer Interactions with a Sales-led Mentality',
                 img: 'https://whoopthisismyusername.github.io/portfolio/projects/1/BranchMappingExample.jpg',
                 tools: 'Intellum Evolve, Vyond',
-                challenge: "Retail colleagues were closing interactions with customers in formal and transactional ways. Importantly, they weren't providing customers with compelling reasons to return to store. Colleagues didn't appear to understand the principles and wanted practical examples, however simply listing these in support documents didn't land.",
-                solution: 'Create a practical and gamified experience with branching that allowed learners to build on examples from previous linked training, whilst exploring scenrios that interested them. Logic variables ensured a minimum number of scenarios were explored, and the rest of the course built on these with tested examples.',
+                challenge: "Retail colleagues were closing interactions with customers in formal and transactional ways. Importantly, they weren't providing customers with compelling reasons to return to store. Colleagues didn't understand the principles, or didn't believe they could be practically applied and wanted examples, however simply listing these in support documents didn't land.",
+                solution: 'To create a practical and gamified experience with branching that allowed learners to build on examples from previous training, whilst exploring scenarios that interested them. Logic variables ensured a minimum number of scenarios were explored, and the rest of the course built on these with tested examples.',
                 result: "'Great-byes' acted as an excellent introduction to upselling. Furthermore, the training halted a concerning trend of low repeat customer numbers.",
                 showDemo: true,
                 demoUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/1/index.html',
@@ -700,8 +831,8 @@
                 title: 'Order Mgmt System Rollout',
                 img: 'https://whoopthisismyusername.github.io/portfolio/projects/2/candc1.jpg',
                 tools: 'Evolve, Photoshop',
-                challenge: 'The company was launching a new Order Management System to Retail colleagues.',
-                solution: "Following procedural training rollout a week earlier, including a robust communications plan, short system simulations were rolled out to all colleagues. These simulations didn't follow 'perfect path' scenarios, but veered off to give typical day to day situations.",
+                challenge: 'The company was launching a new Order Management System to Retail colleagues and required competency on day one.',
+                solution: "Following procedural training rollout a week earlier, including a robust communications plan, short system simulations were designed and built to mirror both common day to day tasks, but also how to handle exception errors. These simulations didn't follow 'perfect path' scenarios, but veered off to give typical day to day challenges that would be encountered.",
                 result: 'Learners were able to settle into using the software in a safe space, resulting in extremely quick adoption and an accelerated rollout of the new service proposition.',
                 disclaimer: "Please note that the demonstration shown is purely a limited functionality learning simulation composed of screen-captures. It is not a software copy of the live system. I hope you enjoy this demonstration.",
                 showDemo: true,
@@ -713,8 +844,8 @@
                 title: 'Data Protection Game',
                 img: 'https://whoopthisismyusername.github.io/portfolio/projects/3/game1.jpg',
                 tools: 'Storyline 360, JavaScript, Vyond, Photoshop',
-                challenge: 'Annual compliance training had low engagement and employees were clicking through without reading.',
-                solution: 'Stakeholder was looking at purchasing an external solution. Developed a bespoke, editable and low cost internal solution.',
+                challenge: 'Annual compliance training had low engagement and employees were clicking through without reading. Issue reporting was low, due to a poor understanding of what required escalation.',
+                solution: 'Developed an engaging and game based mechanic that switched from heavy information, to simple, repeatable questioning that could easily be updated and was bespoke to the businesses challenges.',
                 result: "Course achieved a 'World Class' learner satisfaction NPS score. More importantly though, it generated a notable reduction in data breaches, and a significant uptick in reporting across the business.",
                 showDemo: true,
                 demoUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/3/story.html',
@@ -725,8 +856,8 @@
                 title: 'Card Based Microlearning',
                 img: 'https://whoopthisismyusername.github.io/portfolio/projects/4/Screenshot 2026-01-08 113702.jpg',
                 tools: '7Taps, Canva, Vyond',
-                challenge: 'After years of the business training retail colleagues on academic level pet nutrition, it was clear the level of detail was overwhelming colleagues, leading to poor quality conversations with customers and low confidence. The challenge... how do we simplify 5 hours of training into a 30 minute refresher without overwhelming them further.',
-                solution: "A flexible microlearning pathway that allowed colleagues to consume as little or as much as they needed in bitesized chunks. The content broken into knowledge and soft skills with key messages pulled out by AI, worked on with SMEs and then turned into engaging and targetted information that went straight to the heart of the questions the available data showed us our customers were asking.",
+                challenge: 'After years of the business training retail colleagues on academic level pet nutrition, it was clear the level of detail was overwhelming colleagues, leading to poor quality conversations with customers and low confidence. The challenge... how do to simplify 5 hours of training into a 30 minute refresher without overwhelming them further.',
+                solution: "A flexible microlearning pathway that allowed colleagues to consume as little or as much as they needed in bitesized chunks. The content was broken into knowledge and soft skills with key messages pulled out by AI, worked on with SMEs and then turned into highly focussed, targetted information that went straight to the heart of the questions the data showed us customers were asking.",
                 result: "A rapid delivery of training across deskless workforce that drove 15% uplift in colleagues engaging with customers in nutrition aisles and an above target launch of the 'Easy-Repeat-In-Store' proposition.",
                 linkText: 'Open 7Taps Example',
                 showDemo: true,
@@ -735,13 +866,13 @@
                 processText: 'Open Blended Microlearning Example',
                 showProcess: true,
                 processUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/4/microlearning_player.html',
-                processDisclaimer: "The following example is a demonstration created for the Müller Brand to promote the launch of Mentoring internally. The content is not in use by Müller and is for demonstration purposes only. The original brief asked for a 10 minute microlearning course, however, demonstrating flexible design, the original course has been repurposed into a series of short, targeted micro-courses. I hope you enjoy."
+                processDisclaimer: "The following example is a demonstration created for the Müller Brand to promote the launch of Mentoring internally. The content is not currently in use by Müller and is for demonstration purposes only. The original brief asked for a 10 minute microlearning course, however, demonstrating flexible design, the original course has been repurposed into a series of short, targeted micro-courses. I hope you enjoy."
             },
              'project5': {
                 title: 'Video Examples',
                 img: 'https://placehold.co/800x400/e29c45/FFF?text=Media+Production',
                 tools: 'After Effects, Camtasia, Adobe Premier Pro, Vyond',
-                challenge: 'A variety of video examples, showcasing my ability to develop across a range of tools',
+                challenge: 'A variety of video examples, showcasing my ability to develop across a range of tools and for a range of purposes',
                 solution: 'Live action health & safety video, Interactive live action scenario, Comms promotional video',
                 result: 'All used and integrated across a range of blended solutions.',
                 showDemo: true,
@@ -764,9 +895,9 @@
             'project7': {
                 title: 'Copilot Studio Learning Assistant',
                 img: 'https://placehold.co/800x400/4e8da6/FFF?text=AI+Learning+Assistant',
-                tools: 'MS Copilot Studio, Scribe Now, MS Teams',
-                challenge: 'Learners were asked to switch to a new core software platform with no \'down-time\'. A robust blended training package was launched, however, with over 200 new workflow processes, all covered across a wide array of training courses, a solution was needed to ensure colleagues were able to access knowledge when they needed it.',
-                solution: 'Develop a MS Copilot Studio agent that could be fed with \'ScribeHow\' step-by-step guides and deliver clear, and accurate support that matched learner needs in a high pressure environment.',
+                tools: 'MS Copilot Studio, ScribeHow, MS Teams',
+                challenge: 'Learners were asked to switch to a new core software platform with no \'down-time\'. A robust blended training package was launched, however, with over 200 new workflow processes, all covered across a wide array of training courses, and a need for competence on day one, a solution was needed to ensure colleagues were able to access the right knowledge, quickly.',
+                solution: 'Develop a MS Copilot Studio agent that could be fed with \'ScribeHow\' step-by-step guides and deliver clear, and accurate support that matched learner needs in a high pressure environment. Integrated directly into MS Teams, in the flow of their work.',
                 result: 'This supported a successful, and ahead of schedule rollout of the tool and allowed for a reduction in post launch support, creating cost savings for the project.',
                 showDemo: true,
                 demoUrl: 'https://player.vimeo.com/video/1148896984?',
@@ -777,7 +908,7 @@
                 title: 'AI Skills Adoption',
                 img: 'https://placehold.co/800x400/83a26a/FFF?text=Personalised+AI+Driven+Responses',
                 tools: 'Google Gemini, Claude Code, Render, Github',
-                challenge: 'The world of AI is growing rapidly and yet a large percentage of the workforce is struggling to adapt. A big problem is unlocking that first tier of use on business tools.',
+                challenge: 'The world of AI is growing rapidly and yet a large percentage of the workforce is struggling to adapt. A big problem is unlocking that first tier of use on business tools. This tool was developed to create a lifelike safe environment that would quickly and flexibly guide learners to get the most out of workplace AI.',
                 solution: 'An adult learning activity that uses AI to assess learner inputs and provide personalised feedback to help them develop their individual needs.',
                 result: '',
                 showDemo: true,
@@ -789,9 +920,9 @@
                 title: 'LMS Customisation & Development',
                 img: 'https://placehold.co/800x400/d98d36/FFF?text=LMS+Consultant',
                 tools: 'SAP SuccessFactors, MS Copilot Studio, ChatGPT, Photoshop',
-                challenge: 'SAP SuccessFactors launched a new Learning user experience. In a diverse business with multiple different audience groups, the platform needed to be customised to support the varied requirements of learners.',
-                solution: 'Utilised on-brand page designs and code based custom card dialogs, displayed across custom pages, combined with intelligent assignment rules, to ensure each core audience was services by a bespoke, but easily maintained solution.',
-                result: 'SAP SuccessFactors Learning successfully accepted by Veterinary business as the suitable solution to deploy Clinical Academy. Entire platform customsied with intuitive UI to help learners access their core training and self development pathways.',
+                challenge: 'SAP SuccessFactors launched a new Learning module user experience. In a diverse business with multiple different audience groups, the platform needed to be customised to support the varied requirements of learners.',
+                solution: 'Utilised on-brand page designs and code based custom card dialogs, displayed across custom pages, combined with intelligent assignment rules, to ensure each core audience was serviced by bespoke, but easily maintained learner experiences.',
+                result: 'SAP SuccessFactors Learning successfully accepted by veterinary business as the suitable solution to deploy their Clinical Academy. Entire platform customised with intuitive UI to help learners access their core training and self development pathways.',
                 showDemo: true,
                 demoUrl: 'https://player.vimeo.com/video/1148907962?',
                 showProcess: false,
@@ -801,7 +932,7 @@
                 title: 'Leadership Scenarios - Code Developed Interactions',
                 img: 'https://placehold.co/800x400/b56a8d/FFF?text=Leadership+Learning',
                 tools: 'Google Gemini, Rise, Photoshop',
-                challenge: 'Leaders across the business are struggling to deliver direct and impactful feedback. As a remove and geographically diverse population, how do you support their development of these skills.',
+                challenge: 'Leaders across the business are struggling to deliver direct and impactful feedback. As a remote and geographically diverse population, how do you support their development of these skills.',
                 solution: 'Run virtual webinars supported with targeted flexible, digital interctions that allow leaders to test their understanding in real situations.',
                 result: 'Managers gained ability to test and learn in their role to improve their skill sets, increasing strength of management as business moved to more streamlined management and leadership approach.',
                 showDemo: true,
@@ -1054,8 +1185,39 @@
 
         // Initialize carousel
         if (slides.length > 0) {
+            updateCarousel();
             resetInterval();
         }
+
+        // Role rotator (hero pill)
+        (function () {
+            const el = document.getElementById('role-rotator');
+            if (!el) return;
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            const phrases = [
+                'Learning Experience Designer',
+                'Performance Consultant',
+                'Learning Systems Expert'
+            ];
+            let idx = 0;
+            const WIPE_MS = 600;
+            const HOLD_MS = 3000;
+
+            function cycle() {
+                el.classList.add('is-out');
+                setTimeout(() => {
+                    idx = (idx + 1) % phrases.length;
+                    el.textContent = phrases[idx];
+                    el.classList.remove('is-out');
+                    el.classList.add('is-pre-in');
+                    void el.offsetWidth; // force reflow so the hidden state actually applies
+                    el.classList.remove('is-pre-in');
+                    setTimeout(cycle, WIPE_MS + HOLD_MS);
+                }, WIPE_MS);
+            }
+            setTimeout(cycle, HOLD_MS);
+        })();
     </script>
 </body>
 </html>
