@@ -994,19 +994,18 @@
         }
 
         // Reusable function to render parsed feedback output 
-        function renderFeedbackBox(rawOutput) {
-            const feedbackBox = document.getElementById('feedbackBox');
-            let isSuccess = /\[\s*Skill\s*Achieved\s*\]/i.test(rawOutput);
+function renderFeedbackBox(rawOutput) {
+    const feedbackBox = document.getElementById('feedbackBox');
+    let isSuccess = /\[\s*Skill\s*Achieved\s*\]/i.test(rawOutput);
 
-// Fallback check: all 5 RISEN elements rated 'Yes'
-if (!isSuccess && currentActivityStage.startsWith('stage3')) {
-    const yesMatches = rawOutput.match(/>\s*Yes\s*</gi) || [];
-    if (yesMatches.length >= 5) isSuccess = true;
-}
+    // Fallback check: all 5 RISEN elements rated 'Yes'
+    if (!isSuccess && currentActivityStage.startsWith('stage3')) {
+        const yesMatches = rawOutput.match(/>\s*Yes\s*</gi) || [];
+        if (yesMatches.length >= 5) isSuccess = true;
+    }
 
-let mainContent = rawOutput.replace(/\[\s*Skill\s*Achieved\s*\]/i, '').trim();
-            let mainContent = rawOutput.replace('[Skill Achieved]', '').trim();
-            let learnerFeedback = "";
+    let mainContent = rawOutput.replace(/\[\s*Skill\s*Achieved\s*\]/i, '').trim();
+    let learnerFeedback = "";
 
             // Determine navigation action for the Move On button
             let nextAction = "";
