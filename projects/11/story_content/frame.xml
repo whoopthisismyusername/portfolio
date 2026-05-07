@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<bwFrame xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" default_layout="pxabnsnfns00011100101" textdirection="ltr" textengine="DirectWrite" device="false" fontscale="100" captionFontScale="100" kbshortcuts="false" skip_nav_enabled="true" chromeless="true" preventUpscale="true" outputtype="undefined" theme="unified" themeAccentColor="0x4F81BD">
+<bwFrame xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" default_layout="npnxnanbnsnfns00011100101" textdirection="ltr" textengine="DirectWrite" device="false" fontscale="100" captionFontScale="100" kbshortcuts="false" skip_nav_enabled="true" chromeless="true" preventUpscale="true" outputtype="undefined" theme="unified" themeAccentColor="0x4F81BD">
   <layouts>
-    <layout name="npnxnanbsnfns00011100101" font="Lato" controllayout="npnxnanbsnfns00011100101" colorscheme="pxabnsnfns00011100101" string_table="pxabnsnfns00011100101" />
-    <layout name="pxabnsnfns00011100101" font="Lato" controllayout="pxabnsnfns00011100101" colorscheme="pxabnsnfns00011100101" string_table="pxabnsnfns00011100101" />
-    <layout name="npxnabnsnfns00011100101" font="Lato" controllayout="npxnabnsnfns00011100101" colorscheme="pxabnsnfns00011100101" string_table="pxabnsnfns00011100101" />
-    <layout name="npnxnanbnsnfns00011100101" font="Lato" controllayout="npnxnanbnsnfns00011100101" colorscheme="pxabnsnfns00011100101" string_table="pxabnsnfns00011100101" />
-    <layout name="pxabnsnfns00011100100" font="Lato" controllayout="pxabnsnfns00011100100" colorscheme="pxabnsnfns00011100101" string_table="pxabnsnfns00011100101" />
+    <layout name="npnxnanbsnfns00011100101" font="Lato" controllayout="npnxnanbsnfns00011100101" colorscheme="npnxnanbnsnfns00011100101" string_table="npnxnanbnsnfns00011100101" />
+    <layout name="pxabnsnfns00011100101" font="Lato" controllayout="pxabnsnfns00011100101" colorscheme="npnxnanbnsnfns00011100101" string_table="npnxnanbnsnfns00011100101" />
+    <layout name="npxnabnsnfns00011100101" font="Lato" controllayout="npxnabnsnfns00011100101" colorscheme="npnxnanbnsnfns00011100101" string_table="npnxnanbnsnfns00011100101" />
+    <layout name="npnxnanbnsnfns00011100101" font="Lato" controllayout="npnxnanbnsnfns00011100101" colorscheme="npnxnanbnsnfns00011100101" string_table="npnxnanbnsnfns00011100101" />
+    <layout name="pxabnsnfns00011100100" font="Lato" controllayout="pxabnsnfns00011100100" colorscheme="npnxnanbnsnfns00011100101" string_table="npnxnanbnsnfns00011100101" />
   </layouts>
   <control_options>
     <optiongroups>
@@ -13,7 +13,7 @@
         <options>
           <option name="title_enabled" value="true">
             <options>
-              <option name="title_text" value="Email_Writing_Skillsv2" />
+              <option name="title_text" value="Email_Writing_Skillsv3" />
             </options>
           </option>
           <option name="logo_enabled" value="false">
@@ -227,7 +227,7 @@
     </control_layout>
   </control_layouts>
   <colorschemes>
-    <colorscheme name="pxabnsnfns00011100101">
+    <colorscheme name="npnxnanbnsnfns00011100101">
       <color_group name="accessibility">
         <group_colors>
           <color name="focus_rect">
@@ -1405,7 +1405,7 @@
     </colorscheme>
   </colorschemes>
   <string_tables>
-    <string_table name="pxabnsnfns00011100101">
+    <string_table name="npnxnanbnsnfns00011100101">
       <string id="three_image_progress_audio">progress</string>
       <string id="three_image_audio">audio</string>
       <string id="three_image_camera_down">camera moved down</string>
