@@ -237,7 +237,18 @@
                 </div>
                 
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 items-stretch">
-                    
+
+                    <!-- Project 11 (Adaptive Learning) -->
+                    <button onclick="openModal('project11')" class="group flex flex-col h-full text-left w-full focus:outline-none focus-visible:ring-4 focus-visible:ring-primary rounded-lg" aria-label="View Storyline AI Driven Adaptive Learning">
+                        <div class="w-full aspect-[3/4] rounded-xl overflow-hidden bg-surface-container-highest transition-transform duration-300 group-hover:-translate-y-1 shadow-sm mb-3">
+                            <img alt="Adaptive Learning" class="w-full h-full object-cover group-hover:grayscale transition-all duration-500" src="https://placehold.co/600x800/7a4b8a/FFF?text=Adaptive+Learning"/>
+                        </div>
+                        <div class="space-y-1 px-1 flex-grow flex flex-col">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-primary">Adaptive Learning</span>
+                            <h3 class="font-bold text-sm text-[#5e2b43] leading-tight">Storyline Writing Skills</h3>
+                        </div>
+                    </button>
+
                     <!-- Project 1 -->
                     <button onclick="openModal('project1')" class="group flex flex-col h-full text-left w-full focus:outline-none focus-visible:ring-4 focus-visible:ring-primary rounded-lg" aria-label="View Closing Customer Interactions">
                         <div class="w-full aspect-[3/4] rounded-xl overflow-hidden bg-surface-container-highest transition-transform duration-300 group-hover:-translate-y-1 shadow-sm mb-3">
@@ -815,6 +826,19 @@
         }
 
         const projects = {
+            'project11': {
+                title: 'Storyline - AI Driven Adaptive Learning',
+                img: 'https://placehold.co/800x400/7a4b8a/FFF?text=Adaptive+Learning',
+                tools: 'Articulate Storyline, Claude Design, Google AI Studio, Render, Github, Google Gemini',
+                challenge: 'The requirement is writing skills. As many workplaces are increasingly remote or hybrid, and multinational, the need for clear communications has never been greater. Develop a short course that can be easily developed for additional scenarios and provides valuable, real-world feedback on how the learner writes.',
+                solution: 'An adaptive, fully accessible Storyline course, that provides a scenario and then passes the learners writing to AI for personalised feedback.',
+                result: 'This course can easily be adapted to add additional scenarios (writing comms, presentation notes, meeting agendas etc) or even to develop soft skills, and with the right AI support (and enough tokens) could even support voice input assessment.',
+                showDemo: true,
+                demoUrl: 'https://whoopthisismyusername.github.io/portfolio/projects/11/story.html',
+                disclaimer: '<strong class="block font-headline text-lg text-[#5e2b43] mb-3">Use of AI Transparency and Collection of Data</strong><span class="block mb-3">Your submissions in this activity will be evaluated using Google\'s Gemini AI. The text you submit is sent to Google\'s servers to generate your feedback.</span><span class="block mb-3">Please note that Google may log this data for safety monitoring and may use it to train and improve future AI models. Do not include any personally identifiable or sensitive information - such as your name, contact details, ID numbers, or personal stories - in your submission.</span><span class="block">I (Graham Betts) do not capture any of your inputs and have no access to this data.</span>',
+                showProcess: false,
+                processUrl: '#'
+            },
             'project1': {
                 title: 'Closing Customer Interactions with a Sales-led Mentality',
                 img: 'https://whoopthisismyusername.github.io/portfolio/projects/1/BranchMappingExample.jpg',
@@ -1027,7 +1051,7 @@
             const project = projects[currentProjectId];
             
             if (project && project.disclaimer) {
-                document.getElementById('disclaimerText').innerText = project.disclaimer;
+                document.getElementById('disclaimerText').innerHTML = project.disclaimer;
                 pendingUrl = currentDemoUrl;
                 document.getElementById('modalContent').classList.add('hidden');
                 document.getElementById('disclaimerContainer').classList.remove('hidden');
@@ -1047,7 +1071,7 @@
             const project = projects[currentProjectId];
 
             if (project && project.processDisclaimer) {
-                 document.getElementById('disclaimerText').innerText = project.processDisclaimer;
+                 document.getElementById('disclaimerText').innerHTML = project.processDisclaimer;
                  pendingUrl = currentProcessUrl;
                  document.getElementById('modalContent').classList.add('hidden');
                  document.getElementById('disclaimerContainer').classList.remove('hidden');
