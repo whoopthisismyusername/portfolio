@@ -629,10 +629,10 @@
             <!-- Backdrop -->
             <div class="fixed inset-0 transition-opacity bg-[#1b1c1a]/80 backdrop-blur-sm" aria-hidden="true" onclick="closeModal()"></div>
 
-            <div id="modalPanel" class="relative w-full bg-surface text-left shadow-2xl transform transition-all sm:my-8 sm:max-w-5xl rounded-t-2xl sm:rounded-2xl border border-outline-variant/20" role="document">
-                
-                <div id="modalContent">
-                    <div class="px-4 pt-5 pb-4 sm:p-8 sm:pb-6">
+            <div id="modalPanel" class="relative w-full bg-surface text-left shadow-2xl transform transition-all sm:my-8 sm:max-w-7xl sm:max-h-[90vh] sm:flex sm:flex-col rounded-t-2xl sm:rounded-2xl border border-outline-variant/20 overflow-hidden" role="document">
+
+                <div id="modalContent" class="sm:flex sm:flex-col sm:flex-1 sm:min-h-0">
+                    <div class="px-4 pt-5 pb-4 sm:p-8 sm:pb-6 sm:flex-1 sm:min-h-0 sm:overflow-y-auto">
                         <div class="sm:flex sm:items-start">
                             <div class="w-full mt-3 text-center sm:mt-0 sm:text-left">
                                 <h3 class="font-headline text-3xl font-extrabold text-[#5e2b43]" id="modalTitle">Project Title</h3>
@@ -687,7 +687,7 @@
                          <span class="material-symbols-outlined text-3xl text-primary" aria-hidden="true">info</span>
                     </div>
                     <h3 class="font-headline text-2xl font-bold text-[#5e2b43] mb-3">Notice</h3>
-                    <div class="mt-2 max-w-lg mx-auto">
+                    <div class="mt-2 max-w-4xl mx-auto px-2 sm:px-4">
                         <p id="disclaimerText" class="text-[15px] leading-relaxed text-on-surface-variant"></p>
                     </div>
                     <div class="mt-8 sm:flex sm:flex-row-reverse sm:justify-center gap-3">
@@ -973,7 +973,6 @@
 
         window.openIframe = function(url, title) {
             const modalPanel = document.getElementById('modalPanel');
-            modalPanel.classList.remove('sm:max-w-5xl');
             modalPanel.classList.add('sm:max-w-7xl');
 
             document.getElementById('modalContent').classList.add('hidden');
@@ -997,8 +996,7 @@
             document.getElementById('disclaimerContainer').classList.add('hidden');
             
             const modalPanel = document.getElementById('modalPanel');
-            modalPanel.classList.remove('sm:max-w-7xl');
-            modalPanel.classList.add('sm:max-w-5xl');
+            modalPanel.classList.add('sm:max-w-7xl');
 
             document.getElementById('modalTitle').innerText = project.title;
             document.getElementById('modalImg').src = project.img;
@@ -1100,8 +1098,7 @@
 
         window.backToDetails = function() {
             const modalPanel = document.getElementById('modalPanel');
-            modalPanel.classList.add('sm:max-w-5xl');
-            modalPanel.classList.remove('sm:max-w-7xl');
+            modalPanel.classList.add('sm:max-w-7xl');
 
             document.getElementById('modalContent').classList.remove('hidden');
             document.getElementById('demoContainer').classList.add('hidden');
