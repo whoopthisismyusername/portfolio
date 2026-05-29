@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills Development Selector</title>
+    <style>
+        /* --- FONT DECLARATIONS --- */
+        @font-face {
+            font-family: 'BrandTitle';
+            src: url('fonts/PetsHeadline-Bold.woff2') format('woff2'),
+                 url('fonts/PetsHeadline-Bold.woff') format('woff');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'BrandBody';
+            src: url('fonts/TT_Commons_Pro_Medium.woff2') format('woff2'),
+                 url('fonts/TT_Commons_Pro_Medium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        /* --- CORE VARIABLES --- */
+        :root {
+            --font-stack-heading: 'BrandTitle', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-stack-body: 'BrandBody', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --brand-primary: #4F46E5; /* Vibrant Indigo */
+            --brand-dark: #312E81;
+            --brand-accent: #06B6D4; /* Tech Cyan */
+            --brand-gradient: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
+            --text-main: #111827;
+            --text-sub: #4B5563;
+            --border-light: #E5E7EB;
+            --bg-body: #EEF2FF;        
+            --white: #ffffff;
+            --shadow-card: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+            --shadow-hover: 0 10px 25px -5px rgba(79, 70, 229, 0.3);
+            --transition-speed: 0.3s;
+        }
+
+        /* --- RESET & BASE --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-stack-body);
+        }
+        body {
+            background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 50%, #CFFAFE 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 15s ease infinite;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: var(--text-main);
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1, h2, h3, .quiz-title, .result-title, .question-text {
+            font-family: var(--font-stack-heading);
+            letter-spacing: -0.02em;
+        }
+
+        /* --- QUIZ CONTAINER --- */
+        .ilx-container {
+            width: 100%;
+            max-width: 850px;
+            height: 100%;
+            max-height: 650px;
+            background-color: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        @media screen and (max-width: 850px) {
+            .ilx-container {
+                max-width: 100%;
+                max-height: 100%;
+                border-radius: 0;
+                border: none;
+            }
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .view-section {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            padding: 48px;
+            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            overflow-y: auto;
+        }
+        .view-section.active {
+            display: flex;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        .quiz-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            min-height: 40px;
+        }
+        .back-btn {
+            background: rgba(79, 70, 229, 0.1);
+            border: none;
+            color: var(--brand-primary);
+            font-size: 0.95rem;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all var(--transition-speed);
+        }
+        .back-btn:hover {
+            background: var(--brand-primary);
+            color: var(--white);
+            transform: translateX(-2px);
+        }
+        .back-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* --- PROGRESS BAR --- */
+        .progress-wrapper {
+            flex-grow: 1;
+            margin-left: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        .progress-text {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--brand-accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+        .progress-bar-bg {
+            width: 100%;
+            max-width: 200px;
+            height: 6px;
+            background-color: var(--border-light);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--brand-gradient);
+            border-radius: 10px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* --- TYPOGRAPHY & CONTENT --- */
+        .quiz-title {
+            font-size: 2.5rem;
+            background: var(--brand-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        .quiz-body {
+            font-size: 1.15rem;
+            color: var(--text-sub);
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 90%;
+        }
+        .question-text {
+            font-size: 1.8rem;
+            color: var(--text-main);
+            margin-bottom: 32px;
+            line-height: 1.3;
+        }
+
+        /* --- BUTTONS & OPTIONS --- */
+        .btn-primary {
+            background: var(--brand-gradient);
+            color: var(--white);
+            border: none;
+            padding: 16px 36px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            align-self: flex-start;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 2px solid var(--border-light);
+            padding: 14px 36px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            align-self: flex-start;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+        }
+        .btn-secondary:hover {
+            border-color: var(--text-main);
+            background-color: rgba(0,0,0,0.03);
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .option-card {
+            background-color: var(--white);
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            padding: 22px 28px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 1.15rem;
+            color: var(--text-main);
+            font-weight: 500;
+            transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            line-height: 1.4;
+            position: relative;
+            overflow: hidden;
+        }
+        .option-card:hover {
+            border-color: var(--brand-accent);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+        .option-card::after {
+            content: '→';
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--brand-accent);
+            opacity: 0;
+            transform: translateX(-15px);
+            transition: all var(--transition-speed) ease;
+        }
+        .option-card:hover::after {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* --- RESULTS SCREEN --- */
+        .result-container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+        }
+        .result-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(6, 182, 212, 0.1));
+            color: var(--brand-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            position: relative;
+        }
+        .result-icon::before {
+            content: '';
+            position: absolute;
+            top: -5px; left: -5px; right: -5px; bottom: -5px;
+            border-radius: 50%;
+            background: var(--brand-gradient);
+            z-index: -1;
+            opacity: 0.2;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.1); opacity: 0.1; }
+            100% { transform: scale(1); opacity: 0.4; }
+        }
+        .result-icon svg {
+            width: 45px;
+            height: 45px;
+            fill: currentColor;
+        }
+        .result-title {
+            font-size: 2.8rem;
+            background: var(--brand-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        .result-message {
+            font-size: 1.25rem;
+            color: var(--text-sub);
+            max-width: 600px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* --- NEW LEVEL BUTTON STYLES --- */
+        .level-prompt {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 20px;
+        }
+        .level-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            width: 100%;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        .btn-text-small {
+            background: transparent;
+            border: none;
+            color: var(--text-sub);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: underline;
+            cursor: pointer;
+            transition: color var(--transition-speed);
+            padding: 8px 16px;
+        }
+        .btn-text-small:hover {
+            color: var(--brand-primary);
+        }
+
+        @media screen and (max-width: 600px) {
+            .view-section {
+                padding: 30px 20px;
+            }
+            .action-buttons {
+                flex-direction: column;
+            }
+            .level-buttons {
+                flex-direction: column;
+            }
+            .btn-primary, .btn-secondary {
+                width: 100%;
+            }
+            .quiz-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="ilx-container" id="app-root">
+    
+    <!-- START SCREEN -->
+    <div id="view-start" class="view-section active">
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+            <h1 class="quiz-title">Discover Your Next Skill</h1>
+            <p class="quiz-body">
+                Not sure where to focus your development next? Our Skills Exploration Tool will guide you through 4 quick questions about your natural working style and interests to recommend the perfect skills area for your growth.
+            </p>
+            <button class="btn-primary" onclick="startQuiz()">Start Exploration</button>
+        </div>
+    </div>
+
+    <!-- QUESTION SCREEN -->
+    <div id="view-question" class="view-section">
+        <div class="quiz-header">
+            <button class="back-btn" onclick="goBack()">
+                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                Back
+            </button>
+            <div class="progress-wrapper">
+                <span class="progress-text" id="progress-text">Question 1 of 4</span>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+            <h2 class="question-text" id="question-text">Question goes here?</h2>
+            <div class="options-grid" id="options-container">
+                <!-- Options injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- RESULT SCREEN -->
+    <div id="view-result" class="view-section">
+        <div class="quiz-header">
+            <button class="back-btn" onclick="goBack()">
+                <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                Back
+            </button>
+        </div>
+        <div class="result-container">
+            <div class="result-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <h2 class="result-title" id="result-skill-name">Skill Name</h2>
+            <p class="result-message" id="result-message">
+                We recommend you develop your skills in the <strong style="color: var(--text-main)" id="inline-skill-name"></strong> area. Select below to view the skill library, filtered by your needs.
+            </p>
+            
+            <p class="level-prompt">Now, select the level you believe your existing knowledge to be at:</p>
+            <div class="level-buttons">
+                <!-- NOTE: The href here can be updated to dynamically link to your specific courses/catalogue -->
+                <a href="#" class="btn-primary" id="btn-beginner" target="_blank">Beginner</a>
+                <a href="#" class="btn-primary" id="btn-intermediate" target="_blank">Intermediate</a>
+                <a href="#" class="btn-primary" id="btn-advanced" target="_blank">Advanced</a>
+            </div>
+            <button class="btn-text-small" onclick="resetQuiz()">Start Again</button>
+            
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // --- SKILLS DISCOVERY DATA TREE ---
+    const quizData = {
+        Q1: {
+            question: "When facing your daily tasks, where do you find your energy and focus naturally gravitating?",
+            options: [
+                { text: "Working with people, building relationships, and leading others.", next: "Q_People" },
+                { text: "Optimising processes, managing projects, and solving operational problems.", next: "Q_Ops" },
+                { text: "Exploring data, leveraging technology, or creating innovative designs.", next: "Q_Tech" }
+            ]
+        },
+
+        Q_People: {
+            question: "What is your primary objective when interacting with others at work?",
+            options: [
+                { text: "Leading, developing, and shaping the culture of a team.", next: "Q_Lead" },
+                { text: "Effectively sharing information and connecting with individuals.", next: "Q_Comm" },
+                { text: "Driving external business value, closing deals, or nurturing clients.", next: "Q_Ext" }
+            ]
+        },
+        Q_Lead: {
+            question: "Where do you feel you can make the biggest impact as a leader?",
+            options: [
+                { text: "Setting high-level vision, aligning stakeholders, and navigating change.", next: "Q_Lead_Strat" },
+                { text: "Managing daily performance, resolving team issues, and developing individuals.", next: "Q_Lead_Team" },
+                { text: "Building a positive workplace environment and hiring top talent.", next: "Q_Lead_HR" }
+            ]
+        },
+        Q_Lead_Strat: {
+            question: "Which specific high-level challenge appeals to you most?",
+            options: [
+                { text: "Steering the overall direction and strategy of the business.", next: "RESULT:Executive Leadership" },
+                { text: "Guiding teams smoothly through major organisational transitions.", next: "RESULT:Change Management" },
+                { text: "Balancing the needs and expectations of various business partners.", next: "RESULT:Stakeholder Management" }
+            ]
+        },
+        Q_Lead_Team: {
+            question: "When working directly with your reports, what is your preferred focus?",
+            options: [
+                { text: "Structuring their daily work and delegating tasks effectively.", next: "RESULT:Team Management" },
+                { text: "Helping individuals grow their skills and advance their careers.", next: "RESULT:Mentorship" },
+                { text: "Mediating disputes and maintaining team harmony.", next: "RESULT:Conflict Resolution" }
+            ]
+        },
+        Q_Lead_HR: {
+            question: "Which aspect of organisational culture is most critical to master?",
+            options: [
+                { text: "Identifying and interviewing the best candidates for open roles.", next: "RESULT:Talent Acquisition" },
+                { text: "Keeping current employees motivated, happy, and productive.", next: "RESULT:Employee Engagement" },
+                { text: "Ensuring the workplace is fair, diverse, and welcoming to all.", next: "RESULT:Diversity, Equity & Inclusion" }
+            ]
+        },
+        Q_Comm: {
+            question: "How do you prefer to deliver your message?",
+            options: [
+                { text: "Crafting clear, structured outputs (speeches, documents, emails).", next: "Q_Comm_Output" },
+                { text: "Engaging in nuanced, one-on-one interactions and reading the room.", next: "Q_Comm_Inter" },
+                { text: "Bringing large groups of people together around a shared interest.", next: "RESULT:Community Building" }
+            ]
+        },
+        Q_Comm_Output: {
+            question: "What is your preferred medium for communication?",
+            options: [
+                { text: "Speaking live in front of audiences or leading large meetings.", next: "RESULT:Public Speaking" },
+                { text: "Drafting precise, persuasive, and clear written documents.", next: "RESULT:Written Communication" }
+            ]
+        },
+        Q_Comm_Inter: {
+            question: "When talking to colleagues, what do you want to improve?",
+            options: [
+                { text: "My ability to understand and manage my own and others' emotions.", next: "RESULT:Emotional Intelligence" },
+                { text: "My day-to-day conversational skills, active listening, and rapport building.", next: "RESULT:Interpersonal Communication" }
+            ]
+        },
+        Q_Ext: {
+            question: "What is your primary goal when dealing with external parties?",
+            options: [
+                { text: "Ensuring existing clients get maximum value and remain loyal.", next: "RESULT:Customer Success" },
+                { text: "Prospecting and closing new business deals to drive revenue.", next: "RESULT:B2B Sales" },
+                { text: "Reaching mutually beneficial agreements and contract terms.", next: "RESULT:Negotiation" }
+            ]
+        },
+
+        Q_Ops: {
+            question: "What type of operational challenge do you most enjoy optimising?",
+            options: [
+                { text: "Organising timelines, project deliverables, and strategic growth.", next: "Q_Proj" },
+                { text: "Streamlining workflows, managing finances, or handling logistics.", next: "Q_Proc" },
+                { text: "Diagnosing complex problems, managing crises, or ensuring quality.", next: "Q_Prob" }
+            ]
+        },
+        Q_Proj: {
+            question: "How do you approach managing work and growth?",
+            options: [
+                { text: "Managing distinct team projects and deliverables.", next: "Q_Proj_Method" },
+                { text: "Focusing on long-term business growth and organisational mapping.", next: "Q_Proj_Strat" },
+                { text: "Mastering my own personal focus, schedule, and output.", next: "RESULT:Time Management" }
+            ]
+        },
+        Q_Proj_Method: {
+            question: "Which project management style suits your environment better?",
+            options: [
+                { text: "Flexible, iterative sprints that adapt to rapid changes.", next: "RESULT:Agile Project Management" },
+                { text: "Highly structured, sequential phases with strict milestones.", next: "RESULT:Traditional Project Management" }
+            ]
+        },
+        Q_Proj_Strat: {
+            question: "What is the focus of your strategic planning?",
+            options: [
+                { text: "Mapping out the long-term vision and goals of the organisation.", next: "RESULT:Strategic Planning" },
+                { text: "Identifying new market opportunities and strategic partnerships.", next: "RESULT:Business Development" }
+            ]
+        },
+        Q_Proc: {
+            question: "Which specific resource or system do you want to manage better?",
+            options: [
+                { text: "Financial health, budgets, and business risk.", next: "Q_Proc_Fin" },
+                { text: "Physical goods, supply chains, and daily operational steps.", next: "Q_Proc_Ops" },
+                { text: "Navigating corporate law, compliance, and vendor agreements.", next: "RESULT:Legal & Contract Management" }
+            ]
+        },
+        Q_Proc_Fin: {
+            question: "What is your primary financial focus?",
+            options: [
+                { text: "Understanding P&L, budgeting, and general financial health.", next: "RESULT:Financial Literacy" },
+                { text: "Identifying and mitigating potential threats to the business.", next: "RESULT:Risk Management" }
+            ]
+        },
+        Q_Proc_Ops: {
+            question: "Where do you look to create efficiency?",
+            options: [
+                { text: "Removing waste and bottlenecks from internal workflows.", next: "RESULT:Process Optimisation" },
+                { text: "Managing the procurement and movement of physical goods.", next: "RESULT:Supply Chain Management" }
+            ]
+        },
+        Q_Prob: {
+            question: "How do you prefer to handle workplace challenges?",
+            options: [
+                { text: "Deeply analysing the 'why' behind complex, logical puzzles.", next: "Q_Prob_Analyze" },
+                { text: "Reacting quickly to high-stress, rapidly changing situations.", next: "Q_Prob_React" },
+                { text: "Controlling environments, physical spaces, or event quality.", next: "Q_Prob_Control" }
+            ]
+        },
+        Q_Prob_Analyze: {
+            question: "What is your ultimate goal when analysing a problem?",
+            options: [
+                { text: "Evaluating arguments and data to make a sound, logical judgment.", next: "RESULT:Critical Thinking" },
+                { text: "Digging backward to find the exact origin point of a failure.", next: "RESULT:Root Cause Analysis" }
+            ]
+        },
+        Q_Prob_React: {
+            question: "How do you respond when things go completely off script?",
+            options: [
+                { text: "Taking command during an active emergency to minimise damage.", next: "RESULT:Crisis Management" },
+                { text: "Maintaining personal composure and bouncing back from setbacks.", next: "RESULT:Adaptability & Resilience" }
+            ]
+        },
+        Q_Prob_Control: {
+            question: "What are you trying to ensure runs perfectly?",
+            options: [
+                { text: "The final quality of products or services before they ship.", next: "RESULT:Quality Assurance" },
+                { text: "The logistics, scheduling, and execution of a major gathering.", next: "RESULT:Event Planning" },
+                { text: "The safety, layout, and operation of a physical office building.", next: "RESULT:Facility Management" }
+            ]
+        },
+
+        Q_Tech: {
+            question: "Which realm of technology excites you the most?",
+            options: [
+                { text: "Extracting insights from numbers, data, and algorithms.", next: "Q_Data" },
+                { text: "Building, securing, or supporting IT infrastructure and code.", next: "Q_Code" },
+                { text: "Using digital tools to create designs, content, or new products.", next: "Q_Creative" }
+            ]
+        },
+        Q_Data: {
+            question: "How deep do you want to go into data and logic?",
+            options: [
+                { text: "Finding trends and communicating them visually to others.", next: "Q_Data_Viz" },
+                { text: "Building complex models, training AI, or automating tasks.", next: "Q_Data_Adv" }
+            ]
+        },
+        Q_Data_Viz: {
+            question: "What is your main goal with data?",
+            options: [
+                { text: "Creating dashboards and reports to guide business decisions.", next: "RESULT:Data Analysis" },
+                { text: "Applying advanced mathematics to predict future outcomes.", next: "RESULT:Statistical Modelling" }
+            ]
+        },
+        Q_Data_Adv: {
+            question: "Which advanced technical capability do you want to master?",
+            options: [
+                { text: "Training neural networks and working with Generative AI.", next: "RESULT:AI & Machine Learning" },
+                { text: "Writing scripts to eliminate repetitive, manual computer tasks.", next: "RESULT:Automation & Scripting" }
+            ]
+        },
+        Q_Code: {
+            question: "What is your primary interest in IT and Computing?",
+            options: [
+                { text: "Writing the code and building the platforms that power apps.", next: "Q_Code_Dev" },
+                { text: "Protecting systems from hackers or helping users with tech issues.", next: "Q_Code_Sec" },
+                { text: "Exploring decentralised ledgers and smart contracts.", next: "RESULT:Blockchain & Web3" }
+            ]
+        },
+        Q_Code_Dev: {
+            question: "Where does your software focus lie?",
+            options: [
+                { text: "Programming the actual applications and software logic.", next: "RESULT:Software Development" },
+                { text: "Designing the virtual server environments that host the apps.", next: "RESULT:Cloud Architecture" }
+            ]
+        },
+        Q_Code_Sec: {
+            question: "How do you prefer to protect and support technology?",
+            options: [
+                { text: "Defending networks against breaches and data theft.", next: "RESULT:Cybersecurity" },
+                { text: "Troubleshooting hardware/software issues for everyday users.", next: "RESULT:IT Support" }
+            ]
+        },
+        Q_Creative: {
+            question: "What kind of creative output do you want to produce?",
+            options: [
+                { text: "Visual aesthetics and user interfaces.", next: "Q_Creat_Design" },
+                { text: "Written media, videos, or marketing campaigns.", next: "Q_Creat_Content" },
+                { text: "Developing entirely new products and concepts from scratch.", next: "Q_Creat_Prod" }
+            ]
+        },
+        Q_Creat_Design: {
+            question: "What is the focus of your design work?",
+            options: [
+                { text: "How a user navigates and experiences a digital app or website.", next: "RESULT:UI/UX Design" },
+                { text: "Creating beautiful static graphics, logos, and layouts.", next: "RESULT:Graphic Design" }
+            ]
+        },
+        Q_Creat_Content: {
+            question: "Which medium or strategy do you prefer?",
+            options: [
+                { text: "Writing compelling articles, blogs, or ad copy.", next: "RESULT:Content Creation" },
+                { text: "Filming, recording, and editing multimedia formats.", next: "RESULT:Audio & Video Production" },
+                { text: "Driving online traffic through SEO and digital campaigns.", next: "RESULT:Digital Marketing" }
+            ]
+        },
+        Q_Creat_Prod: {
+            question: "How do you approach creating new offerings?",
+            options: [
+                { text: "Managing the lifecycle and roadmap of a specific software/item.", next: "RESULT:Product Management" },
+                { text: "Using empathy and ideation to invent out-of-the-box solutions.", next: "RESULT:Innovation & Design Thinking" }
+            ]
+        }
+    };
+
+    // --- APP STATE ---
+    let historyStack = []; // Stores node IDs to allow going back
+    let currentNodeId = null;
+
+    // --- DOM ELEMENTS ---
+    const viewStart = document.getElementById('view-start');
+    const viewQuestion = document.getElementById('view-question');
+    const viewResult = document.getElementById('view-result');
+    
+    const questionTextEl = document.getElementById('question-text');
+    const optionsContainerEl = document.getElementById('options-container');
+    
+    const resultSkillNameEl = document.getElementById('result-skill-name');
+    const inlineSkillNameEl = document.getElementById('inline-skill-name');
+    
+    // Progress Bar Elements
+    const progressFillEl = document.getElementById('progress-fill');
+    const progressTextEl = document.getElementById('progress-text');
+
+    // --- LOGIC FUNCTIONS ---
+
+    function switchView(viewElement) {
+        // Hide all
+        viewStart.classList.remove('active');
+        viewQuestion.classList.remove('active');
+        viewResult.classList.remove('active');
+        
+        // Show target
+        viewElement.classList.add('active');
+    }
+
+    function startQuiz() {
+        historyStack = [];
+        loadNode('Q1');
+    }
+
+    function loadNode(nodeId) {
+        // Check if it's a result
+        if (nodeId.startsWith('RESULT:')) {
+            showResult(nodeId.replace('RESULT:', ''));
+            return;
+        }
+
+        const nodeData = quizData[nodeId];
+        if (!nodeData) return;
+
+        currentNodeId = nodeId;
+        
+        // Update Progress Bar (assuming 4 total steps to completion)
+        const currentStep = historyStack.length + 1;
+        const totalSteps = 4;
+        
+        if (progressFillEl && progressTextEl) {
+            const percentage = (currentStep / totalSteps) * 100;
+            progressFillEl.style.width = percentage + '%';
+            progressTextEl.innerText = `Question ${currentStep} of ${totalSteps}`;
+        }
+        
+        // Populate UI
+        questionTextEl.innerText = nodeData.question;
+        optionsContainerEl.innerHTML = '';
+
+        nodeData.options.forEach(option => {
+            const btn = document.createElement('button');
+            btn.className = 'option-card';
+            btn.innerText = option.text;
+            btn.onclick = () => handleOptionSelect(option.next);
+            optionsContainerEl.appendChild(btn);
+        });
+
+        switchView(viewQuestion);
+    }
+
+    function handleOptionSelect(nextNodeId) {
+        // Save current node to history before moving forward
+        historyStack.push(currentNodeId);
+        loadNode(nextNodeId);
+    }
+
+    function showResult(skillName) {
+        resultSkillNameEl.innerText = skillName;
+        inlineSkillNameEl.innerText = skillName;
+        
+        // Here you could add dynamic URL logic based on the skill name and selected level
+        // e.g., document.getElementById('btn-beginner').href = `https://your-lms.com/search?query=${encodeURIComponent(skillName)}&level=beginner`;
+        // e.g., document.getElementById('btn-intermediate').href = `https://your-lms.com/search?query=${encodeURIComponent(skillName)}&level=intermediate`;
+        // e.g., document.getElementById('btn-advanced').href = `https://your-lms.com/search?query=${encodeURIComponent(skillName)}&level=advanced`;
+        
+        switchView(viewResult);
+    }
+
+    function goBack() {
+        if (historyStack.length === 0) {
+            // We are at Q1, go back to start screen
+            switchView(viewStart);
+            currentNodeId = null;
+        } else {
+            // Pop the last node and load it
+            const previousNodeId = historyStack.pop();
+            loadNode(previousNodeId);
+        }
+    }
+
+    function resetQuiz() {
+        historyStack = [];
+        currentNodeId = null;
+        switchView(viewStart);
+    }
+
+</script>
+</body>
+</html>
